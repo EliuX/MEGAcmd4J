@@ -4,25 +4,25 @@ import java.util.Optional;
 
 public abstract class MegaCmdPut extends MegaCmdWithParams {
 
-    private boolean createRemoteIdDoesntExist;
+    private boolean remoteFolderCreatedIfNotPresent;
 
-    private boolean waitForItToEnd;
+    private boolean uploadQueued;
 
-    private boolean ignoreQuotaSurpassingWarning;
+    private boolean isQuotaWarningIgnored;
 
     @Override
     String cmdParams() {
         StringBuilder cmdParamsBuilder = new StringBuilder();
 
-        if(createRemoteIdDoesntExist){
+        if (remoteFolderCreatedIfNotPresent) {
             cmdParamsBuilder.append("-c ");
         }
 
-        if(waitForItToEnd){
+        if (uploadQueued) {
             cmdParamsBuilder.append("-q ");
         }
 
-        if(ignoreQuotaSurpassingWarning){
+        if (isQuotaWarningIgnored) {
             cmdParamsBuilder.append("--ignore-quota-warn ");
         }
 
@@ -40,46 +40,46 @@ public abstract class MegaCmdPut extends MegaCmdWithParams {
         return Optional.empty();    //TODO
     }
 
-    public MegaCmdPut createRemoteIfDoesntExist() {
-        createRemoteIdDoesntExist = true;
+    public MegaCmdPut createRemoteIfNotPresent() {
+        remoteFolderCreatedIfNotPresent = true;
         return this;
     }
 
-    public MegaCmdPut dontCreateRemoteIfDoesntExist() {
-        createRemoteIdDoesntExist = false;
+    public MegaCmdPut dontCreateRemoteIfNotPresent() {
+        remoteFolderCreatedIfNotPresent = false;
         return this;
     }
 
-    public boolean isCreateRemoteIdDoesntExist() {
-        return createRemoteIdDoesntExist;
+    public boolean isRemoteFolderCreatedIfNotPresent() {
+        return remoteFolderCreatedIfNotPresent;
     }
 
-    public MegaCmdPut waitForItToEnd(){
-        waitForItToEnd = true;
+    public MegaCmdPut queueUpload() {
+        uploadQueued = true;
         return this;
     }
 
-    public MegaCmdPut dontWaitForItToEnd(){
-        waitForItToEnd = false;
+    public MegaCmdPut dontQueueUpload() {
+        uploadQueued = false;
         return this;
     }
 
-    public boolean isWaitForItToEnd() {
-        return waitForItToEnd;
+    public boolean isUploadQueued() {
+        return uploadQueued;
     }
 
     public MegaCmdPut ignoreQuotaSurpassingWarning() {
-        this.ignoreQuotaSurpassingWarning = true;
+        this.isQuotaWarningIgnored = true;
         return this;
     }
 
     public MegaCmdPut dontIgnoreQuotaSurpassingWarning() {
-        this.ignoreQuotaSurpassingWarning = false;
+        this.isQuotaWarningIgnored = false;
         return this;
     }
 
-    public boolean isIgnoreQuotaSurpassingWarning() {
-        return ignoreQuotaSurpassingWarning;
+    public boolean isQuotaWarningIgnored() {
+        return isQuotaWarningIgnored;
     }
 
     protected abstract String cmdFileParams();
