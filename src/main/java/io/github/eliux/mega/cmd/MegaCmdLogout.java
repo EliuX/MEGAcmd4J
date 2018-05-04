@@ -13,6 +13,6 @@ public class MegaCmdLogout extends MegaProcedure {
 
     @Override
     public String getCmd() {
-        return getPlatform().cmdInstruction("mega-logout");
+        return "mega-logout";
     }
 }

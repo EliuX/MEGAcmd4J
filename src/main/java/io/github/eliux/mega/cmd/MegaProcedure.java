@@ -15,7 +15,7 @@ public abstract class MegaProcedure extends MegaCmd<Void> {
 
     @Override
     public Void call() {
-        executeSysCmd(getCmd());
+        executeSysCmd(getCmdAdaptedToPlatform());
         return null;
     }
 

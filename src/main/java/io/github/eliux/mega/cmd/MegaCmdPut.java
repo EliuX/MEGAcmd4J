@@ -32,12 +32,12 @@ public abstract class MegaCmdPut extends MegaCmdWithParams {
     }
 
     public String getCmd() {
-        return getPlatform().cmdInstruction("mega-put");
+        return "mega-put";
     }
 
     @Override
     protected Optional executeSysCmd(String cmdStr) {
-        return Optional.empty();
+        return Optional.empty();    //TODO
     }
 
     public MegaCmdPut createRemoteIfDoesntExist() {

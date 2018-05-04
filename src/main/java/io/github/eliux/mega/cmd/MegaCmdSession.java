@@ -7,13 +7,9 @@ import java.util.Optional;
 
 public class MegaCmdSession extends MegaCmd<String> {
 
-    public MegaCmdSession() {
-        super();
-    }
-
     @Override
     public String getCmd() {
-        return getPlatform().cmdInstruction("mega-session");
+        return "mega-session";
     }
 
     @Override

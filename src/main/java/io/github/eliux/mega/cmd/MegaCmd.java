@@ -9,12 +9,12 @@ import java.util.concurrent.Callable;
 public abstract class MegaCmd<T> implements Callable<T> {
 
     public T call() {
-        return executeSysCmd(getCmd())
+        return executeSysCmd(getCmdAdaptedToPlatform())
                 .orElseThrow(() -> new MegaInvalidResponseException(getCmd()));
     }
 
-    protected OSPlatform getPlatform(){
-        return OSPlatform.getCurrent();
+    protected String getCmdAdaptedToPlatform() {
+        return OSPlatform.getCurrent().cmdInstruction(getCmd());
     }
 
     public abstract String getCmd();

@@ -12,7 +12,7 @@ public abstract class MegaCmdWithParams<T> extends MegaCmd<T> {
 
     @Override
     public T call() {
-        return executeSysCmd(getCmd() + " " + cmdParams())
+        return executeSysCmd(getCmdAdaptedToPlatform() + " " + cmdParams())
                 .orElseThrow(() -> new MegaInvalidResponseException(getCmd()));
     }
 

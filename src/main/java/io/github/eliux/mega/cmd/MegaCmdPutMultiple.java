@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MegaCmdPutMultiple extends MegaCmdPut{
+public class MegaCmdPutMultiple extends MegaCmdPut {
 
     private String remotePath;
 
@@ -18,7 +18,7 @@ public class MegaCmdPutMultiple extends MegaCmdPut{
     }
 
     public MegaCmdPutMultiple setRemotePath(String remotePath) {
-        if(remotePath!= null){
+        if (remotePath != null) {
             this.remotePath = remotePath;
         }
         return this;
@@ -28,8 +28,8 @@ public class MegaCmdPutMultiple extends MegaCmdPut{
         return remotePath;
     }
 
-    private String cmdLocalFilesParams(){
-        if(localFiles == null || localFiles.isEmpty()){
+    private String cmdLocalFilesParams() {
+        if (localFiles == null || localFiles.isEmpty()) {
             throw new MegaCmdInvalidArguments("There are not local files specified!");
         }
 

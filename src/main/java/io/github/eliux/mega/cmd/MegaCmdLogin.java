@@ -21,7 +21,7 @@ public class MegaCmdLogin extends MegaCmdWithParams<Boolean> {
 
     @Override
     public String getCmd() {
-        return getPlatform().cmdInstruction("mega-login");
+        return "mega-login";
     }
 
     @Override
