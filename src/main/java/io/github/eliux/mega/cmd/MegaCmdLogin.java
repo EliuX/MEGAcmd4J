@@ -3,14 +3,20 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.MegaUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static io.github.eliux.mega.MegaUtils.handleResult;
 
 public class MegaCmdLogin extends MegaCmdWithParams<Boolean> {
 
-    public MegaCmdLogin(String... params) {
-        super(params);
+    private final String cmdParams;
+
+    public MegaCmdLogin(String... cmdParams) {
+        super();
+        this.cmdParams = Arrays.asList(cmdParams).stream()
+                .collect(Collectors.joining(" "));
     }
 
     @Override
@@ -27,5 +33,10 @@ public class MegaCmdLogin extends MegaCmdWithParams<Boolean> {
         } catch (IOException | InterruptedException e) {
             return Optional.of(Boolean.FALSE);
         }
+    }
+
+    @Override
+    protected String cmdParams() {
+        return cmdParams;
     }
 }

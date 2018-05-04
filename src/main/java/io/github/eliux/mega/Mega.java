@@ -8,8 +8,8 @@ import io.github.eliux.mega.error.MegaException;
 
 public interface Mega {
 
-    public static final String USERNAME_ENV_VAR = "MEGA_EMAIL";
-    public static final String PASSWORD_ENV_VAR = "MEGA_PWD";
+    String USERNAME_ENV_VAR = "MEGA_EMAIL";
+    String PASSWORD_ENV_VAR = "MEGA_PWD";
 
     static String[] envVars() {
         String pathVar = "PATH=" + System.getenv("PATH");
