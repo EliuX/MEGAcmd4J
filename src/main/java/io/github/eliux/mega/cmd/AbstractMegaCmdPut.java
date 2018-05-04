@@ -2,7 +2,7 @@ package io.github.eliux.mega.cmd;
 
 import java.util.Optional;
 
-public abstract class MegaCmdPut extends MegaCmdWithParams {
+public abstract class MegaCmdPut extends AbstractMegaCmdWithParams {
 
     private boolean remoteFolderCreatedIfNotPresent;
 

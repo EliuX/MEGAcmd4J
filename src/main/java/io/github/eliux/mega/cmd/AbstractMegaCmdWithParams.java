@@ -1,14 +1,8 @@
 package io.github.eliux.mega.cmd;
 
-import io.github.eliux.mega.error.MegaException;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-public abstract class MegaCmdWithParams<T> extends MegaCmd<T> {
+public abstract class MegaCmdWithParams<T> extends AbstractMegaCmd<T> {
 
     @Override
     public T call() {
