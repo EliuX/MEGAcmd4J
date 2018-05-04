@@ -3,6 +3,7 @@ package io.github.eliux.mega;
 import io.github.eliux.mega.auth.MegaAuth;
 import io.github.eliux.mega.cmd.MegaCmdLogout;
 import io.github.eliux.mega.cmd.MegaCmdSession;
+import io.github.eliux.mega.cmd.MegaCmdWhoAmI;
 
 public class MegaSession {
 
@@ -22,5 +23,9 @@ public class MegaSession {
 
     public String sessionID(){
         return new MegaCmdSession().call();
+    }
+
+    public String whoAmI(){
+        return new MegaCmdWhoAmI().call();
     }
 }

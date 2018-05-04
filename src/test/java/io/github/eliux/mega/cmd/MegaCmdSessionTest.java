@@ -10,7 +10,6 @@ import static org.junit.Assert.*;
 
 public class MegaCmdSessionTest {
 
-
     @Test
     public void parseSessionIDShouldBeOk() {
         //Given
@@ -26,5 +25,17 @@ public class MegaCmdSessionTest {
                 "Ae9r6XXXqUZGhXEIUoy7C85XhPq9vOAr2Sc94axXXXX-T3JZZE9kOEt3dDjWGMscV2il65Zo-mFMEXXX",
                 id.get()
         );
+    }
+
+    @Test
+    public void parseSessionIDShouldFail() {
+        //Given
+        String invalidResponse = "[API:err: 21:14:32] Not logged in.";
+
+        //When
+       final Optional<String> noId = MegaCmdSession.parseSessionID(invalidResponse);
+
+        //Then
+        Assert.assertFalse(noId.isPresent());
     }
 }

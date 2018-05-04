@@ -21,6 +21,11 @@ public class MegaCmdCommonsTest {
         Assert.assertNotNull(sessionMega.sessionID());
     }
 
+    public void usernameShouldBeGiven() {
+        //When
+        sessionMega.whoAmI();
+    }
+
     @After
     public void logout() {
         sessionMega.logout();

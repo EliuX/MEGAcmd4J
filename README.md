@@ -6,6 +6,7 @@ Current version supports:
 `mega-login --help`.
 * Logout: Close the current session.
 * Put: Upload content to the cloud. See more using `mega-put --help`.
+* WhoAmI: Returns the username of the current session. See more using `mega-whoami --help`.
 
 ##System requirements
 * Install [MEGAcmd][megacmd]. Available packages for MEGAcmd in all supported 
