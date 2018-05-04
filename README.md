@@ -18,7 +18,7 @@ platforms should be found [here][megacmd-install].
 * `MEGA_EMAIL`: Email used as username (lowercase)
 * `MEGA_PWD`: Corresponding password
 
-1. Use an existing session can be a saver way. You can use it from your app as long 
+2. Use an existing session can be a saver way. You can use it from your app as long 
 as it don't be closed.
 
 ## Code conventions
@@ -32,6 +32,14 @@ as it don't be closed.
 * Once installed [MEGAcmd][megacmd] in your system execute `mega-help` to check all commands.
 You will be able to notice those who are used in this library and others which dont, for practical
 reasons, but that will provide you additional capabilities. Try them out.
+
+## Author
+
+* **Eliecer Hernandez** - [eliecerhdz@gmail.com](mailto:eliecerhdz@gmail.com)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 [mega]: https://mega.co.nz
 [megacmd]: https://github.com/meganz/MEGAcmd
