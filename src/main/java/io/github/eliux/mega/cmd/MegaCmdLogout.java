@@ -13,6 +13,6 @@ public class MegaCmdLogout extends AbstractMegaProcedure {
 
     @Override
     public String getCmd() {
-        return "mega-logout";
+        return "logout";
     }
 }

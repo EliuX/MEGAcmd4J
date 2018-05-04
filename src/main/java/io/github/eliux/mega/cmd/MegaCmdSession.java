@@ -9,7 +9,7 @@ public class MegaCmdSession extends AbstractMegaCmd<String> {
 
     @Override
     public String getCmd() {
-        return "mega-session";
+        return "session";
     }
 
     @Override

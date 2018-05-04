@@ -21,7 +21,7 @@ public class MegaCmdLogin extends AbstractMegaCmdWithParams<Boolean> {
 
     @Override
     public String getCmd() {
-        return "mega-login";
+        return "login";
     }
 
     @Override

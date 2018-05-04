@@ -43,7 +43,7 @@ public class MegaCmdGet extends AbstractMegaCmdPathHandler {
 
     @Override
     public String getCmd() {
-        return "mega-get";
+        return "get";
     }
 
     @Override

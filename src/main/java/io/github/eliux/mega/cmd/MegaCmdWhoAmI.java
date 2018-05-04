@@ -9,7 +9,7 @@ public class MegaCmdWhoAmI extends AbstractMegaCmd<String> {
 
     @Override
     public String getCmd() {
-        return "mega-whoami";
+        return "whoami";
     }
 
     @Override
