@@ -9,7 +9,7 @@ public class MegaCmdPut extends MegaCmd {
     }
 
     public String getCmd() {
-        return "mega-put";
+        return getPlatform().cmdInstruction("mega-put");
     }
 
     @Override

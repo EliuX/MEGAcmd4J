@@ -13,7 +13,7 @@ public class MegaCmdSession extends MegaCmd<String> {
 
     @Override
     public String getCmd() {
-        return "mega-session.bat";
+        return getPlatform().cmdInstruction("mega-session");
     }
 
     @Override

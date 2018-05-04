@@ -22,7 +22,6 @@ public class MegaAuthCredentials extends MegaAuth {
     public MegaSession login() {
         final MegaCmdLogin megaCmdLogin = new MegaCmdLogin(username, password);
         megaCmdLogin.call();
-
         return new MegaSession(this);
     }
 

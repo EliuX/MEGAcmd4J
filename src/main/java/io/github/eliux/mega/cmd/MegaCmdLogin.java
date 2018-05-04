@@ -15,7 +15,7 @@ public class MegaCmdLogin extends MegaCmdWithParams<Boolean> {
 
     @Override
     public String getCmd() {
-        return "mega-login.bat";
+        return getPlatform().cmdInstruction("mega-login");
     }
 
     @Override
