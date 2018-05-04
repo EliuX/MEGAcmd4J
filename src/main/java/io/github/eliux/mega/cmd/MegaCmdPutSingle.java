@@ -1,6 +1,6 @@
 package io.github.eliux.mega.cmd;
 
-public class MegaCmdPutSingle extends MegaCmdPut{
+public class MegaCmdPutSingle extends AbstractMegaCmdPut {
 
     private final String localFile;
 
@@ -10,7 +10,6 @@ public class MegaCmdPutSingle extends MegaCmdPut{
 
     protected String cmdFileParams(){
         return localFile;
-
     }
 
     public String getLocalFile() {

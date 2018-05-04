@@ -1,6 +1,6 @@
 package io.github.eliux.mega.cmd;
 
-public class MegaCmdLogout extends MegaProcedure {
+public class MegaCmdLogout extends AbstractMegaProcedure {
 
     public MegaCmdLogout() {
         super();

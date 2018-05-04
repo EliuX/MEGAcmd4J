@@ -5,7 +5,7 @@ import io.github.eliux.mega.MegaUtils;
 import java.io.IOException;
 import java.util.Optional;
 
-public class MegaCmdSession extends MegaCmd<String> {
+public class MegaCmdSession extends AbstractMegaCmd<String> {
 
     @Override
     public String getCmd() {

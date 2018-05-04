@@ -6,7 +6,7 @@ import io.github.eliux.mega.platform.OSPlatform;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 
-public abstract class MegaCmd<T> implements Callable<T> {
+public abstract class AbstractMegaCmd<T> implements Callable<T> {
 
     public T call() {
         return executeSysCmd(getCmdAdaptedToPlatform())

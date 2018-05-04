@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MegaCmdPutMultiple extends MegaCmdPut {
+public class MegaCmdPutMultiple extends AbstractMegaCmdPut {
 
     private String remotePath;
 

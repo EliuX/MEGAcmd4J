@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import static io.github.eliux.mega.MegaUtils.handleResult;
 
-public class MegaCmdLogin extends MegaCmdWithParams<Boolean> {
+public class MegaCmdLogin extends AbstractMegaCmdWithParams<Boolean> {
 
     private final String cmdParams;
 

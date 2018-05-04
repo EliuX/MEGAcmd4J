@@ -7,11 +7,7 @@ import java.util.Optional;
 
 import static io.github.eliux.mega.MegaUtils.handleResult;
 
-public abstract class MegaProcedure extends AbstractMegaCmd<Void> {
-
-    public MegaProcedure() {
-        super();
-    }
+public abstract class AbstractMegaProcedure extends AbstractMegaCmd<Void> {
 
     @Override
     public Void call() {
