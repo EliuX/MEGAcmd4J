@@ -3,13 +3,19 @@ package io.github.eliux.mega;
 import io.github.eliux.mega.error.MegaIOException;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public interface MegaTestUtils {
 
-    static String testTextFileName(String namePrefix, int index){
-        String suffix = index > 1 ? "-" + String.valueOf(index) : "";
-        return String.format("target/%s%s.txt", namePrefix, suffix);
+    static final List<String> EMPTY_SUFFIX_ENTRIES = Arrays.asList("0", "1", "");
+
+    static String testTextFileName(String namePrefix, Object suffix){
+        String suffixStr = EMPTY_SUFFIX_ENTRIES.contains(suffix.toString())
+                ? ""
+                : "-" + String.valueOf(suffix);
+        return String.format("target/%s%s.txt", namePrefix, suffixStr);
     }
 
     static void createTextFiles(String namePrefix, int numberOfFiles) {

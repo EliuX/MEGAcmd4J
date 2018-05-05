@@ -1,6 +1,6 @@
 package io.github.eliux.mega.cmd;
 
-public abstract class AbstractMegaCmdPathHandler<T> extends AbstractMegaCmdWithParams<T> {
+public abstract class AbstractMegaCmdPathHandler extends AbstractMegaCmdProcedureWithParams {
 
     private boolean remoteFolderCreatedIfNotPresent;
 
@@ -29,12 +29,12 @@ public abstract class AbstractMegaCmdPathHandler<T> extends AbstractMegaCmdWithP
         return cmdParamsBuilder.toString();
     }
 
-    public <R extends AbstractMegaCmdPathHandler<T>> R createRemoteIfNotPresent() {
+    public <R extends AbstractMegaCmdPathHandler> R createRemoteIfNotPresent() {
         remoteFolderCreatedIfNotPresent = true;
         return (R) this;
     }
 
-    public <R extends AbstractMegaCmdPathHandler<T>> R createRemoteOnlyIfPresent() {
+    public <R extends AbstractMegaCmdPathHandler> R createRemoteOnlyIfPresent() {
         remoteFolderCreatedIfNotPresent = false;
         return (R) this;
     }
@@ -43,12 +43,12 @@ public abstract class AbstractMegaCmdPathHandler<T> extends AbstractMegaCmdWithP
         return remoteFolderCreatedIfNotPresent;
     }
 
-    public <R extends AbstractMegaCmdPathHandler<T>> R queueUpload() {
+    public <R extends AbstractMegaCmdPathHandler> R queueUpload() {
         uploadQueued = true;
         return (R) this;
     }
 
-    public <R extends AbstractMegaCmdPathHandler<T>> R waitToUpload() {
+    public <R extends AbstractMegaCmdPathHandler> R waitToUpload() {
         uploadQueued = false;
         return (R) this;
     }
@@ -57,12 +57,12 @@ public abstract class AbstractMegaCmdPathHandler<T> extends AbstractMegaCmdWithP
         return uploadQueued;
     }
 
-    public <R extends AbstractMegaCmdPathHandler<T>> R ignoreQuotaSurpassingWarning() {
+    public <R extends AbstractMegaCmdPathHandler> R ignoreQuotaSurpassingWarning() {
         this.isQuotaWarningIgnored = true;
         return (R) this;
     }
 
-    public <R extends AbstractMegaCmdPathHandler<T>> R warnQuotaSurpassing() {
+    public <R extends AbstractMegaCmdPathHandler> R warnQuotaSurpassing() {
         this.isQuotaWarningIgnored = false;
         return (R) this;
     }
