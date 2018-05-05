@@ -29,7 +29,7 @@ public class MegaCRUDTest {
     public void shouldUploadMultipleFilesOkAndCreateRemoteFolder() {
         createTextFiles(TEST_FILE_PREFIX, 10);
 
-        sessionMega.uploadFiles("megacmd4j/", "target/yolo*.txt")
+        sessionMega.uploadFiles("megacmd4j/", "yolo*.txt")
                 .createRemoteIfNotPresent()
                 .call();
     }

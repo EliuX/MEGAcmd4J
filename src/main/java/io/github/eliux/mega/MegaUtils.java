@@ -1,6 +1,7 @@
 package io.github.eliux.mega;
 
-import java.io.Console;
+import io.github.eliux.mega.error.*;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -22,8 +23,30 @@ public interface MegaUtils {
     static void handleResult(int code) {
         switch (code) {
             case 0:
-            default:
                 //Its Ok
+                break;
+            case -51:
+                throw new MegaWrongArgumentsException();
+            case -52:
+                throw new MegaInvalidEmailException();
+            case -53:
+                throw new MegaResourceNotFoundException();
+            case -54:
+                throw new MegaInvalidStateException();
+            case -55:
+                throw new MegaInvalidTypeException();
+            case -56:
+                throw new MegaOperationNotAllowedException();
+            case -57:
+                throw new MegaLoginRequiredException();
+            case -58:
+                throw new MegaNodesNotFetchedException();
+            case -59:
+                throw new MegaUnexpectedFailureException();
+            case -60:
+                throw new MegaConfirmationRequiredException();
+            default:
+                throw new MegaUnexpectedFailureException();
         }
     }
 
