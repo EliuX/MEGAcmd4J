@@ -10,8 +10,9 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import static io.github.eliux.mega.MegaTestUtils.createTextFiles;
-import static io.github.eliux.mega.MegaTestUtils.removeTextFiles;
+import java.util.stream.IntStream;
+
+import static io.github.eliux.mega.MegaTestUtils.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MegaCRUDTest {
@@ -26,12 +27,41 @@ public class MegaCRUDTest {
     }
 
     @Test
+    public void shouldUploadFileToRoot() {
+        createTextFile("target/yolo-test.txt", "You only live once...");
+
+        sessionMega.uploadFile("target/yolo-test.txt")
+                .call();
+
+        removeFile("target/yolo-test.txt");
+    }
+
+    @Test
+    public void shouldUploadFileToTargetFolder() {
+        createTextFile("target/yolo-infinite.txt", "You only live infinitive times...");
+
+        sessionMega.uploadFile("target/yolo-infinite.txt", "megacmd4j/")
+                .createRemoteIfNotPresent()
+                .call();
+
+        removeFile("target/yolo-infinite.txt");
+    }
+
+    @Test
     public void shouldUploadMultipleFilesOkAndCreateRemoteFolder() {
         createTextFiles(TEST_FILE_PREFIX, 10);
 
-        sessionMega.uploadFiles("megacmd4j/", "yolo*.txt")
-                .createRemoteIfNotPresent()
-                .call();
+        final MegaCmdPutMultiple megaCmd = sessionMega.uploadFiles("megacmd4j/")
+                .createRemoteIfNotPresent();
+
+        IntStream.rangeClosed(1, 10).forEach(i -> {
+            String filename = testTextFileName(TEST_FILE_PREFIX, i);
+            megaCmd.addLocalFileToUpload(filename);
+        });
+
+        megaCmd.call();
+
+        removeTextFiles(TEST_FILE_PREFIX, 10);
     }
 
     @After

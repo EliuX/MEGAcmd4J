@@ -2,6 +2,7 @@ package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.error.MegaCmdInvalidArguments;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +16,7 @@ public class MegaCmdPutMultiple extends AbstractMegaCmdPut {
 
     public MegaCmdPutMultiple(String remotePath, String... localFiles) {
         this.remotePath = remotePath;
-        this.localFiles = Arrays.asList(localFiles);
+        this.localFiles = new ArrayList<>(Arrays.asList(localFiles));
     }
 
     public MegaCmdPutMultiple setRemotePath(String remotePath) {

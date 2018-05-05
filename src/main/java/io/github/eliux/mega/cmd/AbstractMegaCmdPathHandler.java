@@ -34,7 +34,7 @@ public abstract class AbstractMegaCmdPathHandler extends AbstractMegaCmdProcedur
         return (R) this;
     }
 
-    public <R extends AbstractMegaCmdPathHandler> R createRemoteOnlyIfPresent() {
+    public <R extends AbstractMegaCmdPathHandler> R skipIfRemoteNotPresent() {
         remoteFolderCreatedIfNotPresent = false;
         return (R) this;
     }
