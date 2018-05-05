@@ -1,9 +1,7 @@
 package io.github.eliux.mega;
 
 import io.github.eliux.mega.auth.MegaAuth;
-import io.github.eliux.mega.cmd.MegaCmdLogout;
-import io.github.eliux.mega.cmd.MegaCmdSession;
-import io.github.eliux.mega.cmd.MegaCmdWhoAmI;
+import io.github.eliux.mega.cmd.*;
 
 public class MegaSession {
 
@@ -27,5 +25,17 @@ public class MegaSession {
 
     public String whoAmI(){
         return new MegaCmdWhoAmI().call();
+    }
+
+    public MegaCmdPutSingle uploadFile(String localFilePath){
+        return new MegaCmdPutSingle(localFilePath);
+    }
+
+    public MegaCmdPutSingle uploadFile(String localFilePath, String remotePath){
+        return new MegaCmdPutSingle(localFilePath, remotePath);
+    }
+
+    public MegaCmdPutMultiple uploadFiles(String remotePath, String... filenames){
+        return new MegaCmdPutMultiple(remotePath, filenames);
     }
 }

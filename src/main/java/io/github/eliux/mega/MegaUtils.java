@@ -1,13 +1,23 @@
 package io.github.eliux.mega;
 
 import java.io.Console;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 import static io.github.eliux.mega.Mega.envVars;
 
 public interface MegaUtils {
+
+    DateTimeFormatter MEGA_FILE_DATE_TIME_FORMATTER = DateTimeFormatter
+            .ofPattern("ddMMMyyyy HH:mm:ss", Locale.US);
+
+    static LocalDateTime parseFileDate(String dateStr){
+        return LocalDateTime.parse(dateStr, MEGA_FILE_DATE_TIME_FORMATTER);
+    }
 
     static void handleResult(int code) {
         switch (code) {

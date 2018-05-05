@@ -8,8 +8,8 @@ import java.util.stream.IntStream;
 public interface MegaTestUtils {
 
     static String testTextFileName(String namePrefix, int index){
-        String suffix = index > 1 ? String.valueOf(index) : "";
-        return String.format("target/%s-%s.txt", namePrefix, suffix);
+        String suffix = index > 1 ? "-" + String.valueOf(index) : "";
+        return String.format("target/%s%s.txt", namePrefix, suffix);
     }
 
     static void createTextFiles(String namePrefix, int numberOfFiles) {

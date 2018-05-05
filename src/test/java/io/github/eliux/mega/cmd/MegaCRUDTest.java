@@ -32,7 +32,5 @@ public class MegaCRUDTest {
     @After
     public void logout() {
         sessionMega.logout();
-
-        removeTextFiles(TEST_FILE_PREFIX, 10);
     }
 }

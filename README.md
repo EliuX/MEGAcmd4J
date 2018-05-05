@@ -30,7 +30,7 @@ as it don't be closed.
 
 ## More information
 * Once installed [MEGAcmd][megacmd] in your system execute `mega-help` to check all commands.
-You will be able to notice those who are used in this library and others which dont, for practical
+You will be able to notice those who are used in this library and others which don't, for practical
 reasons, but that will provide you additional capabilities. Try them out.
 
 ## Author

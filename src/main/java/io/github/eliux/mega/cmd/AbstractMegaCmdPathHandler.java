@@ -34,7 +34,7 @@ public abstract class AbstractMegaCmdPathHandler<T> extends AbstractMegaCmdWithP
         return (R) this;
     }
 
-    public <R extends AbstractMegaCmdPathHandler<T>> R dontCreateRemoteIfNotPresent() {
+    public <R extends AbstractMegaCmdPathHandler<T>> R createRemoteOnlyIfPresent() {
         remoteFolderCreatedIfNotPresent = false;
         return (R) this;
     }
@@ -48,7 +48,7 @@ public abstract class AbstractMegaCmdPathHandler<T> extends AbstractMegaCmdWithP
         return (R) this;
     }
 
-    public <R extends AbstractMegaCmdPathHandler<T>> R dontQueueUpload() {
+    public <R extends AbstractMegaCmdPathHandler<T>> R waitToUpload() {
         uploadQueued = false;
         return (R) this;
     }
@@ -62,7 +62,7 @@ public abstract class AbstractMegaCmdPathHandler<T> extends AbstractMegaCmdWithP
         return (R) this;
     }
 
-    public <R extends AbstractMegaCmdPathHandler<T>> R dontIgnoreQuotaSurpassingWarning() {
+    public <R extends AbstractMegaCmdPathHandler<T>> R warnQuotaSurpassing() {
         this.isQuotaWarningIgnored = false;
         return (R) this;
     }
