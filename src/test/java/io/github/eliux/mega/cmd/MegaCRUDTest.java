@@ -4,6 +4,7 @@ import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
 import io.github.eliux.mega.MegaTestUtils;
 import io.github.eliux.mega.MegaUtilsTest;
+import io.github.eliux.mega.error.MegaException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -62,6 +63,18 @@ public class MegaCRUDTest {
         megaCmd.call();
 
         removeTextFiles(TEST_FILE_PREFIX, 10);
+    }
+
+    @Test
+    public void given_multilevelfolder_when_mkdir_withoutRecursivelyFlag_then_fail() {
+        sessionMega.mkdir("megacmd4j/level2/level3").call();
+    }
+
+    @Test(expected = MegaException.class)
+    public void given_multilevelfolder_when_mkdir_withRecursivelyFlag_then_Success() {
+        sessionMega.mkdir("megacmd4j/level2/level3")
+                .recursively()
+                .call();
     }
 
     @After

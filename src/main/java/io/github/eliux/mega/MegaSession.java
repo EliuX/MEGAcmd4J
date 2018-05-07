@@ -38,4 +38,8 @@ public class MegaSession {
     public MegaCmdPutMultiple uploadFiles(String remotePath, String... filenames){
         return new MegaCmdPutMultiple(remotePath, filenames);
     }
+
+    public MegaCmdMakeDirectory mkdir(String remotePath){
+        return new MegaCmdMakeDirectory(remotePath);
+    }
 }
