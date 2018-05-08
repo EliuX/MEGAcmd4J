@@ -36,7 +36,9 @@ public class MegaCmdPutMultiple extends AbstractMegaCmdPut {
 
     private String cmdLocalFilesParams() {
         if (localFiles == null || localFiles.isEmpty()) {
-            throw new MegaCmdInvalidArguments("There are not local files specified!");
+            throw new MegaCmdInvalidArguments(
+                    "There are not local files specified!"
+            );
         }
 
         return localFiles.stream().collect(Collectors.joining(" "));
@@ -47,7 +49,7 @@ public class MegaCmdPutMultiple extends AbstractMegaCmdPut {
         return cmdLocalFilesParams() + " " + getRemotePath();
     }
 
-    public void addLocalFileToUpload(String filename){
+    public void addLocalFileToUpload(String filename) {
         localFiles.add(filename);
     }
 }

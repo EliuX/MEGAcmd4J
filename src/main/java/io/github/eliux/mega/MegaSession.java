@@ -16,7 +16,7 @@ public class MegaSession {
     }
 
     public void logout() {
-        new MegaCmdLogout().call();
+        new MegaCmdLogout().run();
     }
 
     public String sessionID() {

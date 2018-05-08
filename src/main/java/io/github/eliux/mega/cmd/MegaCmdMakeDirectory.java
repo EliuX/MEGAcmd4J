@@ -2,7 +2,7 @@ package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.error.MegaInvalidStateException;
 
-public class MegaCmdMakeDirectory extends AbstractMegaCmdProcedureWithParams {
+public class MegaCmdMakeDirectory extends AbstractMegaCmdRunnerWithParams {
 
     private final String remotePath;
 
@@ -64,15 +64,13 @@ public class MegaCmdMakeDirectory extends AbstractMegaCmdProcedureWithParams {
     }
 
     @Override
-    public Void call() {
+    public void run() {
         try {
-            return super.call();
+            super.run();
         } catch (MegaInvalidStateException ex) {
             if (!errorIgnoredIfExists) {
                 throw ex;
             }
         }
-
-        return null;
     }
 }

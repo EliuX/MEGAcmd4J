@@ -1,6 +1,6 @@
 package io.github.eliux.mega.cmd;
 
-public abstract class AbstractMegaCmdPathHandler extends AbstractMegaCmdProcedureWithParams {
+public abstract class AbstractMegaCmdPathHandler extends AbstractMegaCmdRunnerWithParams {
 
     private boolean remoteFolderCreatedIfNotPresent;
 

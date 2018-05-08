@@ -1,11 +1,13 @@
 package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.MegaUtils;
+import io.github.eliux.mega.error.MegaIOException;
+import io.github.eliux.mega.error.MegaLoginRequiredException;
 
 import java.io.IOException;
 import java.util.Optional;
 
-public class MegaCmdWhoAmI extends AbstractMegaCmd<String> {
+public class MegaCmdWhoAmI extends AbstractMegaCmdCaller<String> {
 
     @Override
     public String getCmd() {
@@ -13,13 +15,15 @@ public class MegaCmdWhoAmI extends AbstractMegaCmd<String> {
     }
 
     @Override
-    protected Optional<String> executeSysCmd(String cmdStr) {
+    protected String executeSysCmd(String cmdStr) {
         try {
             final String response = MegaUtils.execWithOutput(cmdStr).get(0);
-            return Optional.ofNullable(response)
-                    .flatMap(MegaCmdWhoAmI::parseUsername);
+
+            return parseUsername(response).orElseThrow(
+                    () -> new MegaLoginRequiredException()
+            );
         } catch (IOException e) {
-            return Optional.empty();
+            throw new MegaIOException();
         }
     }
 

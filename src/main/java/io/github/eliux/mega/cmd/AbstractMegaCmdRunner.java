@@ -7,16 +7,14 @@ import java.util.Optional;
 
 import static io.github.eliux.mega.MegaUtils.handleResult;
 
-public abstract class AbstractMegaCmdProcedureWithParams extends AbstractMegaCmdWithParams<Void> {
+public abstract class AbstractMegaCmdRunner extends AbstractMegaCmd implements Runnable {
 
     @Override
-    public Void call() {
-        executeSysCmd(getCmdAdaptedToPlatform() + " " + cmdParams());
-        return null;
+    public void run() {
+        executeSysCmd(getCmdAdaptedToPlatform());
     }
 
-    @Override
-    protected Optional<Void> executeSysCmd(String cmdStr) {
+    protected void executeSysCmd(String cmdStr) {
         try {
             final Process exec = Runtime.getRuntime().exec(cmdStr);
             handleResult(exec.waitFor());
@@ -27,7 +25,5 @@ public abstract class AbstractMegaCmdProcedureWithParams extends AbstractMegaCmd
                     "The execution of %s couldn't be finished", getCmd()
             );
         }
-
-        return Optional.empty();
     }
 }

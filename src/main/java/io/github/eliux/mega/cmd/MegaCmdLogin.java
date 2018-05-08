@@ -1,15 +1,15 @@
 package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.MegaUtils;
+import io.github.eliux.mega.error.MegaLoginException;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static io.github.eliux.mega.MegaUtils.handleResult;
 
-public class MegaCmdLogin extends AbstractMegaCmdWithParams<Boolean> {
+public class MegaCmdLogin extends AbstractMegaCmdRunnerWithParams {
 
     private final String cmdParams;
 
@@ -25,13 +25,16 @@ public class MegaCmdLogin extends AbstractMegaCmdWithParams<Boolean> {
     }
 
     @Override
-    protected Optional<Boolean> executeSysCmd(String cmdStr) {
+    protected void executeSysCmd(String cmdStr) {
         try {
             final int result = MegaUtils.execCmd(cmdStr);
             handleResult(result);
-            return Optional.of(Boolean.TRUE);
-        } catch (IOException | InterruptedException e) {
-            return Optional.of(Boolean.FALSE);
+        } catch (IOException e) {
+            throw new MegaLoginException(
+                    "Error while executing login command in Mega"
+            );
+        } catch (InterruptedException e) {
+            throw new MegaLoginException("The login was interrupted");
         }
     }
 

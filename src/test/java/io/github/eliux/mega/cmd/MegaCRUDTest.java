@@ -34,7 +34,7 @@ public class MegaCRUDTest {
         createTextFile("target/yolo-test.txt", "You only live once...");
 
         sessionMega.uploadFile("target/yolo-test.txt")
-                .call();
+                .run();
 
         removeFile("target/yolo-test.txt");
     }
@@ -45,11 +45,11 @@ public class MegaCRUDTest {
 
         sessionMega.uploadFile("target/yolo-infinite.txt", "megacmd4j/")
                 .createRemoteIfNotPresent()
-                .call();
+                .run();
     }
 
     @Test
-    public void stage03_shouldUploadMultipleFilesOkAndCreateRemoteFolder() {
+    public void stage03_shouldUploadMultipleFilesAndCreateRemoteFolderSuccessfully() {
         createTextFiles(TEST_FILE_PREFIX, 10);
 
         final MegaCmdPutMultiple megaCmd = sessionMega.uploadFiles("megacmd4j/")
@@ -60,12 +60,12 @@ public class MegaCRUDTest {
             megaCmd.addLocalFileToUpload(filename);
         });
 
-        megaCmd.call();
+        megaCmd.run();
     }
 
     @Test(expected = MegaException.class)
     public void stage04_given_multilevelfolder_when_mkdir_withoutRecursivelyFlag_then_fail() {
-        sessionMega.makeDirectory("megacmd4j/level2/level3").call();
+        sessionMega.makeDirectory("megacmd4j/level2/level3").run();
     }
 
     @Test
@@ -73,7 +73,7 @@ public class MegaCRUDTest {
         sessionMega.makeDirectory("megacmd4j/level2/level3")
                 .recursively()
                 .ignoreErrorIfExists()
-                .call();
+                .run();
     }
 
     @Test(expected = MegaInvalidStateException.class)
@@ -81,13 +81,13 @@ public class MegaCRUDTest {
         sessionMega.makeDirectory("megacmd4j/level2/level3")
                 .recursively()
                 .throwErrorIfExists()
-                .call();
+                .run();
     }
 
     @Test
     public void stage07_given_a_file_when_copy_then_success() {
         sessionMega.copy("megacmd4j/yolo.txt", "megacmd4j/level2/yolo.txt")
-                .call();
+                .run();
     }
 
     @Test
@@ -118,13 +118,13 @@ public class MegaCRUDTest {
     @Test(expected = MegaInvalidTypeException.class)
     public void stage09_given_localPathDoesntExist_when_get_then_Fail() {
         sessionMega.get("megacmd4j/level2", "target/savedLevel2")
-                .call();
+                .run();
     }
 
     @Test
     public void stage10_given_localPathWhichExist_when_get_then_success() {
         sessionMega.get("megacmd4j/level2", "target")
-                .call();
+                .run();
 
         Assert.assertTrue(new File("target/level2/yolo.txt").isFile());
         Assert.assertTrue(new File("target/level2/level3").isDirectory());
@@ -133,19 +133,13 @@ public class MegaCRUDTest {
     @Test
     public void stage11_shouldDownloadASingleFileIntoLocalFolder() {
         sessionMega.get("megacmd4j/yolo-infinite.txt", "target/level2")
-                .call();
+                .run();
 
         Assert.assertTrue(new File("target/level2/yolo-infinite.txt").exists());
     }
 
     @Test
     public void stage12_downloadedContentShouldBeConsistent() throws IOException {
-        Assert.assertTrue(Files.isSameFile(
-                new File("target/yolo-infinite.txt").toPath(),
-                new File("target/./yolo-infinite.txt").toPath()
-        ));
-
-
         final String lineSeparator = System.getProperty("line.separator");
 
         final String firstlineOfGeneratedFile =
