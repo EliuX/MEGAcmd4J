@@ -85,6 +85,13 @@ public class MegaCRUDTest {
                 .call();
     }
 
+    @Test
+    public void given_a_file_when_copy_then_success(){
+        sessionMega.copy("megacmd4j/yolo.txt", "megacmd4j/level2/yolo.txt")
+                .call();
+    }
+
+
     @After
     public void logout() {
         sessionMega.logout();

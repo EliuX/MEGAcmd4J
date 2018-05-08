@@ -19,27 +19,31 @@ public class MegaSession {
         new MegaCmdLogout().call();
     }
 
-    public String sessionID(){
+    public String sessionID() {
         return new MegaCmdSession().call();
     }
 
-    public String whoAmI(){
+    public String whoAmI() {
         return new MegaCmdWhoAmI().call();
     }
 
-    public MegaCmdPutSingle uploadFile(String localFilePath){
+    public MegaCmdPutSingle uploadFile(String localFilePath) {
         return new MegaCmdPutSingle(localFilePath);
     }
 
-    public MegaCmdPutSingle uploadFile(String localFilePath, String remotePath){
+    public MegaCmdPutSingle uploadFile(String localFilePath, String remotePath) {
         return new MegaCmdPutSingle(localFilePath, remotePath);
     }
 
-    public MegaCmdPutMultiple uploadFiles(String remotePath, String... filenames){
+    public MegaCmdPutMultiple uploadFiles(String remotePath, String... filenames) {
         return new MegaCmdPutMultiple(remotePath, filenames);
     }
 
-    public MegaCmdMakeDirectory mkdir(String remotePath){
+    public MegaCmdMakeDirectory mkdir(String remotePath) {
         return new MegaCmdMakeDirectory(remotePath);
+    }
+
+    public MegaCmdCopy copy(String remoteSourcePath, String remoteTarget) {
+        return new MegaCmdCopy(remoteSourcePath, remoteTarget);
     }
 }

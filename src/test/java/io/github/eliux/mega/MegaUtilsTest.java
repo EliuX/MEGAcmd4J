@@ -25,4 +25,31 @@ public class MegaUtilsTest {
         Assert.assertEquals(54, date.getMinute());
         Assert.assertEquals(11, date.getSecond());
     }
+
+    @Test
+    public void isEmailShouldBeOk(){
+        Assert.assertTrue(MegaUtils.isEmail("user@doma.in"));
+        Assert.assertTrue(MegaUtils.isEmail("eliecerhdz@gmail.com"));
+        Assert.assertTrue(MegaUtils.isEmail("a@b.xx"));
+    }
+
+    @Test
+    public void isEmailShouldFail(){
+        Assert.assertFalse(MegaUtils.isEmail("/user@doma.in"));
+        Assert.assertFalse(MegaUtils.isEmail("eliecerhdz*@gmail.com"));
+        Assert.assertFalse(MegaUtils.isEmail("a@b.toolong"));
+    }
+
+    @Test
+    public void isDirectoryShouldBeOk(){
+        Assert.assertTrue(MegaUtils.isDirectory("/path"));
+        Assert.assertTrue(MegaUtils.isDirectory("/path/subpath"));
+        Assert.assertTrue(MegaUtils.isDirectory("subpath"));
+    }
+
+    @Test
+    public void isDirectoryShouldFail(){
+        Assert.assertFalse(MegaUtils.isDirectory("user@doma.in"));
+        //TODO Improve
+    }
 }

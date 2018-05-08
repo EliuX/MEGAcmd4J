@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import static io.github.eliux.mega.Mega.envVars;
 
@@ -15,6 +16,16 @@ public interface MegaUtils {
 
     DateTimeFormatter MEGA_FILE_DATE_TIME_FORMATTER = DateTimeFormatter
             .ofPattern("ddMMMyyyy HH:mm:ss", Locale.US);
+
+    Pattern EMAIL_PATTERN = Pattern.compile(
+            "^[\\w]+@[\\w]+\\.[a-zA-Z]{2,6}$",
+            Pattern.CASE_INSENSITIVE
+    );
+
+    Pattern DIRECTORY_PATTERN = Pattern.compile(
+            "[\\/]?[\\p{Alnum}]+(\\/[\\p{Alnum}]+)*",
+            Pattern.CASE_INSENSITIVE
+    );
 
     static LocalDateTime parseFileDate(String dateStr){
         return LocalDateTime.parse(dateStr, MEGA_FILE_DATE_TIME_FORMATTER);
@@ -71,5 +82,13 @@ public interface MegaUtils {
         process.destroy();
 
         return result;
+    }
+
+    static boolean isEmail(String token) {
+        return EMAIL_PATTERN.matcher(token).find();
+    }
+
+    static boolean isDirectory(String token){
+        return !isEmail(token) && DIRECTORY_PATTERN.matcher(token).find();
     }
 }
