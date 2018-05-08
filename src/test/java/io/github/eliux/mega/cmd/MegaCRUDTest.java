@@ -66,12 +66,12 @@ public class MegaCRUDTest {
 
     @Test(expected = MegaException.class)
     public void given_multilevelfolder_when_mkdir_withoutRecursivelyFlag_then_fail() {
-        sessionMega.mkdir("megacmd4j/level2/level3").call();
+        sessionMega.makeDirectory("megacmd4j/level2/level3").call();
     }
 
     @Test
     public void given_multilevelfolder_when_mkdir_withRecursivelyAndIgnoreErrorIfExistsFlag_then_Success() {
-        sessionMega.mkdir("megacmd4j/level2/level3")
+        sessionMega.makeDirectory("megacmd4j/level2/level3")
                 .recursively()
                 .ignoreErrorIfExists()
                 .call();
@@ -79,7 +79,7 @@ public class MegaCRUDTest {
 
     @Test(expected = MegaInvalidStateException.class)
     public void given_multilevelfolder_when_mkdir_withRecursivelyAndthrowErrorIfExistsFlag_then_Fail() {
-        sessionMega.mkdir("megacmd4j/level2/level3")
+        sessionMega.makeDirectory("megacmd4j/level2/level3")
                 .recursively()
                 .throwErrorIfExists()
                 .call();
@@ -91,6 +91,10 @@ public class MegaCRUDTest {
                 .call();
     }
 
+    @Test
+    public void lsShouldReturn2ExpectedElements(){
+        sessionMega.ls("megacmd4j/level2").call();
+    }
 
     @After
     public void logout() {

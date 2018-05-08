@@ -39,11 +39,15 @@ public class MegaSession {
         return new MegaCmdPutMultiple(remotePath, filenames);
     }
 
-    public MegaCmdMakeDirectory mkdir(String remotePath) {
+    public MegaCmdMakeDirectory makeDirectory(String remotePath) {
         return new MegaCmdMakeDirectory(remotePath);
     }
 
     public MegaCmdCopy copy(String remoteSourcePath, String remoteTarget) {
         return new MegaCmdCopy(remoteSourcePath, remoteTarget);
+    }
+
+    public MegaCmdList ls(String remotePath){
+        return new MegaCmdList(remotePath);
     }
 }
