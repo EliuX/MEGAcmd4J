@@ -1,13 +1,24 @@
 MEGAcmd for Java
 ================
 This is an open source Java library for the [mega.co.nz][mega] API, working on top of the [MEGAcmd][megacmd] CLI. 
-Current version supports:
-* Login: Using user and password, or sessionID or an exported/public folder. See more using 
-`mega-login --help`.
-* Logout: Close the current session.
-* Put: Upload content to the cloud. See more using `mega-put --help`.
-* Session: Returns the id of the current session. See more using `mega-session --help`.
-* WhoAmI: Returns the username of the current session. See more using `mega-whoami --help`.
+
+## Features
+
+| Feature                   | MEGAcmd   | Description                                                           
+| ---                       | ---       | ---                                                                   
+| Start session             | `login`   | Allows to authenticate into the mega api to start running commands using user and password, or sessionID or an exported/public folder  |
+| Close session             | `logout`  | Close the current session. 
+| Put content in the Cloud  | `put`     | Upload content to the cloud.
+| Session Id                | `session` | Returns the id of the current session.
+| Idenfity current username | `whoami`  | Returns the username of the current session.
+| Make directory            | `mkdir`   | Creates a directory or multiple based on a given remote path.
+        
+
+If you have any doubt about how each feature works, please run
+
+~~~
+    MegaClient <MEGAcmd> --help
+~~~
 
 ## System requirements
 * Install [MEGAcmd][megacmd]. Available packages for MEGAcmd in all supported 
