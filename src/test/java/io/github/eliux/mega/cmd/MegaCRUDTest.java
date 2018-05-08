@@ -2,9 +2,8 @@ package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
-import io.github.eliux.mega.MegaTestUtils;
-import io.github.eliux.mega.MegaUtilsTest;
 import io.github.eliux.mega.error.MegaException;
+import io.github.eliux.mega.error.MegaInvalidStateException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -65,15 +64,24 @@ public class MegaCRUDTest {
         removeTextFiles(TEST_FILE_PREFIX, 10);
     }
 
-    @Test
+    @Test(expected = MegaException.class)
     public void given_multilevelfolder_when_mkdir_withoutRecursivelyFlag_then_fail() {
         sessionMega.mkdir("megacmd4j/level2/level3").call();
     }
 
-    @Test(expected = MegaException.class)
-    public void given_multilevelfolder_when_mkdir_withRecursivelyFlag_then_Success() {
+    @Test
+    public void given_multilevelfolder_when_mkdir_withRecursivelyAndIgnoreErrorIfExistsFlag_then_Success() {
         sessionMega.mkdir("megacmd4j/level2/level3")
                 .recursively()
+                .ignoreErrorIfExists()
+                .call();
+    }
+
+    @Test(expected = MegaInvalidStateException.class)
+    public void given_multilevelfolder_when_mkdir_withRecursivelyAndthrowErrorIfExistsFlag_then_Fail() {
+        sessionMega.mkdir("megacmd4j/level2/level3")
+                .recursively()
+                .throwErrorIfExists()
                 .call();
     }
 

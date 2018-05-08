@@ -6,6 +6,8 @@ public class MegaCmdMakeDirectory extends AbstractMegaCmdProcedureWithParams {
 
     private boolean recursively;
 
+    private boolean errorIgnoredIfExists;
+
     public MegaCmdMakeDirectory(String remotePath) {
         this.remotePath = remotePath;
     }
@@ -43,5 +45,19 @@ public class MegaCmdMakeDirectory extends AbstractMegaCmdProcedureWithParams {
 
     public boolean isRecursively() {
         return recursively;
+    }
+
+    public boolean isErrorIgnoredIfExists() {
+        return errorIgnoredIfExists;
+    }
+
+    public MegaCmdMakeDirectory ignoreErrorIfExists(){
+        errorIgnoredIfExists = true;
+        return this;
+    }
+
+    public MegaCmdMakeDirectory throwErrorIfExists(){
+        errorIgnoredIfExists = false;
+        return this;
     }
 }
