@@ -4,12 +4,10 @@ import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
 import io.github.eliux.mega.error.MegaException;
 import io.github.eliux.mega.error.MegaInvalidStateException;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runners.MethodSorters;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static io.github.eliux.mega.MegaTestUtils.*;
@@ -92,8 +90,28 @@ public class MegaCRUDTest {
     }
 
     @Test
-    public void lsShouldReturn2ExpectedElements(){
-        sessionMega.ls("megacmd4j/level2").call();
+    public void lsShouldReturnAFileAndADirectory(){
+        final List<FileInfo> files = sessionMega.ls("megacmd4j/level2").call();
+
+        Assert.assertEquals(
+                "There should be 2 elements",
+                2,
+                files.size()
+        );
+
+        final FileInfo fileInfo = files.stream().filter(x -> x.getName().equals("yolo.txt"))
+                .findAny().orElseThrow(() -> new MegaInvalidStateException(
+                        "The previously copied filed was not found"
+                ));
+
+        Assert.assertTrue(fileInfo.isFile());
+
+        final FileInfo directoryInfo = files.stream().filter(x -> x.getName().equals("level3"))
+                .findAny().orElseThrow(() -> new MegaInvalidStateException(
+                        "The previously copied filed was not found"
+                ));
+
+        Assert.assertTrue(directoryInfo.isDirectory());
     }
 
     @After

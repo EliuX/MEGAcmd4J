@@ -33,7 +33,7 @@ public class MegaCmdList extends AbstractMegaCmdWithParams<List<FileInfo>> {
     protected Optional<List<FileInfo>> executeSysCmd(String cmdStr) {
         try {
             final List<FileInfo> infoOfFiles = MegaUtils.execWithOutput(cmdStr)
-                    .subList(1, -1).stream()
+                    .stream().skip(1)
                     .map(FileInfo::valueOf)
                     .collect(Collectors.toList());
 

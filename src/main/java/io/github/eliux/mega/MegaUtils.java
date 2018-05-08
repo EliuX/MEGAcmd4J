@@ -71,7 +71,7 @@ public interface MegaUtils {
             throws java.io.IOException {
         final Process process = Runtime.getRuntime().exec(cmd, envVars());
         final Scanner scanner = new Scanner(process.getInputStream())
-                .useDelimiter("\\A");
+                .useDelimiter(System.getProperty("line.separator"));
 
         final List<String> result = new ArrayList<>();
 
