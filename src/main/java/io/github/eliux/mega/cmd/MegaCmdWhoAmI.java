@@ -14,10 +14,18 @@ public class MegaCmdWhoAmI extends AbstractMegaCmdCaller<String> {
         return "whoami";
     }
 
+    static final Optional<String> parseUsername(String response) {
+        return Optional.ofNullable(response)
+                .map(s -> s.split("e-mail:"))
+                .filter(x -> x.length == 2)
+                .map(s -> s[1].trim());
+    }
+
     @Override
-    protected String executeSysCmd(String cmdStr) {
+    public String call() {
         try {
-            final String response = MegaUtils.execWithOutput(cmdStr).get(0);
+            final String response =
+                    MegaUtils.execWithOutput(executableCommand()).get(0);
 
             return parseUsername(response).orElseThrow(
                     () -> new MegaLoginRequiredException()
@@ -25,12 +33,5 @@ public class MegaCmdWhoAmI extends AbstractMegaCmdCaller<String> {
         } catch (IOException e) {
             throw new MegaIOException();
         }
-    }
-
-    static final Optional<String> parseUsername(String response) {
-        return Optional.ofNullable(response)
-                .map(s -> s.split("e-mail:"))
-                .filter(x -> x.length == 2)
-                .map(s -> s[1].trim());
     }
 }

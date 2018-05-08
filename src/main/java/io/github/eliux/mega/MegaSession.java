@@ -47,6 +47,10 @@ public class MegaSession {
         return new MegaCmdCopy(remoteSourcePath, remoteTarget);
     }
 
+    public MegaCmdMove move(String remoteSourcePath, String remoteTarget) {
+        return new MegaCmdMove(remoteSourcePath, remoteTarget);
+    }
+
     public MegaCmdList ls(String remotePath){
         return new MegaCmdList(remotePath);
     }

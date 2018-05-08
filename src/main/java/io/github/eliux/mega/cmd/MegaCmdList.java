@@ -1,6 +1,7 @@
 package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.MegaUtils;
+import io.github.eliux.mega.error.MegaException;
 import io.github.eliux.mega.error.MegaIOException;
 
 import java.io.IOException;
@@ -30,14 +31,32 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
     }
 
     @Override
-    protected List<FileInfo> executeSysCmd(String cmdStr) {
+    public List<FileInfo> call() {
         try {
-            return MegaUtils.execWithOutput(cmdStr)
+            return MegaUtils.execWithOutput(executableCommand())
                     .stream().skip(1)
                     .map(FileInfo::valueOf)
                     .collect(Collectors.toList());
         } catch (IOException e) {
             throw new MegaIOException("Error while listing " + remotePath);
+        }
+    }
+
+    public long count() {
+        try {
+            return MegaUtils.execWithOutput(executableCommand())
+                    .stream().skip(1)
+                    .count();
+        } catch (IOException e) {
+            throw new MegaIOException("Error while listing " + remotePath);
+        }
+    }
+
+    public boolean exists() {
+        try {
+            return count() > 0;
+        } catch (MegaException e) {
+            return false;
         }
     }
 }

@@ -8,9 +8,4 @@ import java.util.concurrent.Callable;
 
 public abstract class AbstractMegaCmdCaller<T> extends AbstractMegaCmd implements Callable<T> {
 
-    public T call() {
-        return executeSysCmd(getCmdAdaptedToPlatform());
-    }
-
-    protected abstract T executeSysCmd(String cmdStr);
 }

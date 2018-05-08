@@ -151,6 +151,44 @@ public class MegaCRUDTest {
         Assert.assertEquals(firstlineOfGeneratedFile, firstLineOfDownloadedFile);
     }
 
+    @Test
+    public void stage13_testFindRepeatedFileIfAllFilesAreMovedIntoSubpath() {
+        sessionMega.move("megacmd4j/*.txt", "megacmd4j/level2/")
+                .run();
+
+        final List<FileInfo> currentFiles = sessionMega.ls("megacmd4j/").call();
+        Assert.assertEquals(
+                "Only 1 file was expected",
+                1,
+                currentFiles.size()
+        );
+        final FileInfo leftFile = currentFiles.get(0);
+        Assert.assertTrue(
+                "The unique file left was not a directory",
+                leftFile.isDirectory()
+        );
+        Assert.assertEquals(
+                "The expected directory was level2",
+                "level2",
+                leftFile.getName()
+        );
+
+        Assert.assertEquals(
+                "It should only detect the latest version of yolo.txt",
+                1L,
+                sessionMega.ls("megacmd4j/level2/yolo.txt").count()
+        );
+    }
+
+    @Test
+    public void stage14_testOldVersionIsLeftIfRepeatedFileIsMovedBack(){
+        sessionMega.move("megacmd4j/level2/yolo.txt", "megacmd4j/")
+                .run();
+
+        Assert.assertTrue(sessionMega.ls("megacmd4j/yolo.txt").exists());
+        Assert.assertTrue(sessionMega.ls("megacmd4j/level2/yolo.txt").exists());
+    }
+
     @After
     public void logout() {
         sessionMega.logout();

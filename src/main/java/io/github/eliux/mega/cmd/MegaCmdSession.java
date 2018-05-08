@@ -14,22 +14,23 @@ public class MegaCmdSession extends AbstractMegaCmdCaller<String> {
         return "session";
     }
 
+    static final Optional<String> parseSessionID(String response) {
+        return Optional.ofNullable(response)
+                .map(s -> s.split(":"))
+                .filter(x -> x.length == 2)
+                .map(s -> s[1].trim());
+    }
+
     @Override
-    protected String executeSysCmd(String cmdStr) {
+    public String call() {
         try {
-            final String response = MegaUtils.execWithOutput(cmdStr).get(0);
+            final String response =
+                    MegaUtils.execWithOutput(executableCommand()).get(0);
 
             return parseSessionID(response)
                     .orElseThrow(()-> new MegaLoginRequiredException());
         } catch (IOException e) {
             throw new MegaIOException();
         }
-    }
-
-    static final Optional<String> parseSessionID(String response) {
-        return Optional.ofNullable(response)
-                .map(s -> s.split(":"))
-                .filter(x -> x.length == 2)
-                .map(s -> s[1].trim());
     }
 }
