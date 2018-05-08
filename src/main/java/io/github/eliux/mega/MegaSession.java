@@ -50,4 +50,12 @@ public class MegaSession {
     public MegaCmdList ls(String remotePath){
         return new MegaCmdList(remotePath);
     }
+
+    public MegaCmdGet get(String remotePath){
+        return new MegaCmdGet(remotePath);
+    }
+
+    public MegaCmdGet get(String remotePath, String localPath){
+        return new MegaCmdGet(remotePath, localPath);
+    }
 }

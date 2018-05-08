@@ -57,9 +57,4 @@ public class MegaCmdGet extends AbstractMegaCmdPathHandler {
 
         return cmdFileParamsBuilder.toString();
     }
-
-    @Override
-    protected Optional executeSysCmd(String cmdStr) {
-        return Optional.empty();
-    }
 }
