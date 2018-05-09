@@ -3,6 +3,8 @@ package io.github.eliux.mega;
 import io.github.eliux.mega.auth.MegaAuth;
 import io.github.eliux.mega.cmd.*;
 
+import java.util.function.Predicate;
+
 public class MegaSession {
 
     private MegaAuth authentication;
@@ -51,15 +53,35 @@ public class MegaSession {
         return new MegaCmdMove(remoteSourcePath, remoteTarget);
     }
 
-    public MegaCmdList ls(String remotePath){
+    public MegaCmdList ls(String remotePath) {
         return new MegaCmdList(remotePath);
     }
 
-    public MegaCmdGet get(String remotePath){
+    public MegaCmdGet get(String remotePath) {
         return new MegaCmdGet(remotePath);
     }
 
-    public MegaCmdGet get(String remotePath, String localPath){
+    public MegaCmdGet get(String remotePath, String localPath) {
         return new MegaCmdGet(remotePath, localPath);
+    }
+
+    public MegaCmdRemove remove(String remotePath) {
+        return new MegaCmdRemove(remotePath);
+    }
+
+    public MegaCmdRemove removeDirectory(String remotePath) {
+        return new MegaCmdRemove(remotePath).deleteRecursively();
+    }
+
+    public long count(String remotePath) {
+        return ls(remotePath).count();
+    }
+
+    public long count(String remotePath, Predicate<FileInfo> predicate) {
+        return ls(remotePath).count(predicate);
+    }
+
+    public boolean exists(String remotePath) {
+        return ls(remotePath).exists();
     }
 }

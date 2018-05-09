@@ -12,19 +12,42 @@ This is an open source Java library for the [mega.co.nz][mega] API, working on t
 | Session Id                | `session` | Returns the id of the current session.
 | Idenfity current username | `whoami`  | Returns the username of the current session.
 | Make directory            | `mkdir`   | Creates a directory or multiple based on a given remote path.
-| List files/directories    | `ls`      | List files and directories in a remote path.
-                                            * count of elements
-                                            * is there any content
+| List files/directories    | `ls`      | List files and directories in a remote path. 
 | Get content               | `get`     | Get the content of files and directories in a remote path.
 | Copy                      | `cp`      | Copy remote files and directories into a new location.
 | Move                      | `mv`      | Move remote files and directories into a new location.
         
-
 If you have any doubt about how each feature works, please run
 
-~~~
+```bash
     MegaClient <MEGAcmd> --help
-~~~
+```
+
+## Additional Features
+This features have no corresponding Megacmd command, but they are infered from the existing ones
+
+### Count
+Show the amount of elements in a folder or that match the query mask. E.g.
+
+```java
+    final long amountOfFilesAndDirectories = sessionMega.count("remote/path");
+```
+
+But what if you want to filter that counting and it a Predicate to, for instance,
+just get the files and not the directories.
+
+```java
+    final long amountOfFiles = sessionMega.count("remote/path", FileInfo::isFile);
+```
+
+### Exists
+This is pretty much the equivalent of `java.io.File.exists`. It checks if the remote path or mask
+indicates any non null response. E.g.
+ 
+```java
+    sessionMega.exists("remote/path/filesprefix*.ext");
+```
+
 
 ## System requirements
 * Install [MEGAcmd][megacmd]. Available packages for MEGAcmd in all supported 

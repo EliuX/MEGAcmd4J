@@ -2,9 +2,7 @@ package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
-import io.github.eliux.mega.error.MegaException;
-import io.github.eliux.mega.error.MegaInvalidStateException;
-import io.github.eliux.mega.error.MegaInvalidTypeException;
+import io.github.eliux.mega.error.*;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 
@@ -27,6 +25,19 @@ public class MegaCRUDTest {
     @Before
     public void setup() {
         sessionMega = Mega.init();
+    }
+
+    @Test
+    public void stage00_shouldDeleteWorkingDirectoryIfExist(){
+        sessionMega.remove("megacmd4j")
+                .deleteRecursively()
+                .ignoreErrorIfNotPresent()
+                .run();
+    }
+
+    @Test
+    public void stage00_sessionShouldHaveAuthenticationObject(){
+        Assert.assertNotNull(sessionMega.getAuthentication());
     }
 
     @Test
@@ -63,7 +74,7 @@ public class MegaCRUDTest {
         megaCmd.run();
     }
 
-    @Test(expected = MegaException.class)
+    @Test(expected = MegaWrongArgumentsException.class)
     public void stage04_given_multilevelfolder_when_mkdir_withoutRecursivelyFlag_then_fail() {
         sessionMega.makeDirectory("megacmd4j/level2/level3").run();
     }
@@ -152,7 +163,7 @@ public class MegaCRUDTest {
     }
 
     @Test
-    public void stage13_testFindRepeatedFileIfAllFilesAreMovedIntoSubpath() {
+    public void stage13_findRepeatedFileIfAllFilesAreMovedIntoSubpath() {
         sessionMega.move("megacmd4j/*.txt", "megacmd4j/level2/")
                 .run();
 
@@ -181,7 +192,7 @@ public class MegaCRUDTest {
     }
 
     @Test
-    public void stage14_testOldVersionIsLeftIfRepeatedFileIsMovedBack(){
+    public void stage14_OldVersionIsLeftIfRepeatedFileIsMovedBack() {
         sessionMega.move("megacmd4j/level2/yolo.txt", "megacmd4j/")
                 .run();
 
@@ -190,7 +201,7 @@ public class MegaCRUDTest {
     }
 
     @Test
-    public void stage15_given_emptyfolder_when_ls_then_exists_is_true(){
+    public void stage15_given_emptyfolder_when_ls_then_exists_is_true() {
         Assert.assertTrue(
                 "The directory level3 should exist",
                 sessionMega.ls("megacmd4j/level2/level3").exists()
@@ -198,11 +209,38 @@ public class MegaCRUDTest {
     }
 
     @Test
-    public void stage15_given_nonExistingFile_when_ls_then_exists_is_false(){
+    public void stage15_given_nonExistingFile_when_ls_then_exists_is_false() {
         Assert.assertFalse(
                 "That file/directory doesnt exist",
                 sessionMega.ls("megacmd4j/level2/level33").exists()
         );
+    }
+
+    @Test
+    public void stage15_deleteMultipleFilesWithMaskShouldBeOk() {
+        if(sessionMega.exists("megacmd4j/level2/yolo-*.txt"))
+            sessionMega.remove("megacmd4j/level2/yolo-*.txt").run();
+
+        Assert.assertEquals(
+                "There should be only 1 file",
+                1,
+                sessionMega.count("megacmd4j/level2", FileInfo::isFile)
+        );
+
+        Assert.assertTrue(
+                "There should be left a directory",
+                sessionMega.exists("megacmd4j/level2/level3")
+        );
+    }
+
+    @Test(expected = MegaInvalidTypeException.class)
+    public void stage16_given_directory_when_remove_then_fail() {
+        sessionMega.remove("megacmd4j/level2/level3").run();
+    }
+
+    @Test(expected = MegaResourceNotFoundException.class)
+    public void stage17_given_unexistingDirectory_when_remove_then_fail() {
+        sessionMega.remove("megacmd4j/level2/level33").run();
     }
 
     @After

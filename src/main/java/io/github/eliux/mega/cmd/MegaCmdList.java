@@ -7,6 +7,7 @@ import io.github.eliux.mega.error.MegaResourceNotFoundException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>> {
@@ -35,7 +36,7 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
     public List<FileInfo> call() {
         try {
             return MegaUtils.execCmdWithOutput(executableCommand()).stream().skip(1)
-                    .filter(FileInfo::isValid)
+                    .filter(FileInfo::isValid)  //To avoid complementary info
                     .map(FileInfo::valueOf)
                     .collect(Collectors.toList());
         } catch (IOException e) {
@@ -43,10 +44,36 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
         }
     }
 
-    public long count() throws MegaResourceNotFoundException{
+    public List<FileInfo> filter(Predicate<FileInfo> predicate) {
+        try {
+            return MegaUtils.execCmdWithOutput(executableCommand()).stream()
+                    .skip(1)                    // For sure the first is not valid
+                    .filter(FileInfo::isValid)  //To avoid complementary info
+                    .map(FileInfo::valueOf)
+                    .filter(predicate)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            throw new MegaIOException("Error while listing " + remotePath);
+        }
+    }
+
+    public long count() throws MegaResourceNotFoundException {
         try {
             return MegaUtils.execCmdWithOutput(executableCommand()).stream()
                     .filter(FileInfo::isValid)
+                    .count();
+        } catch (IOException e) {
+            throw new MegaIOException("Error while listing " + remotePath);
+        }
+    }
+
+    public long count(Predicate<FileInfo> predicate)
+            throws MegaResourceNotFoundException {
+        try {
+            return MegaUtils.execCmdWithOutput(executableCommand()).stream()
+                    .filter(FileInfo::isValid)  //To avoid complementary info
+                    .map(FileInfo::valueOf)
+                    .filter(predicate)
                     .count();
         } catch (IOException e) {
             throw new MegaIOException("Error while listing " + remotePath);
@@ -57,9 +84,9 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
         try {
             MegaUtils.execCmdWithOutput(executableCommand());
             return true;
-        } catch (MegaException e) {
+        } catch (MegaResourceNotFoundException e) {
             return false;
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new MegaIOException("Error while listing " + remotePath);
         }
     }
