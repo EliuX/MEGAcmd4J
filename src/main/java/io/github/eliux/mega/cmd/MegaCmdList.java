@@ -3,6 +3,7 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaException;
 import io.github.eliux.mega.error.MegaIOException;
+import io.github.eliux.mega.error.MegaResourceNotFoundException;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,8 +34,8 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
     @Override
     public List<FileInfo> call() {
         try {
-            return MegaUtils.execWithOutput(executableCommand())
-                    .stream().skip(1)
+            return MegaUtils.execCmdWithOutput(executableCommand()).stream().skip(1)
+                    .filter(FileInfo::isValid)
                     .map(FileInfo::valueOf)
                     .collect(Collectors.toList());
         } catch (IOException e) {
@@ -42,10 +43,10 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
         }
     }
 
-    public long count() {
+    public long count() throws MegaResourceNotFoundException{
         try {
-            return MegaUtils.execWithOutput(executableCommand())
-                    .stream().skip(1)
+            return MegaUtils.execCmdWithOutput(executableCommand()).stream()
+                    .filter(FileInfo::isValid)
                     .count();
         } catch (IOException e) {
             throw new MegaIOException("Error while listing " + remotePath);
@@ -54,9 +55,12 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
 
     public boolean exists() {
         try {
-            return count() > 0;
+            MegaUtils.execCmdWithOutput(executableCommand());
+            return true;
         } catch (MegaException e) {
             return false;
+        }catch (IOException e) {
+            throw new MegaIOException("Error while listing " + remotePath);
         }
     }
 }

@@ -189,6 +189,22 @@ public class MegaCRUDTest {
         Assert.assertTrue(sessionMega.ls("megacmd4j/level2/yolo.txt").exists());
     }
 
+    @Test
+    public void stage15_given_emptyfolder_when_ls_then_exists_is_true(){
+        Assert.assertTrue(
+                "The directory level3 should exist",
+                sessionMega.ls("megacmd4j/level2/level3").exists()
+        );
+    }
+
+    @Test
+    public void stage15_given_nonExistingFile_when_ls_then_exists_is_false(){
+        Assert.assertFalse(
+                "That file/directory doesnt exist",
+                sessionMega.ls("megacmd4j/level2/level33").exists()
+        );
+    }
+
     @After
     public void logout() {
         sessionMega.logout();

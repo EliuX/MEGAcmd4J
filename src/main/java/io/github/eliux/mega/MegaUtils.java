@@ -67,9 +67,10 @@ public interface MegaUtils {
         return process.waitFor();
     }
 
-    static List<String> execWithOutput(String cmd)
+    static List<String> execCmdWithOutput(String cmd)
             throws java.io.IOException {
         final Process process = Runtime.getRuntime().exec(cmd, envVars());
+
         final Scanner scanner = new Scanner(process.getInputStream())
                 .useDelimiter(System.getProperty("line.separator"));
 
@@ -80,6 +81,8 @@ public interface MegaUtils {
         }
 
         process.destroy();
+
+        handleResult(process.exitValue());
 
         return result;
     }

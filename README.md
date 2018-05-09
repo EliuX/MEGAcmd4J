@@ -13,6 +13,8 @@ This is an open source Java library for the [mega.co.nz][mega] API, working on t
 | Idenfity current username | `whoami`  | Returns the username of the current session.
 | Make directory            | `mkdir`   | Creates a directory or multiple based on a given remote path.
 | List files/directories    | `ls`      | List files and directories in a remote path.
+                                            * count of elements
+                                            * is there any content
 | Get content               | `get`     | Get the content of files and directories in a remote path.
 | Copy                      | `cp`      | Copy remote files and directories into a new location.
 | Move                      | `mv`      | Move remote files and directories into a new location.

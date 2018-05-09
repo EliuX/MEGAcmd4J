@@ -56,13 +56,7 @@ public class FileInfo {
     }
 
     public static final FileInfo valueOf(String fileInfoStr) {
-        final String[] tokens = fileInfoStr.replace("\\t", "\\s").split("\\s+");
-
-        if (tokens.length != 6)
-            throw new MegaInvalidResponseException(
-                    "The gotten file format is incorrect: Should have 6 tokens"
-            );
-
+        final String[] tokens = parseTokens(fileInfoStr);
         try {
             return parseFileInfo(tokens);
         } catch (Exception ex) {
@@ -73,6 +67,25 @@ public class FileInfo {
             megaEx.addSuppressed(ex);
             throw megaEx;
         }
+    }
+
+    public static final boolean isValid(String fileInfoStr){
+        try{
+            return parseTokens(fileInfoStr).length == 6;
+        }catch (MegaInvalidResponseException ex){
+            return false;
+        }
+    }
+
+    private static final String[] parseTokens(String fileInfoStr){
+        final String[] tokens = fileInfoStr.replace("\\t", "\\s").split("\\s+");
+
+        if (tokens.length != 6)
+            throw new MegaInvalidResponseException(
+                    "The gotten file format is incorrect: Should have 6 tokens"
+            );
+
+        return tokens;
     }
 
     private static final FileInfo parseFileInfo(String[] tokens) {
