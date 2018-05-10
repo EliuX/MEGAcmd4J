@@ -17,6 +17,11 @@ public class MegaSession {
         return authentication;
     }
 
+    public void changePassword(String oldPassword, String newPassword){
+        new MegaCmdChangePassword(oldPassword, newPassword).run();
+        System.setProperty(Mega.PASSWORD_ENV_VAR, newPassword);
+    }
+
     public void logout() {
         new MegaCmdLogout().run();
     }
