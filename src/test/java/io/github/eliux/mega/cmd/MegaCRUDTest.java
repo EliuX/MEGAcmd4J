@@ -235,12 +235,12 @@ public class MegaCRUDTest {
 
     @Test(expected = MegaInvalidTypeException.class)
     public void stage16_given_directory_when_remove_then_fail() {
-        sessionMega.remove("megacmd4j/level2/level3").run();
+        sessionMega.removeDirectory("megacmd4j/level2/level3").run();
     }
 
     @Test(expected = MegaResourceNotFoundException.class)
     public void stage17_given_unexistingDirectory_when_remove_then_fail() {
-        sessionMega.remove("megacmd4j/level2/level33").run();
+        sessionMega.removeDirectory("megacmd4j/level2/level33").run();
     }
 
     @After

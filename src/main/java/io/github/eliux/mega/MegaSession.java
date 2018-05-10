@@ -17,7 +17,7 @@ public class MegaSession {
         return authentication;
     }
 
-    public void changePassword(String oldPassword, String newPassword){
+    public void changePassword(String oldPassword, String newPassword) {
         new MegaCmdChangePassword(oldPassword, newPassword).run();
         System.setProperty(Mega.PASSWORD_ENV_VAR, newPassword);
     }
@@ -88,5 +88,9 @@ public class MegaSession {
 
     public boolean exists(String remotePath) {
         return ls(remotePath).exists();
+    }
+
+    public MegaCmdShare share(String remotePath, String userMailToShareWith) {
+        return new MegaCmdShare(remotePath, userMailToShareWith);
     }
 }

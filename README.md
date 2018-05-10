@@ -16,6 +16,8 @@ This is an open source Java library for the [mega.co.nz][mega] API, working on t
 | Get content               | `get`     | Get the content of files and directories in a remote path.
 | Copy                      | `cp`      | Copy remote files and directories into a new location.
 | Move                      | `mv`      | Move remote files and directories into a new location.
+| Change password           | `passwd`  | Changes the password of the currently logged user.
+| Shares folder             | `share`   | Shares/Unshares folder with user
         
 If you have any doubt about how each feature works, please run
 
@@ -75,7 +77,8 @@ reasons, but that will provide you additional capabilities. Try them out.
 
 ## Author
 
-* **Eliecer Hernandez** - [eliecerhdz@gmail.com](mailto:eliecerhdz@gmail.com)
+* **Eliecer Hernandez** - [eliecerhdz@gmail.com](mailto:eliecerhdz@gmail.com). 
+To know more of me please visit my [website](eliux.github.io).
 
 ## License
 
