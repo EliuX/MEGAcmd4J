@@ -55,7 +55,7 @@ public class FileInfo {
         return status;
     }
 
-    public static final FileInfo valueOf(String fileInfoStr) {
+    public static final FileInfo parseInfo(String fileInfoStr) {
         final String[] tokens = parseTokens(fileInfoStr);
         try {
             return parseFileInfo(tokens);

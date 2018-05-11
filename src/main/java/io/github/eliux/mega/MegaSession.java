@@ -93,4 +93,8 @@ public class MegaSession {
     public MegaCmdShare share(String remotePath, String userMailToShareWith) {
         return new MegaCmdShare(remotePath, userMailToShareWith);
     }
+
+    public MegaCmdExport export (String remotePath){
+        return new MegaCmdExport(remotePath);
+    }
 }

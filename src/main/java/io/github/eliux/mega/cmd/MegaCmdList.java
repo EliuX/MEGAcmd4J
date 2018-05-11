@@ -1,7 +1,6 @@
 package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.MegaUtils;
-import io.github.eliux.mega.error.MegaException;
 import io.github.eliux.mega.error.MegaIOException;
 import io.github.eliux.mega.error.MegaResourceNotFoundException;
 
@@ -37,7 +36,7 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
         try {
             return MegaUtils.execCmdWithOutput(executableCommand()).stream().skip(1)
                     .filter(FileInfo::isValid)  //To avoid complementary info
-                    .map(FileInfo::valueOf)
+                    .map(FileInfo::parseInfo)
                     .collect(Collectors.toList());
         } catch (IOException e) {
             throw new MegaIOException("Error while listing " + remotePath);
@@ -49,7 +48,7 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
             return MegaUtils.execCmdWithOutput(executableCommand()).stream()
                     .skip(1)                    // For sure the first is not valid
                     .filter(FileInfo::isValid)  //To avoid complementary info
-                    .map(FileInfo::valueOf)
+                    .map(FileInfo::parseInfo)
                     .filter(predicate)
                     .collect(Collectors.toList());
         } catch (IOException e) {
@@ -72,7 +71,7 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
         try {
             return MegaUtils.execCmdWithOutput(executableCommand()).stream()
                     .filter(FileInfo::isValid)  //To avoid complementary info
-                    .map(FileInfo::valueOf)
+                    .map(FileInfo::parseInfo)
                     .filter(predicate)
                     .count();
         } catch (IOException e) {

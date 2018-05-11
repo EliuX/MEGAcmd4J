@@ -16,18 +16,17 @@ import java.util.stream.IntStream;
 import static io.github.eliux.mega.MegaTestUtils.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class MegaCRUDTest {
+public class BasicActionsTest {
 
-
-    static MegaSession sessionMega;
+    private static MegaSession sessionMega;
 
     @BeforeClass
-    public void setupSession() {
+    public static void setupSession() {
         sessionMega = Mega.init();
     }
 
     @Test
-    public void stage00_shouldDeleteWorkingDirectoryIfExist(){
+    public void stage00_shouldDeleteWorkingDirectoryIfExist() {
         sessionMega.remove("megacmd4j")
                 .deleteRecursively()
                 .ignoreErrorIfNotPresent()
@@ -35,7 +34,7 @@ public class MegaCRUDTest {
     }
 
     @Test
-    public void stage00_sessionShouldHaveAuthenticationObject(){
+    public void stage00_sessionShouldHaveAuthenticationObject() {
         Assert.assertNotNull(sessionMega.getAuthentication());
     }
 
@@ -217,7 +216,7 @@ public class MegaCRUDTest {
 
     @Test
     public void stage15_deleteMultipleFilesWithMaskShouldBeOk() {
-        if(sessionMega.exists("megacmd4j/level2/yolo-*.txt"))
+        if (sessionMega.exists("megacmd4j/level2/yolo-*.txt"))
             sessionMega.remove("megacmd4j/level2/yolo-*.txt").run();
 
         Assert.assertEquals(
@@ -242,8 +241,55 @@ public class MegaCRUDTest {
         sessionMega.removeDirectory("megacmd4j/level2/level3").run();
     }
 
+    @Test(expected = MegaResourceNotFoundException.class)
+    public void stage18_given_unexistingDirectory_when_share_then_fail() {
+        String username = System.getenv(Mega.USERNAME_ENV_VAR);
+        sessionMega.share("megacmd4j/unexisting-folder", username)
+                .grantReadAndWriteAccess()
+                .run();
+    }
+
+    @Test
+    public void stage18_given_existingDirectory_when_share_then_success() {
+        String username = System.getenv(Mega.USERNAME_ENV_VAR);
+        sessionMega.share("megacmd4j/level2", username)
+                .grantReadAndWriteAccess()
+                .run();
+    }
+
+    @Test(expected = MegaResourceNotFoundException.class)
+    public void stage19_given_unexistingDirectory_when_export_then_fail() {
+        sessionMega.export("megacmd4j/unexisting-folder")
+                .enablePublicLink()
+                .call();
+    }
+
+    @Test
+    public void stage19_given_existingDirectory_when_export_then_success() {
+        final ExportInfo exportInfo = sessionMega.export("megacmd4j/level2")
+                .enablePublicLink()
+                .call();
+
+        Assert.assertEquals("/megacmd4j/level2", exportInfo.getRemotePath());
+
+        Assert.assertTrue(exportInfo.getPublicLink().startsWith("https://mega.nz/"));
+        Assert.assertTrue(exportInfo.getPublicLink().length()
+                - "https://mega.nz/".length() > 5);
+    }
+
+    @Test
+    public void stage20_exportedFolderShouldAppearInListings() {
+        final List<ExportInfo> exportedFiles
+                = sessionMega.export("megacmd4j").list();
+
+        Assert.assertTrue(exportedFiles.stream()
+                .map(ExportInfo::getRemotePath)
+                .filter("megacmd4j/level2"::equals)
+                .findAny().isPresent());
+    }
+
     @AfterClass
-    public void finishSession() {
+    public static void finishSession() {
         sessionMega.logout();
     }
 }

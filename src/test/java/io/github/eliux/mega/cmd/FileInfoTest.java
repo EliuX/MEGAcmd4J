@@ -15,7 +15,7 @@ public class FileInfoTest {
         String fileInfoStr = "----    1         50 04May2018 17:54:11 yolo-2.txt";
 
         //When
-        final FileInfo fileInfo = FileInfo.valueOf(fileInfoStr);
+        final FileInfo fileInfo = FileInfo.parseInfo(fileInfoStr);
 
         //Then
         Assert.assertNotNull(fileInfo);
@@ -35,7 +35,7 @@ public class FileInfoTest {
         String fileInfoStr = "d---    -          - 31Jan2018 00:25:12 megacmd4j";
 
         //When
-        final FileInfo fileInfo = FileInfo.valueOf(fileInfoStr);
+        final FileInfo fileInfo = FileInfo.parseInfo(fileInfoStr);
 
         //Then
         Assert.assertNotNull(fileInfo);
@@ -55,7 +55,7 @@ public class FileInfoTest {
         String fileInfoStr = "----    -         50 04May2018 17:54:11 yolo-2.txt";
 
         //When
-        final FileInfo fileInfo = FileInfo.valueOf(fileInfoStr);
+        final FileInfo fileInfo = FileInfo.parseInfo(fileInfoStr);
 
         //Then
         Assert.assertNotNull(fileInfo);
@@ -68,7 +68,7 @@ public class FileInfoTest {
         String fileInfoStr = "----    1         - 04May2018 17:54:11 yolo-2.txt";
 
         //When
-        final FileInfo fileInfo = FileInfo.valueOf(fileInfoStr);
+        final FileInfo fileInfo = FileInfo.parseInfo(fileInfoStr);
 
         //Then
         Assert.assertNotNull(fileInfo);
@@ -81,7 +81,7 @@ public class FileInfoTest {
         String fileInfoStr = "----    1         50 04May20xx 17:54:11 yolo-2.txt";
 
         //When
-        FileInfo.valueOf(fileInfoStr);
+        FileInfo.parseInfo(fileInfoStr);
     }
 
     @Test(expected = MegaInvalidResponseException.class)
@@ -90,6 +90,6 @@ public class FileInfoTest {
         String fileInfoStr = "----    1         50 04May20xx 17:54:11";
 
         //When
-        FileInfo.valueOf(fileInfoStr);
+        FileInfo.parseInfo(fileInfoStr);
     }
 }

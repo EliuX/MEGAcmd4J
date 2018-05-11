@@ -1,21 +1,25 @@
 package io.github.eliux.mega.cmd;
 
+import java.util.Optional;
+
 public class MegaCmdShare extends AbstractMegaCmdRunnerWithParams {
 
-    private String remotePath;
+    private final Optional<String> remotePath;
 
-    private String username;
+    private final Optional<String> username;
 
     private boolean shared = true;
 
     private AccessLevel accessLevel = AccessLevel.READ_ONLY;
 
     protected MegaCmdShare() {
+        remotePath = Optional.empty();
+        username = Optional.empty();
     }
 
     public MegaCmdShare(String remotePath, String username) {
-        this.remotePath = remotePath;
-        this.username = username;
+        this.remotePath = Optional.of(remotePath);
+        this.username = Optional.of(username);
     }
 
     @Override
@@ -29,14 +33,13 @@ public class MegaCmdShare extends AbstractMegaCmdRunnerWithParams {
 
         cmdParamsBuilder.append(shared ? "-a " : "-d ");
 
-        if (username != null)
-            cmdParamsBuilder.append(String.format("--with=%s ", username));
+        username.ifPresent(x -> cmdParamsBuilder
+                .append(String.format("--with=%s ", x)));
 
         if (shared)
             cmdParamsBuilder.append(String.format("--level=%s ", accessLevel));
 
-        if (remotePath != null)
-            cmdParamsBuilder.append(remotePath);
+        remotePath.ifPresent(cmdParamsBuilder::append);
 
         return cmdParamsBuilder.toString();
     }
@@ -76,6 +79,7 @@ public class MegaCmdShare extends AbstractMegaCmdRunnerWithParams {
     }
 
     protected enum AccessLevel {
+
         READ_ONLY('0'), READ_WRITE('1'), FULL('2'), OWNER('3');
 
         private Character id;
