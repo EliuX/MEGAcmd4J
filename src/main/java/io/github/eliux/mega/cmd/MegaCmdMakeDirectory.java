@@ -1,6 +1,5 @@
 package io.github.eliux.mega.cmd;
 
-import io.github.eliux.mega.error.MegaInvalidStateException;
 import io.github.eliux.mega.error.MegaWrongArgumentsException;
 
 public class MegaCmdMakeDirectory extends AbstractMegaCmdRunnerWithParams {

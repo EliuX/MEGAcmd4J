@@ -2,10 +2,11 @@ package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
-import io.github.eliux.mega.auth.MegaAuthCredentials;
-import io.github.eliux.mega.error.MegaException;
 import io.github.eliux.mega.error.MegaWrongArgumentsException;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 
 public class MegaCmdCommonsTest {

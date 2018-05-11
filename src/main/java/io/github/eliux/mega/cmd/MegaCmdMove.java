@@ -1,7 +1,5 @@
 package io.github.eliux.mega.cmd;
 
-import io.github.eliux.mega.MegaUtils;
-
 public class MegaCmdMove extends AbstractMegaCmdRunnerWithParams {
 
     private final String sourceRemotePath;

@@ -2,7 +2,10 @@ package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
-import io.github.eliux.mega.error.*;
+import io.github.eliux.mega.error.MegaInvalidStateException;
+import io.github.eliux.mega.error.MegaInvalidTypeException;
+import io.github.eliux.mega.error.MegaResourceNotFoundException;
+import io.github.eliux.mega.error.MegaWrongArgumentsException;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 

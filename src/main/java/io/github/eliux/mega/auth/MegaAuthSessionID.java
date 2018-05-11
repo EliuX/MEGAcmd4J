@@ -2,7 +2,6 @@ package io.github.eliux.mega.auth;
 
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
-import io.github.eliux.mega.cmd.MegaCmdLogin;
 import io.github.eliux.mega.error.MegaException;
 
 import java.util.Optional;

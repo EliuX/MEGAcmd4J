@@ -1,6 +1,5 @@
 package io.github.eliux.mega.cmd;
 
-import com.sun.xml.internal.ws.api.message.Packet;
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
 import io.github.eliux.mega.error.MegaInvalidResponseException;

@@ -3,7 +3,6 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.error.MegaIOException;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import static io.github.eliux.mega.MegaUtils.handleResult;
 

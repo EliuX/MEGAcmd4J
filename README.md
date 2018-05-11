@@ -21,6 +21,7 @@ This is an open source Java library for the [mega.co.nz][mega] API, working on t
 | Move                      | `mv`      | Move remote files and directories into a new location.
 | Change password           | `passwd`  | Changes the password of the currently logged user.
 | Shares folder             | `share`   | Shares/Unshares folder with user
+| Export to the Internet    | `export`  | Create, delete or list existing public links
         
 If you have any doubt about how each feature works, please run
 
