@@ -18,12 +18,11 @@ import static io.github.eliux.mega.MegaTestUtils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MegaCRUDTest {
 
-    private static final String TEST_FILE_PREFIX = "yolo";
 
-    MegaSession sessionMega;
+    static MegaSession sessionMega;
 
-    @Before
-    public void setup() {
+    @BeforeClass
+    public void setupSession() {
         sessionMega = Mega.init();
     }
 
@@ -61,13 +60,13 @@ public class MegaCRUDTest {
 
     @Test
     public void stage03_shouldUploadMultipleFilesAndCreateRemoteFolderSuccessfully() {
-        createTextFiles(TEST_FILE_PREFIX, 10);
+        createTextFiles("yolo", 10);
 
         final MegaCmdPutMultiple megaCmd = sessionMega.uploadFiles("megacmd4j/")
                 .createRemoteIfNotPresent();
 
         IntStream.rangeClosed(1, 10).forEach(i -> {
-            String filename = testTextFileName(TEST_FILE_PREFIX, i);
+            String filename = testTextFileName("yolo", i);
             megaCmd.addLocalFileToUpload(filename);
         });
 
@@ -243,8 +242,8 @@ public class MegaCRUDTest {
         sessionMega.removeDirectory("megacmd4j/level2/level3").run();
     }
 
-    @After
-    public void logout() {
+    @AfterClass
+    public void finishSession() {
         sessionMega.logout();
     }
 }
