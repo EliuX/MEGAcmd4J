@@ -67,6 +67,15 @@ platforms should be found [here][megacmd-install].
 2. Use an existing session can be a saver way. You can use it from your app as long 
 as it don't be closed.
 
+## Continuous Integrations
+As most OSS projects in github this one uses [Travis CI](https://travis-ci.com/EliuX/MEGAcmd4J). 
+I you want a CLI for your project, its recommend to install the correspondent ruby gem:
+
+```bash
+    gem install travis
+```
+
+
 ## Code conventions
 
 *Java*
