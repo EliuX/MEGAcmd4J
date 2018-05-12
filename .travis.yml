@@ -1,4 +1,5 @@
 language: java
+cache: megaCmd
 sudo: enabled
 before_install:
  #Megacmd required ubuntu packages
