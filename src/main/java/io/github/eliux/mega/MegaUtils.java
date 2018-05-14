@@ -82,7 +82,13 @@ public interface MegaUtils {
 
         process.destroy();
 
-        handleResult(process.exitValue());
+        try {
+            handleResult(process.waitFor());
+        }catch (InterruptedException ex){
+            throw new MegaIOException(
+                    "The execution of '%s' was interrupted", cmd
+            );
+        }
 
         return result;
     }
