@@ -1,6 +1,7 @@
 package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.MegaUtils;
+import io.github.eliux.mega.error.MegaException;
 import io.github.eliux.mega.error.MegaIOException;
 import io.github.eliux.mega.error.MegaResourceNotFoundException;
 
@@ -83,7 +84,7 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
         try {
             MegaUtils.execCmdWithOutput(executableCommand());
             return true;
-        } catch (MegaResourceNotFoundException e) {
+        } catch (MegaException e) {
             return false;
         } catch (IOException e) {
             throw new MegaIOException("Error while listing " + remotePath);
