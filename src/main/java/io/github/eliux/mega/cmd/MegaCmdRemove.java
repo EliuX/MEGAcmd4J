@@ -1,6 +1,6 @@
 package io.github.eliux.mega.cmd;
 
-import io.github.eliux.mega.error.MegaResourceNotFoundException;
+import io.github.eliux.mega.error.MegaException;
 
 public class MegaCmdRemove extends AbstractMegaCmdRunnerWithParams {
 
@@ -34,7 +34,7 @@ public class MegaCmdRemove extends AbstractMegaCmdRunnerWithParams {
     public void run() {
         try {
             super.run();
-        } catch (MegaResourceNotFoundException ex) {
+        } catch (MegaException ex) {
             if (!errorIgnoredIfAbsent) {
                 throw ex;
             }
