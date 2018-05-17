@@ -8,3 +8,16 @@ before_install:
  - wget https://mega.nz/linux/MEGAsync/xUbuntu_14.04/amd64/megacmd-xUbuntu_14.04_amd64.deb
  - sudo dpkg -i ./megacmd-xUbuntu_14.04_amd64.deb
  - mega-help
+before_deploy:
+ - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
+ - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+deploy:
+   provider: releases
+       api_key:
+           secure: **** (some long encrypted key)
+       file:
+           - target/megacmd4j-$project_version.jar
+       skip_cleanup: true
+       on:
+           repo: EliuX/MEGAcmd4J
+       name: $project_version
