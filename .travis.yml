@@ -1,5 +1,7 @@
 language: java
-cache: megaCmd
+cache:
+  directories:
+    - $HOME/.megaCmd
 sudo: enabled
 before_install:
  #Megacmd required ubuntu packages
@@ -10,13 +12,10 @@ before_install:
  - mega-help
 before_deploy:
  - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
- - export project_version=$(!!)
+ - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
 deploy:
   provider: releases
-  api_key:
-    secure: eHatoMobmXyEWJoVUgsC3AizwOk5WXyjB/OPtJFm4ZUxsNNlRq0+nkbe6fiwWT/iWn+6XUVIyk4sXgA77B07wG4gw+YIaGTIQbV2KlYfMv8FA96F3DU2R4WreDpoSz1p/AKaZE9mqSqQgN2iX4bU4mgxNxtIkruAGHcTwOgg89X2b3yZ3NPLmGZChDff0C9sK883iddf46TWeIbpxL8Febl2r8++0Gdzct9sn117+l1eGAoWqahUB1K0Qnd
-            lZZTRhduGB6c4Xxo46jB95LmpvOIkE8ogu7joDrJAZE5OqySWPKM6sRpQU842nwJjvHzdL8B9WlhQq5nPQuQF0Wm8EsDOxE1TMxzPwYR0QBa+8Hq2YT5TIH1twa0AOYr9DSTJeJh0uF7DuEBrsUyeRFhFTs+3wByW4XtCCWCbvwSf9CtqQMu/PYEJwgN+M30CUQaZ5bCGWbY8a2TD2kPkea29tPc7uWyl4/jkXkc2MDQtd/reZ7bPo4yHFgwxVLANJMMGB
-            RY4tU8QwECP90qcia1HIYbp6Kon9HRTt7Uj1mNWUtjsrGEqDYYnY+7EQWQWZN6uICQ1SNpHP4IMy7Xkxz1XzaTC1T/cVHVY/zbBpyn89yELA3chGDg/mgjSrgdlsj84D9MK4dzp9NmxvwFC2YUUiAtzn9Dr4ZWJp4mSsc2QoMM=
+  api_key: $GITHUB_API_KEY
   file: target/megacmd4j-$project_version.jar
   skip_cleanup: true
   on:
