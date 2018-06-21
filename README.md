@@ -4,6 +4,7 @@ MEGAcmd for Java
 [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/eliux_black)
 
 This is an open source Java library for the [mega.co.nz][mega] API, working on top of the [MEGAcmd][megacmd] CLI. 
+There is a [Quick Start][quick-start] for developers if you want to start using the library right away.
 
 ## Features
 
@@ -112,3 +113,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 [mega]: https://mega.co.nz
 [megacmd]: https://github.com/meganz/MEGAcmd
 [megacmd-install]: https://mega.nz/cmd
+[quick-start]: https://github.com/EliuX/MEGAcmd4J/wiki/Quick-start
