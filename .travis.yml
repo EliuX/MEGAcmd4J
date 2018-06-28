@@ -11,8 +11,9 @@ before_install:
  - sudo dpkg -i ./megacmd-xUbuntu_14.04_amd64.deb
  - mega-help
 before_deploy:
- - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
- - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+ #GPG keys
+ - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
+ - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
 deploy:
   provider: script
   #After running release:clean release:prepare
