@@ -47,12 +47,13 @@
                         <configuration>
                             <serverId>ossrh</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <!-- If set to false the release would be done manually using
-                            mvn nexus-staging:release-->
+                            <!-- If set to false the release would be done manually in the
+                            Nexus UI or by running mvn nexus-staging:release-->
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
-                    <!-- To sign the artifacts -->
+                    <!-- Required for OSS projects by Maven Central -->
+                    <!-- To sign the artifacts-->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
@@ -67,7 +68,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- To generate javadoc -->
+                    <!-- To generate javadoc-->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>

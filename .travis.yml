@@ -10,8 +10,6 @@ before_install:
  - wget https://mega.nz/linux/MEGAsync/xUbuntu_14.04/amd64/megacmd-xUbuntu_14.04_amd64.deb
  - sudo dpkg -i ./megacmd-xUbuntu_14.04_amd64.deb
  - mega-help
-install:
-     mvn  --settings .travis/maven-settings.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
 before_deploy:
  - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
  - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
@@ -20,7 +18,7 @@ deploy:
   #After running release:clean release:prepare
   #A release tag is created and this script is run
   #And a release artifact is uploaded to the Maven Central
-  script: "mvn clean deploy --settings .travis/maven-settings.xml -DskipTests=true -B -U"
+  script: "mvn clean deploy nexus-staging:release --settings .travis/maven-settings.xml -DskipTests=true"
   skip_cleanup: true
   on:
     tags: true
