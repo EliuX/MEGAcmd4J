@@ -6,7 +6,7 @@
     <artifactId>megacmd4j</artifactId>
     <!-- To change the version use
     mvn versions:set -DnewVersion=${newversion} -->
-    <version>1.1.0-alpha-SNAPSHOT</version>
+    <version>1.1.0-alpha</version>
 
     <name>MEGAcmd for Java</name>
     <description>Java client library that works on top of MEGAcmd to provide access to the services of Mega.nz
@@ -120,7 +120,7 @@
     <scm>
         <connection>scm:git:https://github.com/EliuX/MEGAcmd4J.git</connection>
         <url>https://github.com/EliuX/MEGAcmd4J</url>
-        <tag>HEAD</tag>
+        <tag>megacmd4j-1.1.0-alpha</tag>
     </scm>
 
     <distributionManagement>
@@ -149,6 +149,7 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <!-- Executed by Travis and triggered by release:prepare -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
