@@ -15,6 +15,9 @@ before_deploy:
  - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
 deploy:
   provider: script
+  #After running release:clean release:prepare
+  #A release tag is created and this script is run
+  #And a release artifact is uploaded to the Maven Central
   script: "mvn --settings .travis/maven-settings.xml deploy"
   skip_cleanup: true
   on:

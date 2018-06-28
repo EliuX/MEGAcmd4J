@@ -30,7 +30,7 @@
 
     <profiles>
         <profile>
-            <id>release</id>
+            <id>release-profile</id>
             <activation>
                 <property>
                     <name>release</name>
@@ -154,9 +154,7 @@
                 <version>2.5.3</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <releaseProfiles>release</releaseProfiles>
-                    <goals>deploy</goals>
+                    <useReleaseProfile>true</useReleaseProfile>
                 </configuration>
             </plugin>
         </plugins>
