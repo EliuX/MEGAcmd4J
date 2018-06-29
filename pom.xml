@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.eliux</groupId>
     <artifactId>megacmd4j</artifactId>
+    <version>1.2.2-alpha-SNAPSHOT</version>
     <!-- To change the version use
     mvn versions:set -DnewVersion=${newversion} -->
-    <version>1.0.1-alpha-SNAPSHOT</version>
 
     <name>MEGAcmd for Java</name>
     <description>Java client library that works on top of MEGAcmd to provide access to the services of Mega.nz
     </description>
+    <url>http://github.com/EliuX/MEGAcmd4J</url>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -48,12 +47,13 @@
                         <configuration>
                             <serverId>ossrh</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <!-- If set to false the release would be done manually using
-                            mvn nexus-staging:release-->
+                            <!-- If set to false the release would be done manually in the
+                            Nexus UI or by running mvn nexus-staging:release-->
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
-                    <!-- To sign the artifacts -->
+                    <!-- Required for OSS projects by Maven Central -->
+                    <!-- To sign the artifacts-->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
@@ -68,7 +68,33 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- TODO To release javadocs -->
+                    <!-- To generate javadoc-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -94,6 +120,7 @@
     <scm>
         <connection>scm:git:https://github.com/EliuX/MEGAcmd4J.git</connection>
         <url>https://github.com/EliuX/MEGAcmd4J</url>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
@@ -107,7 +134,7 @@
         </snapshotRepository>
         <repository>
             <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
     </distributionManagement>
 
@@ -122,15 +149,16 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <!-- Executed by Travis and triggered by release:prepare -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5.3</version>
                 <configuration>
+                    <goals>deploy</goals>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <useReleaseProfile>false</useReleaseProfile>
                     <releaseProfiles>release</releaseProfiles>
-                    <goals>deploy</goals>
                 </configuration>
             </plugin>
         </plugins>
