@@ -4,7 +4,7 @@
 
     <groupId>com.github.eliux</groupId>
     <artifactId>megacmd4j</artifactId>
-    <version>1.2.0-alpha</version>
+    <version>1.2.1-alpha-SNAPSHOT</version>
     <!-- To change the version use
     mvn versions:set -DnewVersion=${newversion} -->
 
@@ -120,7 +120,7 @@
     <scm>
         <connection>scm:git:https://github.com/EliuX/MEGAcmd4J.git</connection>
         <url>https://github.com/EliuX/MEGAcmd4J</url>
-        <tag>megacmd4j-1.2.0-alpha</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
