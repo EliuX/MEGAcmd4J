@@ -4,9 +4,9 @@
 
     <groupId>com.github.eliux</groupId>
     <artifactId>megacmd4j</artifactId>
+    <version>1.1.6-alpha-SNAPSHOT</version>
     <!-- To change the version use
     mvn versions:set -DnewVersion=${newversion} -->
-    <version>1.1.6-alpha-SNAPSHOT</version>
 
     <name>MEGAcmd for Java</name>
     <description>Java client library that works on top of MEGAcmd to provide access to the services of Mega.nz
@@ -120,7 +120,7 @@
     <scm>
         <connection>scm:git:https://github.com/EliuX/MEGAcmd4J.git</connection>
         <url>https://github.com/EliuX/MEGAcmd4J</url>
-        <tag>releases</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
@@ -159,7 +159,6 @@
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <useReleaseProfile>false</useReleaseProfile>
                     <releaseProfiles>release</releaseProfiles>
-                    <branchName>releases</branchName>
                 </configuration>
             </plugin>
         </plugins>
