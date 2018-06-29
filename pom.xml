@@ -6,7 +6,7 @@
     <artifactId>megacmd4j</artifactId>
     <!-- To change the version use
     mvn versions:set -DnewVersion=${newversion} -->
-    <version>1.1.4-alpha</version>
+    <version>1.1.5-alpha-SNAPSHOT</version>
 
     <name>MEGAcmd for Java</name>
     <description>Java client library that works on top of MEGAcmd to provide access to the services of Mega.nz
@@ -120,7 +120,7 @@
     <scm>
         <connection>scm:git:https://github.com/EliuX/MEGAcmd4J.git</connection>
         <url>https://github.com/EliuX/MEGAcmd4J</url>
-        <tag>megacmd4j-1.1.4-alpha</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
