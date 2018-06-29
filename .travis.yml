@@ -19,4 +19,4 @@ deploy:
   skip_cleanup: true
   on:
     branch: releases
-    condition: $TRAVIS_BRANCH =~ /.+(prepare release).+/
+    condition: tag =~ /.+(prepare release).+/
