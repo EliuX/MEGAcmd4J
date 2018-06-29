@@ -18,4 +18,5 @@ deploy:
   script: source .travis/deploy.sh
   skip_cleanup: true
   on:
-    condition: $TRAVIS_TAG =~ /.+(prepare release).+/
+    tags: true
+    condition: $TRAVIS_TAG =~ .+(prepare release).+
