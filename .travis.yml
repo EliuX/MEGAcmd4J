@@ -10,16 +10,13 @@ before_install:
  - wget https://mega.nz/linux/MEGAsync/xUbuntu_14.04/amd64/megacmd-xUbuntu_14.04_amd64.deb
  - sudo dpkg -i ./megacmd-xUbuntu_14.04_amd64.deb
  - mega-help
-before_deploy:
- #GPG keys
- - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
- - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
 deploy:
   provider: script
   #After running release:clean release:prepare
   #A release tag is created and this script is run
   #And a release artifact is uploaded to the Maven Central
-  script: "mvn deploy --settings .travis/maven-settings.xml -DskipTests=true -P release"
+  script: source .travis/deploy.sh
   skip_cleanup: true
   on:
-    tags: true
+    branch: releases
+    condition: $TRAVIS_BRANCH =~ /.+(prepare release).+/

@@ -159,6 +159,7 @@
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <useReleaseProfile>false</useReleaseProfile>
                     <releaseProfiles>release</releaseProfiles>
+                    <branchName>releases</branchName>
                 </configuration>
             </plugin>
         </plugins>
