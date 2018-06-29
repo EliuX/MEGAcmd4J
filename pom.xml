@@ -120,7 +120,7 @@
     <scm>
         <connection>scm:git:https://github.com/EliuX/MEGAcmd4J.git</connection>
         <url>https://github.com/EliuX/MEGAcmd4J</url>
-        <tag>HEAD</tag>
+        <tag>releases</tag>
     </scm>
 
     <distributionManagement>
