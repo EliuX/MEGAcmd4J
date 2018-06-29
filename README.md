@@ -1,7 +1,7 @@
 MEGAcmd for Java
 ================
 [![Build Status](https://travis-ci.com/EliuX/MEGAcmd4J.svg?branch=master)](https://travis-ci.com/EliuX/MEGAcmd4J)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.EliuX/MEGAcmd4J/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.EliuX/MEGAcmd4J)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.eliux/megacmd4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.eliux/megacmd4j)
 [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/eliux_black)
 
 This is an open source Java library for the [mega.co.nz][mega] API, working on top of the [MEGAcmd][megacmd] CLI. 
