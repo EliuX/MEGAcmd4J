@@ -1,3 +1,7 @@
+<a href="https://eliux.github.io/MEGAcmd4J/">
+  <img src="https://eliux.github.io/assets/images/MEGAcmd4J.png" alt="MEGAcmd for Java" />
+</a>
+
 MEGAcmd for Java
 ================
 [![Build Status](https://travis-ci.com/EliuX/MEGAcmd4J.svg?branch=master)](https://travis-ci.com/EliuX/MEGAcmd4J)
