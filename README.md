@@ -1,15 +1,13 @@
 <a href="https://eliux.github.io/MEGAcmd4J/">
-  <img src="https://eliux.github.io/assets/images/MEGAcmd4J.png" alt="MEGAcmd for Java" />
+  <img src="https://eliux.github.io/assets/images/MEGAcmd4J.png" alt="MEGAcmd for Java"  title="MEGAcmd for Java" />
 </a>
 
-MEGAcmd for Java
-================
 [![Build Status](https://travis-ci.com/EliuX/MEGAcmd4J.svg?branch=master)](https://travis-ci.com/EliuX/MEGAcmd4J)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.eliux/megacmd4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.eliux/megacmd4j)
 [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/eliux_black)
 
-This is an open source Java library for the [mega.co.nz][mega] API, working on top of the [MEGAcmd][megacmd] CLI. 
-There is a [Quick Start][quick-start] for developers if you want to start using the library right away.
+This is an open source Java library for the [mega.nz][mega] API, working on top of the [MEGAcmd][megacmd] CLI. 
+There is a [Quick Start][quick-start] available for developers who want to start using the library right away.
 
 ## Features
 
@@ -105,6 +103,12 @@ were the same. It has already been reported as an [issue](https://github.com/meg
 * Once installed [MEGAcmd][megacmd] in your system execute `mega-help` to check all commands.
 You will be able to notice those who are used in this library and others which don't, for practical
 reasons, but that will provide you additional capabilities. Try them out.
+
+## Status
+Pre-release or Beta: The project has gone through multiple rounds of active development with a goal of reaching 
+a stable release version, but is not there yet.
+
+Path of Development: Active (July 2nd 2018)
 
 ## Author
 
