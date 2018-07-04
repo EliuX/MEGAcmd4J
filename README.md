@@ -82,9 +82,8 @@ I you want a CLI for your project, its recommend to install the correspondent ru
 
 ## Code conventions
 
-*Java*
-* Camelcase as usual for Java code
-* Line length is tried (no code checkers) to be kept less than *80* characters. Specially for Java code.
+* Follow the [Google Java Style Guide][google-java-style-guide] as much as possible.
+* Install the [Google Java Style Guide settings in your IDE][google-java-style-settings-intellij].
 
 ## Known Bugs
 There were tests that moved a file to a folder where another file with the same name was present.
@@ -113,12 +112,14 @@ Path of Development: Active (July 2nd 2018)
 ## Author
 
 * **Eliecer Hernandez** - [eliecerhdz@gmail.com](mailto:eliecerhdz@gmail.com). 
-To know more of me please visit my [website](eliux.github.io).
+To know more of me please visit my [website](http://eliux.github.io).
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
+[google-java-style-guide]: https://google.github.io/styleguide/javaguide.html 
+[google-java-style-settings-intellij]: https://github.com/HPI-Information-Systems/Metanome/wiki/Installing-the-google-styleguide-settings-in-intellij-and-eclipse
 [mega]: https://mega.co.nz
 [megacmd]: https://github.com/meganz/MEGAcmd
 [megacmd-install]: https://mega.nz/cmd

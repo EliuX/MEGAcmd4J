@@ -2,74 +2,74 @@ package com.github.eliux.mega.cmd;
 
 public abstract class AbstractMegaCmdPathHandler extends AbstractMegaCmdRunnerWithParams {
 
-    private boolean remoteFolderCreatedIfNotPresent;
+  private boolean remoteFolderCreatedIfNotPresent;
 
-    private boolean uploadQueued;
+  private boolean uploadQueued;
 
-    private boolean isQuotaWarningIgnored;
+  private boolean isQuotaWarningIgnored;
 
-    @Override
-    String cmdParams() {
-        StringBuilder cmdParamsBuilder = new StringBuilder();
+  @Override
+  String cmdParams() {
+    StringBuilder cmdParamsBuilder = new StringBuilder();
 
-        if (remoteFolderCreatedIfNotPresent) {
-            cmdParamsBuilder.append("-c ");
-        }
-
-        if (uploadQueued) {
-            cmdParamsBuilder.append("-q ");
-        }
-
-        if (isQuotaWarningIgnored) {
-            cmdParamsBuilder.append("--ignore-quota-warn ");
-        }
-
-        cmdParamsBuilder.append(cmdFileParams());
-
-        return cmdParamsBuilder.toString();
+    if (remoteFolderCreatedIfNotPresent) {
+      cmdParamsBuilder.append("-c ");
     }
 
-    public <R extends AbstractMegaCmdPathHandler> R createRemoteIfNotPresent() {
-        remoteFolderCreatedIfNotPresent = true;
-        return (R) this;
+    if (uploadQueued) {
+      cmdParamsBuilder.append("-q ");
     }
 
-    public <R extends AbstractMegaCmdPathHandler> R skipIfRemoteNotPresent() {
-        remoteFolderCreatedIfNotPresent = false;
-        return (R) this;
+    if (isQuotaWarningIgnored) {
+      cmdParamsBuilder.append("--ignore-quota-warn ");
     }
 
-    public boolean isRemoteFolderCreatedIfNotPresent() {
-        return remoteFolderCreatedIfNotPresent;
-    }
+    cmdParamsBuilder.append(cmdFileParams());
 
-    public <R extends AbstractMegaCmdPathHandler> R queueUpload() {
-        uploadQueued = true;
-        return (R) this;
-    }
+    return cmdParamsBuilder.toString();
+  }
 
-    public <R extends AbstractMegaCmdPathHandler> R waitToUpload() {
-        uploadQueued = false;
-        return (R) this;
-    }
+  public <R extends AbstractMegaCmdPathHandler> R createRemoteIfNotPresent() {
+    remoteFolderCreatedIfNotPresent = true;
+    return (R) this;
+  }
 
-    public boolean isUploadQueued() {
-        return uploadQueued;
-    }
+  public <R extends AbstractMegaCmdPathHandler> R skipIfRemoteNotPresent() {
+    remoteFolderCreatedIfNotPresent = false;
+    return (R) this;
+  }
 
-    public <R extends AbstractMegaCmdPathHandler> R ignoreQuotaSurpassingWarning() {
-        this.isQuotaWarningIgnored = true;
-        return (R) this;
-    }
+  public boolean isRemoteFolderCreatedIfNotPresent() {
+    return remoteFolderCreatedIfNotPresent;
+  }
 
-    public <R extends AbstractMegaCmdPathHandler> R warnQuotaSurpassing() {
-        this.isQuotaWarningIgnored = false;
-        return (R) this;
-    }
+  public <R extends AbstractMegaCmdPathHandler> R queueUpload() {
+    uploadQueued = true;
+    return (R) this;
+  }
 
-    public boolean isQuotaWarningIgnored() {
-        return isQuotaWarningIgnored;
-    }
+  public <R extends AbstractMegaCmdPathHandler> R waitToUpload() {
+    uploadQueued = false;
+    return (R) this;
+  }
 
-    protected abstract String cmdFileParams();
+  public boolean isUploadQueued() {
+    return uploadQueued;
+  }
+
+  public <R extends AbstractMegaCmdPathHandler> R ignoreQuotaSurpassingWarning() {
+    this.isQuotaWarningIgnored = true;
+    return (R) this;
+  }
+
+  public <R extends AbstractMegaCmdPathHandler> R warnQuotaSurpassing() {
+    this.isQuotaWarningIgnored = false;
+    return (R) this;
+  }
+
+  public boolean isQuotaWarningIgnored() {
+    return isQuotaWarningIgnored;
+  }
+
+  protected abstract String cmdFileParams();
 }

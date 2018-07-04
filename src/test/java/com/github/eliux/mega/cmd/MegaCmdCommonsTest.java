@@ -11,32 +11,32 @@ import org.junit.Test;
 
 public class MegaCmdCommonsTest {
 
-    MegaSession sessionMega;
+  MegaSession sessionMega;
 
-    @Before
-    public void setup() {
-        sessionMega = Mega.init();
-    }
+  @Before
+  public void setup() {
+    sessionMega = Mega.init();
+  }
 
-    @Test
-    public void sessionShouldExist() {
-        Assert.assertNotNull(sessionMega.sessionID());
-    }
+  @Test
+  public void sessionShouldExist() {
+    Assert.assertNotNull(sessionMega.sessionID());
+  }
 
-    @Test
-    public void shouldReturnUsername() {
-        Assert.assertNotNull(sessionMega.whoAmI());
-    }
+  @Test
+  public void shouldReturnUsername() {
+    Assert.assertNotNull(sessionMega.whoAmI());
+  }
 
-    @Test(expected = MegaException.class)
-    public void given_emptyPassword_when_changePassword_then_fail() {
-        final String currentPassword = System.getenv(Mega.PASSWORD_ENV_VAR);
+  @Test(expected = MegaException.class)
+  public void given_emptyPassword_when_changePassword_then_fail() {
+    final String currentPassword = System.getenv(Mega.PASSWORD_ENV_VAR);
 
-        sessionMega.changePassword(currentPassword, "  ");
-    }
+    sessionMega.changePassword(currentPassword, "  ");
+  }
 
-    @After
-    public void logout() {
-        sessionMega.logout();
-    }
+  @After
+  public void logout() {
+    sessionMega.logout();
+  }
 }
