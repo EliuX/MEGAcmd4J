@@ -4,73 +4,73 @@ import com.github.eliux.mega.error.MegaException;
 
 public class MegaCmdRemove extends AbstractMegaCmdRunnerWithParams {
 
-  private final String remotePath;
+    private final String remotePath;
 
-  private boolean recursivelyDeleted;
+    private boolean recursivelyDeleted;
 
-  private boolean errorIgnoredIfAbsent;
+    private boolean errorIgnoredIfAbsent;
 
-  public MegaCmdRemove(String remotePath) {
-    this.remotePath = remotePath;
-  }
-
-  public String getRemotePath() {
-    return remotePath;
-  }
-
-  @Override
-  String cmdParams() {
-    StringBuilder cmdParamsBuilder
-        = new StringBuilder("-f ");  //Never asks
-
-    if (recursivelyDeleted) {
-      cmdParamsBuilder.append("-r ");
+    public MegaCmdRemove(String remotePath) {
+        this.remotePath = remotePath;
     }
 
-    return cmdParamsBuilder.append(remotePath).toString();
-  }
-
-  @Override
-  public void run() {
-    try {
-      super.run();
-    } catch (MegaException ex) {
-      if (!errorIgnoredIfAbsent) {
-        throw ex;
-      }
+    public String getRemotePath() {
+        return remotePath;
     }
-  }
 
-  @Override
-  public String getCmd() {
-    return "rm";
-  }
+    @Override
+    String cmdParams() {
+        StringBuilder cmdParamsBuilder
+                = new StringBuilder("-f ");  //Never asks
 
-  public MegaCmdRemove deleteRecursively() {
-    recursivelyDeleted = true;
-    return this;
-  }
+        if (recursivelyDeleted) {
+            cmdParamsBuilder.append("-r ");
+        }
 
-  public MegaCmdRemove deleteRecursivelyDisabled() {
-    recursivelyDeleted = false;
-    return this;
-  }
+        return cmdParamsBuilder.append(remotePath).toString();
+    }
 
-  public boolean isRecursivelyDeleted() {
-    return recursivelyDeleted;
-  }
+    @Override
+    public void run() {
+        try {
+            super.run();
+        } catch (MegaException ex) {
+            if (!errorIgnoredIfAbsent) {
+                throw ex;
+            }
+        }
+    }
 
-  public MegaCmdRemove ignoreErrorIfNotPresent() {
-    errorIgnoredIfAbsent = true;
-    return this;
-  }
+    @Override
+    public String getCmd() {
+        return "rm";
+    }
 
-  public MegaCmdRemove reportErrorIfNotPresent() {
-    errorIgnoredIfAbsent = false;
-    return this;
-  }
+    public MegaCmdRemove deleteRecursively() {
+        recursivelyDeleted = true;
+        return this;
+    }
 
-  public boolean isErrorIgnoredIfAbsent() {
-    return errorIgnoredIfAbsent;
-  }
+    public MegaCmdRemove deleteRecursivelyDisabled() {
+        recursivelyDeleted = false;
+        return this;
+    }
+
+    public boolean isRecursivelyDeleted() {
+        return recursivelyDeleted;
+    }
+
+    public MegaCmdRemove ignoreErrorIfNotPresent() {
+        errorIgnoredIfAbsent = true;
+        return this;
+    }
+
+    public MegaCmdRemove reportErrorIfNotPresent() {
+        errorIgnoredIfAbsent = false;
+        return this;
+    }
+
+    public boolean isErrorIgnoredIfAbsent() {
+        return errorIgnoredIfAbsent;
+    }
 }

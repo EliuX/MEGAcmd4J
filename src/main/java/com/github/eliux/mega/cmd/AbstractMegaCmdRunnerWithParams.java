@@ -1,12 +1,12 @@
 package com.github.eliux.mega.cmd;
 
 public abstract class AbstractMegaCmdRunnerWithParams
-    extends AbstractMegaCmdRunner {
+        extends AbstractMegaCmdRunner {
 
-  @Override
-  public void run() {
-    executeSysCmd(getCmdAdaptedToPlatform() + " " + cmdParams());
-  }
+    @Override
+    public void run() {
+        executeSysCmd(getCmdAdaptedToPlatform() + " " + cmdParams());
+    }
 
-  abstract String cmdParams();
+    abstract String cmdParams();
 }

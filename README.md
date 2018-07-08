@@ -2,6 +2,8 @@
   <img src="https://eliux.github.io/assets/images/MEGAcmd4J.png" alt="MEGAcmd for Java"  title="MEGAcmd for Java" />
 </a>
 
+# MEGAcmd for Java
+
 [![Build Status](https://travis-ci.com/EliuX/MEGAcmd4J.svg?branch=master)](https://travis-ci.com/EliuX/MEGAcmd4J)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.eliux/megacmd4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.eliux/megacmd4j)
 [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/eliux_black)
@@ -80,7 +82,7 @@ I you want a CLI for your project, its recommend to install the correspondent ru
 ```
 
 
-## Code conventions
+## Code style
 
 * Follow the [Google Java Style Guide][google-java-style-guide] as much as possible.
 * Install the [Google Java Style Guide settings in your IDE][google-java-style-settings-intellij].

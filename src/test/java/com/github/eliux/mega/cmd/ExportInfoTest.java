@@ -10,128 +10,128 @@ import org.junit.Test;
 
 public class ExportInfoTest {
 
-  static MegaSession sessionMega;
+    static MegaSession sessionMega;
 
-  @BeforeClass
-  public static void setupSession() {
-    sessionMega = Mega.init();
-  }
+    @BeforeClass
+    public static void setupSession() {
+        sessionMega = Mega.init();
+    }
 
-  @Test
-  public void parseExportInfoShouldBeOk() {
-    //Given
-    String validExportInfo = "Exported /megacmd4j/level2: https://mega.nz/#F!8OQxgYgY!xxxg0kyQ9wibextVq5FZbQ";
+    @AfterClass
+    public static void finishSession() {
+        sessionMega.logout();
+    }
 
-    //When
-    final ExportInfo exportInfo = ExportInfo.parseExportInfo(validExportInfo);
+    @Test
+    public void parseExportInfoShouldBeOk() {
+        //Given
+        String validExportInfo = "Exported /megacmd4j/level2: https://mega.nz/#F!8OQxgYgY!xxxg0kyQ9wibextVq5FZbQ";
 
-    //Then
-    Assert.assertNotNull(exportInfo);
-    Assert.assertEquals("/megacmd4j/level2", exportInfo.getRemotePath());
-    Assert.assertEquals("https://mega.nz/#F!8OQxgYgY!xxxg0kyQ9wibextVq5FZbQ",
-        exportInfo.getPublicLink());
-  }
+        //When
+        final ExportInfo exportInfo = ExportInfo.parseExportInfo(validExportInfo);
 
-  @Test(expected = MegaInvalidResponseException.class)
-  public void given_invalid_remotePath_when_parseExportListInfo_then_fail() {
-    //Given
-    String entryWithInvalidRemotePath = "megacmd4j/level2(folder, shared as exported " +
-        " folder link: https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
+        //Then
+        Assert.assertNotNull(exportInfo);
+        Assert.assertEquals("/megacmd4j/level2", exportInfo.getRemotePath());
+        Assert.assertEquals("https://mega.nz/#F!8OQxgYgY!xxxg0kyQ9wibextVq5FZbQ",
+                exportInfo.getPublicLink());
+    }
 
-    //When
-    ExportInfo.parseExportListInfo(entryWithInvalidRemotePath);
-  }
+    @Test(expected = MegaInvalidResponseException.class)
+    public void given_invalid_remotePath_when_parseExportListInfo_then_fail() {
+        //Given
+        String entryWithInvalidRemotePath = "megacmd4j/level2(folder, shared as exported " +
+                " folder link: https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
 
-  @Test(expected = MegaInvalidResponseException.class)
-  public void given_invalid_publicLinkPrefix_when_parseExportListInfo_then_fail() {
-    //Given
-    String entryWithInvalidRemotePath = "megacmd4j/level2 (folder, shared as exported " +
-        " folder content: https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
+        //When
+        ExportInfo.parseExportListInfo(entryWithInvalidRemotePath);
+    }
 
-    //When
-    ExportInfo.parseExportListInfo(entryWithInvalidRemotePath);
-  }
+    @Test(expected = MegaInvalidResponseException.class)
+    public void given_invalid_publicLinkPrefix_when_parseExportListInfo_then_fail() {
+        //Given
+        String entryWithInvalidRemotePath = "megacmd4j/level2 (folder, shared as exported " +
+                " folder content: https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
 
-  @Test(expected = MegaInvalidResponseException.class)
-  public void given_invalid_ending_when_parseExportListInfo_then_fail() {
-    //Given
-    String entryWithInvalidRemotePath = "megacmd4j/level2 (folder, shared as exported " +
-        " folder content: https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA";
+        //When
+        ExportInfo.parseExportListInfo(entryWithInvalidRemotePath);
+    }
 
-    //When
-    ExportInfo.parseExportListInfo(entryWithInvalidRemotePath);
-  }
+    @Test(expected = MegaInvalidResponseException.class)
+    public void given_invalid_ending_when_parseExportListInfo_then_fail() {
+        //Given
+        String entryWithInvalidRemotePath = "megacmd4j/level2 (folder, shared as exported " +
+                " folder content: https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA";
 
-  @Test(expected = MegaInvalidResponseException.class)
-  public void given_publicLinkWithIncorrectMegaUrl_when_parseExportListInfo_then_fail() {
-    //Given
-    String responseWithInvalidMegaUrl =
-        "megacmd4j (folder, shared as exported permanent " +
-            "folder link: http://mega.com/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
+        //When
+        ExportInfo.parseExportListInfo(entryWithInvalidRemotePath);
+    }
 
-    //When
-    ExportInfo.parseExportListInfo(responseWithInvalidMegaUrl);
-  }
+    @Test(expected = MegaInvalidResponseException.class)
+    public void given_publicLinkWithIncorrectMegaUrl_when_parseExportListInfo_then_fail() {
+        //Given
+        String responseWithInvalidMegaUrl =
+                "megacmd4j (folder, shared as exported permanent " +
+                        "folder link: http://mega.com/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
 
-  @Test
-  public void given_remotePathWithSubPaths_when_parseExportListInfo_then_success() {
-    //Given
-    String responseWithRemotePathWithSubPaths =
-        "megacmd4j/level2/level3 (folder, shared as exported permanent " +
-            "folder link: https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
+        //When
+        ExportInfo.parseExportListInfo(responseWithInvalidMegaUrl);
+    }
 
-    //When
-    final ExportInfo exportInfo =
-        ExportInfo.parseExportListInfo(responseWithRemotePathWithSubPaths);
+    @Test
+    public void given_remotePathWithSubPaths_when_parseExportListInfo_then_success() {
+        //Given
+        String responseWithRemotePathWithSubPaths =
+                "megacmd4j/level2/level3 (folder, shared as exported permanent " +
+                        "folder link: https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
 
-    //Then
-    Assert.assertEquals("megacmd4j/level2/level3", exportInfo.getRemotePath());
-    Assert.assertEquals(
-        "https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA",
-        exportInfo.getPublicLink()
-    );
-  }
+        //When
+        final ExportInfo exportInfo =
+                ExportInfo.parseExportListInfo(responseWithRemotePathWithSubPaths);
 
-  @Test
-  public void given_remotePathWithSingleFolder_when_parseExportListInfo_then_success() {
-    //Given
-    String responseWithRemotePathWithSingleFolder =
-        "megacmd4j (folder, shared as exported permanent " +
-            "folder link: https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
+        //Then
+        Assert.assertEquals("megacmd4j/level2/level3", exportInfo.getRemotePath());
+        Assert.assertEquals(
+                "https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA",
+                exportInfo.getPublicLink()
+        );
+    }
 
-    //When
-    final ExportInfo exportInfo =
-        ExportInfo.parseExportListInfo(responseWithRemotePathWithSingleFolder);
+    @Test
+    public void given_remotePathWithSingleFolder_when_parseExportListInfo_then_success() {
+        //Given
+        String responseWithRemotePathWithSingleFolder =
+                "megacmd4j (folder, shared as exported permanent " +
+                        "folder link: https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
 
-    //Then
-    Assert.assertEquals("megacmd4j", exportInfo.getRemotePath());
-    Assert.assertEquals(
-        "https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA",
-        exportInfo.getPublicLink()
-    );
-  }
+        //When
+        final ExportInfo exportInfo =
+                ExportInfo.parseExportListInfo(responseWithRemotePathWithSingleFolder);
 
-  @Test
-  public void given_publicLinkNotHttps_when_parseExportListInfo_then_success() {
-    //Given
-    String responseWithHttp =
-        "megacmd4j (folder, shared as exported permanent " +
-            "folder link: http://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
+        //Then
+        Assert.assertEquals("megacmd4j", exportInfo.getRemotePath());
+        Assert.assertEquals(
+                "https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA",
+                exportInfo.getPublicLink()
+        );
+    }
 
-    //When
-    final ExportInfo exportInfo =
-        ExportInfo.parseExportListInfo(responseWithHttp);
+    @Test
+    public void given_publicLinkNotHttps_when_parseExportListInfo_then_success() {
+        //Given
+        String responseWithHttp =
+                "megacmd4j (folder, shared as exported permanent " +
+                        "folder link: http://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
 
-    //Then
-    Assert.assertEquals("megacmd4j", exportInfo.getRemotePath());
-    Assert.assertEquals(
-        "http://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA",
-        exportInfo.getPublicLink()
-    );
-  }
+        //When
+        final ExportInfo exportInfo =
+                ExportInfo.parseExportListInfo(responseWithHttp);
 
-  @AfterClass
-  public static void finishSession() {
-    sessionMega.logout();
-  }
+        //Then
+        Assert.assertEquals("megacmd4j", exportInfo.getRemotePath());
+        Assert.assertEquals(
+                "http://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA",
+                exportInfo.getPublicLink()
+        );
+    }
 }
