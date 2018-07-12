@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Before 1.0.0-beta - 2018-07-04
 ### Added
+- Add implementation of the MEGAcmd command: `https`
 - Add javadocs to functions and classes difficult to understand.
 - Add the Google Java Style Guide references to README
 ### Update

@@ -25,7 +25,7 @@ public class MegaCmdSession extends AbstractMegaCmdCaller<String> {
     public String call() {
         try {
             final String response =
-                    MegaUtils.execCmdWithOutput(executableCommand()).get(0);
+                    MegaUtils.execCmdWithSingleOutput(executableCommand());
             return parseSessionID(response)
                     .orElseThrow(() -> new MegaLoginRequiredException());
         } catch (IOException e) {

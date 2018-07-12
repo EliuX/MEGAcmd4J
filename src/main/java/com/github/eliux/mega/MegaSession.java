@@ -251,4 +251,31 @@ public class MegaSession {
     public MegaCmdExport export(String remotePath) {
         return new MegaCmdExport(remotePath);
     }
+
+    /**
+     * Enables HTTPS for transactions
+     *
+     * @return {@link Boolean} with true|false if it ran successfully or not
+     */
+    public Boolean enableHttps() {
+        return new MegaCmdHttps(true).call();
+    }
+
+    /**
+     * Disables HTTPS for transactions
+     *
+     * @return {@link Boolean} with false|true if it ran successfully or not
+     */
+    public Boolean disableHttps() {
+        return new MegaCmdHttps(false).call();
+    }
+
+    /**
+     * Requests if HTTPS is used for transactions
+     *
+     * @return {@link Boolean} with true|false if HTTPS is used for transactions or not
+     */
+    public Boolean isHttpsEnabled() {
+        return new MegaCmdHttps().call();
+    }
 }

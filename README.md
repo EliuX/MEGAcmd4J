@@ -19,6 +19,7 @@ There is a [Quick Start][quick-start] available for developers who want to start
 | Close session             | `logout`  | Close the current session. 
 | Put content in the Cloud  | `put`     | Upload content to the cloud.
 | Session Id                | `session` | Returns the id of the current session.
+| HTTPS                     | `https`   | Shows if HTTPS is used for transfers. Allows enabling and disabling this option.
 | Idenfity current username | `whoami`  | Returns the username of the current session.
 | Make directory            | `mkdir`   | Creates a directory or multiple based on a given remote path.
 | List files/directories    | `ls`      | List files and directories in a remote path. 

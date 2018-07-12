@@ -34,6 +34,14 @@ public class BasicActionsTest {
     }
 
     @Test
+    public void stage00_shouldEnableHttps() {
+        Assert.assertTrue(
+                "HTTPS should be enabled after the action",
+                sessionMega.enableHttps()
+        );
+    }
+
+    @Test
     public void stage00_shouldDeleteWorkingDirectoryIfExist() {
         sessionMega.remove("megacmd4j")
                 .deleteRecursively()
@@ -132,6 +140,11 @@ public class BasicActionsTest {
         Assert.assertTrue(directoryInfo.isDirectory());
     }
 
+    @Test
+    public void stage09_httpsShouldBeEnabled() {
+        Assert.assertTrue("HTTPS should be enabled", sessionMega.isHttpsEnabled());
+    }
+
     @Test(expected = MegaException.class)
     public void stage09_given_localPathDoesntExist_when_get_then_fail() {
         sessionMega.get("megacmd4j/level2", "target/savedLevel2")
@@ -198,6 +211,14 @@ public class BasicActionsTest {
     }
 
     @Test
+    public void stage14_shouldDisableHTTPS() {
+        Assert.assertFalse(
+                "HTTPS should be disabled",
+                sessionMega.disableHttps()
+        );
+    }
+
+    @Test
     public void stage14_given_emptyfolder_when_ls_then_exists_is_true() {
         Assert.assertTrue(
                 "The directory level3 should exist",
@@ -239,6 +260,14 @@ public class BasicActionsTest {
     @Test(expected = MegaException.class)
     public void stage17_given_unexistingDirectory_when_remove_then_fail() {
         sessionMega.removeDirectory("megacmd4j/level2/level3").run();
+    }
+
+    @Test
+    public void stage17_httpsShouldBeDisabled(){
+        Assert.assertFalse(
+                "HTTPS should be disabled",
+                sessionMega.isHttpsEnabled()
+        );
     }
 
     @Test(expected = MegaException.class)

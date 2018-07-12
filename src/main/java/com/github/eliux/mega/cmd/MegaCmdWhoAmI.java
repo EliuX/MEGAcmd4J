@@ -25,8 +25,7 @@ public class MegaCmdWhoAmI extends AbstractMegaCmdCaller<String> {
     public String call() {
         try {
             final String response =
-                    MegaUtils.execCmdWithOutput(executableCommand()).get(0);
-
+                    MegaUtils.execCmdWithSingleOutput(executableCommand());
             return parseUsername(response).orElseThrow(
                     () -> new MegaLoginRequiredException()
             );

@@ -2,6 +2,7 @@ package com.github.eliux.mega;
 
 import com.github.eliux.mega.error.*;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public interface MegaUtils {
     }
 
     static List<String> execCmdWithOutput(String cmd)
-            throws java.io.IOException {
+            throws IOException {
         final Process process = Runtime.getRuntime().exec(cmd, envVars());
 
         final Scanner scanner = new Scanner(process.getInputStream())
@@ -99,6 +100,14 @@ public interface MegaUtils {
         }
 
         return result;
+    }
+
+    static String execCmdWithSingleOutput(String cmd) throws IOException {
+        try{
+            return execCmdWithOutput(cmd).get(0);
+        }catch (IndexOutOfBoundsException ex){
+            return "";
+        }
     }
 
     static boolean isEmail(String token) {
