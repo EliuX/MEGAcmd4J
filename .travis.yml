@@ -2,7 +2,7 @@ language: java
 cache:
   directories:
     - $HOME/.megaCmd
-sudo: enabled
+sudo: required
 before_install:
  #Megacmd required ubuntu packages
  - sudo apt-get -y install libc-ares2 libcrypto++9 libmediainfo0 libzen0
