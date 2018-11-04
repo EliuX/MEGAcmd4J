@@ -46,6 +46,7 @@ public interface MegaUtils {
                 //Its Ok
                 break;
             case -51:
+            case 199:
             case 127:
                 throw new MegaWrongArgumentsException();
             case -52:

@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Before 1.0 - 2018-11-04
 - Add support for command `signup`.
+- Add Makefile
 
 ## Before 1.0.0-beta - 2018-07-04
 ### Added

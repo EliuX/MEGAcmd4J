@@ -16,10 +16,10 @@ before_deploy:
  - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
 deploy:
   provider: script
-  #After running release:clean release:prepare
-  #A release tag is created and this script is run
-  #And a release artifact is uploaded to the Maven Central
-  script: "mvn deploy --settings .travis/maven-settings.xml -DskipTests=true -P release"
+  #After running make release a release tag is created.
+  #Then run this script and a release artifact is
+  #uploaded to the Maven Central
+  script: make deploy
   skip_cleanup: true
   on:
     tags: true

@@ -96,11 +96,15 @@ name it operated over the last moved file and left the oldest one in that folder
 both files are keep in the folder but identified as different ones, even if the properties where the
 same; when a move operation was run over such filename it operated over both.  
 
-Also when I tested this on Windows I got more detailed error code, which also gives more detailed exceptions.
+Also when I tested this on Windows I got more detailed error code, which also gives more detailed 
+exceptions.
 
-I suppose these issues has to do with the libraries used for making calls to the Mega API, because in the 
-Linux version I had more features enabled that in the Windows one, whilst the Mega Cmd and SDK version 
-were the same. It has already been reported as an [issue](https://github.com/meganz/MEGAcmd/issues/52) in the MEGAcmd project.
+I suppose these issues has to do with the libraries used for making calls to the Mega API, because 
+in the  Linux version I had more features enabled that in the Windows one, whilst the Mega Cmd and 
+SDK version were the same. It has already been reported as an 
+[issue](https://github.com/meganz/MEGAcmd/issues/52) in the MEGAcmd project. It was afterwards solved
+by keeping return errors always positive to be compliant with POSIX standard. Thats why an
+issue was raised in this repository to provide support for this new feature.
 
 ## More information
 * Once installed [MEGAcmd][megacmd] in your system execute `mega-help` to check all commands.
@@ -108,10 +112,11 @@ You will be able to notice those who are used in this library and others which d
 reasons, but that will provide you additional capabilities. Try them out.
 
 ## Status
-Pre-release or Beta: The project has gone through multiple rounds of active development with a goal of reaching 
+Pre-release or Beta: The project has gone through multiple rounds of active development with a goal 
+of reaching 
 a stable release version, but is not there yet.
 
-Path of Development: Active (July 2nd 2018)
+Path of Development: Active (November 4th 2018)
 
 ## Author
 
