@@ -1,9 +1,8 @@
-package io.github.eliux.mega.cmd;
+package io.github.eliux.mega.cmd.cmd;
 
-import io.github.eliux.mega.Mega;
-import io.github.eliux.mega.MegaSession;
+import com.github.eliux.mega.Mega;
+import com.github.eliux.mega.MegaSession;
 import io.github.eliux.mega.error.MegaException;
-import io.github.eliux.mega.error.MegaWrongArgumentsException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,7 +28,7 @@ public class MegaCmdCommonsTest {
     Assert.assertNotNull(sessionMega.whoAmI());
   }
 
-  @Test(expected = MegaException.class, timeout = 30000)
+  @Test(expected = MegaException.class)
   public void given_emptyPassword_when_changePassword_then_fail() {
     final String currentPassword = System.getenv(Mega.PASSWORD_ENV_VAR);
 

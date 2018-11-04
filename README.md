@@ -67,10 +67,15 @@ indicates any non null response. E.g.
 * Install [MEGAcmd][megacmd]. Available packages for MEGAcmd in all supported 
 platforms should be found [here][megacmd-install].
 
-### Setup your credentials
-1. The most common way to setup your credentials would be using environment variables:
+### Environment variables to set
+
 * `MEGA_EMAIL`: Email used as username (lowercase)
 * `MEGA_PWD`: Corresponding password
+* `CMD_TTL_ENV_VAR`: Maximum time to live of a running MEGAcmd command.
+
+### Setup your credentials
+1. The most common way to setup your credentials would be using environment variables `MEGA_EMAIL` 
+and `MEGA_PWD`.
 
 2. Use an existing session can be a saver way. You can use it from your app as long 
 as it don't be closed.
