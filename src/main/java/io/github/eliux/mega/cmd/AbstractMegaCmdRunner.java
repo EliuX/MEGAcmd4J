@@ -1,6 +1,5 @@
 package io.github.eliux.mega.cmd;
 
-import static io.github.eliux.mega.MegaUtils.handleResult;
 
 import io.github.eliux.mega.MegaUtils;
 
@@ -18,7 +17,7 @@ public abstract class AbstractMegaCmdRunner extends AbstractMegaCmd implements R
     protected void executeSysCmd(String cmdStr) {
         try {
           final int result = MegaUtils.execCmd(cmdStr);
-          handleResult(result);
+          MegaUtils.handleResult(result);
         } catch (IOException e) {
             throw new MegaIOException();
         } catch (InterruptedException e) {

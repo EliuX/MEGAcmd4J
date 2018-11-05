@@ -83,7 +83,7 @@ public interface MegaUtils {
       throws java.io.IOException, InterruptedException {
     final Process process = Runtime.getRuntime().exec(cmd);
 
-    Boolean succeeded = process.waitFor(MEGA_TTL, TimeUnit.SECONDS);
+    Boolean succeeded = process.waitFor(MEGA_TTL, TimeUnit.MILLISECONDS);
 
     return succeeded ? process.exitValue() : -1;
   }
