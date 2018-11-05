@@ -1,7 +1,7 @@
 package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.Mega;
-import io.github.eliux.mega.error.MegaWrongArgumentsException;
+import io.github.eliux.mega.error.MegaUnexpectedFailureException;
 import org.junit.Test;
 
 public class MegaCmdSignupTest {
@@ -18,12 +18,12 @@ public class MegaCmdSignupTest {
         .run();
   }
 
-  @Test(expected = MegaWrongArgumentsException.class)
+  @Test(expected = MegaUnexpectedFailureException.class)
   public void givenEmptyUser_whenSignup_thenThrowWrongArgumentsException() {
     Mega.signup("", "anypassword").run();
   }
 
-  @Test(expected = MegaWrongArgumentsException.class)
+  @Test(expected = MegaUnexpectedFailureException.class)
   public void givenEmptyPassword_whenSignup_thenThrowWrongArgumentsException() {
     Mega.signup("noreply@gmail.com", "").run();
   }

@@ -54,6 +54,7 @@ public interface MegaUtils {
         //Its Ok
         break;
       case -51:
+      case 127:
         throw new MegaWrongArgumentsException();
       case -52:
         throw new MegaInvalidEmailException();
