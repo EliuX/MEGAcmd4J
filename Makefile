@@ -6,4 +6,4 @@ release:
 
 .PHONY: deploy
 deploy:
-	mvn deploy --settings .travis/maven-settings.xml -DskipTests=true -P release
+	mvn deploy --settings .travis/maven-settings.xml -DskipTests=true -P release -e

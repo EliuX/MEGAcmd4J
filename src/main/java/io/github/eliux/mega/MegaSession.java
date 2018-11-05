@@ -85,8 +85,8 @@ public class MegaSession {
    *
    * @param localFilePath {@link String} with the path of the file/folder to upload
    * @return {@link MegaCmdPutSingle} to be configured and run
-   * @see {@link #uploadFile(String, String)}
-   * @see {@link #uploadFiles(String, String...)}
+   * @see #uploadFile(String, String)
+   * @see #uploadFiles(String, String...)
    */
   public MegaCmdPutSingle uploadFile(String localFilePath) {
     return new MegaCmdPutSingle(localFilePath);
@@ -99,8 +99,8 @@ public class MegaSession {
    * @param remotePath {@link String} of the remotePath where upload the content of {@code
    * localFilePath}
    * @return {@link MegaCmdPutSingle} to be configured and run
-   * @see {@link #uploadFile(String)
-   * @see {@link #uploadFiles(String, String...)}
+   * @see #uploadFile(String)
+   * @see #uploadFiles(String, String...)
    */
   public MegaCmdPutSingle uploadFile(String localFilePath, String remotePath) {
     return new MegaCmdPutSingle(localFilePath, remotePath);
@@ -112,8 +112,8 @@ public class MegaSession {
    * @param remotePath {@link String} with the remote path where to upload the files/folders
    * @param localFilesNames {@link String[]} with local files/folders to be uploaded
    * @return {@link MegaCmdPutMultiple} to be configured and run
-   * @see {@link #uploadFile(String, String)}
-   * @see {@link #uploadFile(String)}
+   * @see #uploadFile(String, String)
+   * @see #uploadFile(String)
    */
   public MegaCmdPutMultiple uploadFiles(
       String remotePath, String... localFilesNames
@@ -173,7 +173,7 @@ public class MegaSession {
    *
    * @param remotePath {@link String} with the remote path of the file/folder to be downloaded
    * @return {@link MegaCmdGet} to be configured and run.
-   * @see {@link #get(String, String)}
+   * @see #get(String, String)
    */
   public MegaCmdGet get(String remotePath) {
     return new MegaCmdGet(remotePath);
@@ -186,7 +186,7 @@ public class MegaSession {
    * @param remotePath {@link String} with the remote path of the file/folder to be downloaded
    * @param localPath {@link String} with the local path where to put the downloaded file/folder
    * @return {@link MegaCmdGet} to be configured and run.
-   * @see {@link #get(String)}
+   * @see #get(String)
    */
   public MegaCmdGet get(String remotePath, String localPath) {
     return new MegaCmdGet(remotePath, localPath);
@@ -197,7 +197,7 @@ public class MegaSession {
    *
    * @param remotePath {@link String} with the remote path of the file to remove
    * @return {@link MegaCmdRemove} not null
-   * @see {@link #removeDirectory(String)}
+   * @see #removeDirectory(String)
    */
   public MegaCmdRemove remove(String remotePath) {
     return new MegaCmdRemove(remotePath);
@@ -218,22 +218,21 @@ public class MegaSession {
    *
    * @param remotePath {@link String} with the remote path
    * @return {@link Long} with the amount of elements
-   * @see {@link #count(String, Predicate)}
+   * @see #count(String, Predicate)
    */
   public long count(String remotePath) {
     return ls(remotePath).count();
   }
 
   /**
-   * Count the amount of elements in a remote path, filtering by a {@link Predicate<FileInfo>}.
+   * Count the amount of elements in a remote path, filtering by a Predicate.
    *
    * @param remotePath {@link String} with the remote path
-   * @param predicate {@link Predicate<FileInfo>} that will filter the count of elements to have in
-   * count
+   * @param predicate {@link Predicate} filter to narrow elements to count
    * @return {@link Long} with the amount of elements
-   * @see {@link #count(String)}
+   * @see #count(String)
    */
-  public long count(String remotePath, Predicate<FileInfo> predicate) {
+  public long count(String remotePath, Predicate predicate) {
     return ls(remotePath).count(predicate);
   }
 
@@ -242,14 +241,14 @@ public class MegaSession {
   }
 
   /**
-   * Shares a resource hosted in Mega with a given user, giving him an specific {@link
-   * MegaCmdShare.AccessLevel}.
+   * Shares a resource hosted in Mega with a given user, giving him an specific
+   * <code>MegaCmdShare.AccessLevel</code>.
    *
    * @param remotePath {@link String} with the remote path of the resource in MEGA to share
    * @param userMailToShareWith {@link String} with the username of the user to share the resource
    * with
    * @return {@link MegaCmdShare} not null
-   * @see {@link #export(String)}
+   * @see #export(String)
    */
   public MegaCmdShare share(String remotePath, String userMailToShareWith) {
     return new MegaCmdShare(remotePath, userMailToShareWith);
@@ -260,7 +259,7 @@ public class MegaSession {
    *
    * @param remotePath {@link String} with the remote path of the resource to be exported
    * @return {@link MegaCmdExport} not null
-   * @see {@link #share(String, String)}
+   * @see #share(String, String)
    */
   public MegaCmdExport export(String remotePath) {
     return new MegaCmdExport(remotePath);
