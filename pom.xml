@@ -4,7 +4,7 @@
 
     <groupId>com.github.eliux</groupId>
     <artifactId>megacmd4j</artifactId>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOT</version>
     <!-- To change the version use
     mvn versions:set -DnewVersion=${newversion} -->
 
