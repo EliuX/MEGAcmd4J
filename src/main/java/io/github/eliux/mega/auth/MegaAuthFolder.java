@@ -1,7 +1,7 @@
 package io.github.eliux.mega.auth;
 
-import com.github.eliux.mega.MegaSession;
-import io.github.eliux.mega.cmd.cmd.MegaCmdLogin;
+import io.github.eliux.mega.MegaSession;
+import io.github.eliux.mega.cmd.MegaCmdLogin;
 import io.github.eliux.mega.error.MegaLoginException;
 
 /**
