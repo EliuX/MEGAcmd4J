@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Defines a remote file/Folder in MEGA
  *
- * @see {@link FileStatus}
+ * @see FileStatus
  */
 public class FileInfo {
 

@@ -5,7 +5,7 @@ import io.github.eliux.mega.error.MegaInvalidResponseException;
 /**
  * Defines the status of the remote file/folder in MEGA
  *
- * @see {@link FileInfo}
+ * @see FileInfo
  */
 public class FileStatus {
 
