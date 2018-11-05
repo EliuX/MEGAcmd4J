@@ -1,10 +1,11 @@
 package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.MegaUtils;
-import java.time.LocalDateTime;
-import java.time.Month;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.time.LocalDateTime;
+import java.time.Month;
 
 public class MegaUtilsTest {
 

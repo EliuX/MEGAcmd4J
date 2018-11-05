@@ -5,18 +5,15 @@ import io.github.eliux.mega.MegaSession;
 import io.github.eliux.mega.MegaTestUtils;
 import io.github.eliux.mega.error.MegaException;
 import io.github.eliux.mega.error.MegaInvalidStateException;
+import org.junit.*;
+import org.junit.runners.MethodSorters;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BasicActionsTest {

@@ -1,8 +1,9 @@
 package io.github.eliux.mega.cmd;
 
-import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Optional;
 
 public class MegaCmdSessionTest {
 
