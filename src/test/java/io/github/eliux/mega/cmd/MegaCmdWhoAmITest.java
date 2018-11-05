@@ -1,9 +1,9 @@
 package io.github.eliux.mega.cmd;
 
-import io.github.eliux.mega.cmd.MegaCmdWhoAmI;
-import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Optional;
 
 public class MegaCmdWhoAmITest {
 

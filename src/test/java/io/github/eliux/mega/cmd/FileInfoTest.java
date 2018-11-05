@@ -2,9 +2,10 @@ package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
-import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Optional;
 
 public class FileInfoTest {
 
