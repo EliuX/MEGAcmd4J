@@ -4,6 +4,10 @@
 release:
 	mvn release:clean release:prepare -X
 
+.PHONY: release-tag
+release-tag:
+	mvn release:clean release:prepare -X
+
 .PHONY: deploy
 deploy:
 	mvn deploy --settings .travis/maven-settings.xml -DskipTests=true -P release
