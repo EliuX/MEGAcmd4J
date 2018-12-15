@@ -3,6 +3,7 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
 import io.github.eliux.mega.error.MegaException;
+import io.github.eliux.mega.error.MegaIOException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

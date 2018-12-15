@@ -3,17 +3,8 @@ package io.github.eliux.mega;
 import static io.github.eliux.mega.Mega.CMD_TTL_ENV_VAR;
 import static io.github.eliux.mega.Mega.envVars;
 
-import io.github.eliux.mega.error.MegaConfirmationRequiredException;
-import io.github.eliux.mega.error.MegaIOException;
-import io.github.eliux.mega.error.MegaInvalidEmailException;
-import io.github.eliux.mega.error.MegaInvalidStateException;
-import io.github.eliux.mega.error.MegaInvalidTypeException;
-import io.github.eliux.mega.error.MegaLoginRequiredException;
-import io.github.eliux.mega.error.MegaNodesNotFetchedException;
-import io.github.eliux.mega.error.MegaOperationNotAllowedException;
-import io.github.eliux.mega.error.MegaResourceNotFoundException;
-import io.github.eliux.mega.error.MegaUnexpectedFailureException;
-import io.github.eliux.mega.error.MegaWrongArgumentsException;
+import io.github.eliux.mega.error.*;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -53,29 +44,30 @@ public interface MegaUtils {
       case 0:
         //Its Ok
         break;
-      case -51:
-      case 127:
+      case 51:
         throw new MegaWrongArgumentsException();
-      case -52:
+      case 52:
         throw new MegaInvalidEmailException();
-      case -53:
+      case 53:
         throw new MegaResourceNotFoundException();
-      case -54:
+      case 54:
         throw new MegaInvalidStateException();
-      case -55:
+      case 55:
         throw new MegaInvalidTypeException();
-      case -56:
+      case 56:
         throw new MegaOperationNotAllowedException();
-      case -57:
+      case 57:
         throw new MegaLoginRequiredException();
-      case -58:
+      case 58:
         throw new MegaNodesNotFetchedException();
-      case -59:
+      case 59:
         throw new MegaUnexpectedFailureException();
-      case -60:
+      case 60:
         throw new MegaConfirmationRequiredException();
+      case 61:
+        //TODO throw new StringRequiredException();
       default:
-        throw new MegaUnexpectedFailureException();
+        throw new MegaUnexpectedFailureException(code);
     }
   }
 

@@ -3,8 +3,7 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
 import io.github.eliux.mega.MegaTestUtils;
-import io.github.eliux.mega.error.MegaException;
-import io.github.eliux.mega.error.MegaInvalidStateException;
+import io.github.eliux.mega.error.*;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 
@@ -98,7 +97,7 @@ public class BasicActionsTest {
     megaCmd.run();
   }
 
-  @Test(expected = MegaException.class)
+  @Test(expected = MegaWrongArgumentsException.class)
   public void stage04_given_multilevelfolder_when_mkdir_withoutRecursivelyFlag_then_fail() {
     sessionMega.makeDirectory("megacmd4j/level2/level3").run();
   }
@@ -111,7 +110,7 @@ public class BasicActionsTest {
         .run();
   }
 
-  @Test(expected = MegaException.class)
+  @Test(expected = MegaInvalidStateException.class)
   public void stage06_given_multilevelfolder_when_mkdir_withRecursivelyAndthrowErrorIfExistsFlag_then_fail() {
     sessionMega.makeDirectory("megacmd4j/level2/level3")
         .recursively()
@@ -150,7 +149,7 @@ public class BasicActionsTest {
     Assert.assertTrue(directoryInfo.isDirectory());
   }
 
-  @Test(expected = MegaException.class)
+  @Test(expected = MegaInvalidTypeException.class)
   public void stage09_given_localPathDoesntExist_when_get_then_fail() {
     sessionMega.get("megacmd4j/level2", "target/savedLevel2")
         .run();
@@ -275,7 +274,7 @@ public class BasicActionsTest {
     );
   }
 
-  @Test(expected = MegaException.class)
+  @Test(expected = MegaResourceNotFoundException.class)
   public void stage18_given_unexistingDirectory_when_share_then_fail() {
     String username = System.getenv(Mega.USERNAME_ENV_VAR);
     sessionMega.share("megacmd4j/unexisting-folder", username)
@@ -291,11 +290,11 @@ public class BasicActionsTest {
         .run();
   }
 
-  @Test(expected = MegaException.class)
+  @Test(expected = MegaResourceNotFoundException.class)
   public void stage19_given_unexistingDirectory_when_export_then_fail() {
-    sessionMega.export("megacmd4j/unexisting-folder")
-        .enablePublicLink()
-        .call();
+    final ExportInfo info = sessionMega.export("megacmd4j/unexisting-folder")
+            .enablePublicLink()
+            .call();
   }
 
   @Test

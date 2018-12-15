@@ -48,7 +48,7 @@ public class ExportInfoTest {
   }
 
   @Test(expected = MegaInvalidResponseException.class)
-  public void given_invalid_publicLinkPrefix_when_parseExportListInfo_then_fail() {
+  public void given_invalid_public_link_prefix_when_parseExportListInfo_then_fail() {
     //Given
     String entryWithInvalidRemotePath = "megacmd4j/level2 (folder, shared as exported " +
         " folder content: https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
@@ -58,7 +58,7 @@ public class ExportInfoTest {
   }
 
   @Test(expected = MegaInvalidResponseException.class)
-  public void given_invalid_ending_when_parseExportListInfo_then_fail() {
+  public void given_invalid_public_link_ending_when_parseExportListInfo_then_fail() {
     //Given
     String entryWithInvalidRemotePath = "megacmd4j/level2 (folder, shared as exported " +
         " folder content: https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA";

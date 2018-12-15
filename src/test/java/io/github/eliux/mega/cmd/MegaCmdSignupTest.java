@@ -2,6 +2,7 @@ package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.error.MegaException;
+import io.github.eliux.mega.error.MegaWrongArgumentsException;
 import org.junit.Test;
 
 public class MegaCmdSignupTest {
@@ -18,7 +19,7 @@ public class MegaCmdSignupTest {
                 .run();
     }
 
-    @Test(expected = MegaException.class)
+    @Test(expected = MegaWrongArgumentsException.class)
     public void givenEmptyUser_whenSignup_thenThrowWrongArgumentsException() {
         Mega.signup("", "anypassword").run();
     }
