@@ -1,20 +1,16 @@
 package io.github.eliux.mega;
 
-import static io.github.eliux.mega.Mega.CMD_TTL_ENV_VAR;
-import static io.github.eliux.mega.Mega.envVars;
-
 import io.github.eliux.mega.error.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+
+import static io.github.eliux.mega.Mega.CMD_TTL_ENV_VAR;
+import static io.github.eliux.mega.Mega.envVars;
 
 public interface MegaUtils {
 

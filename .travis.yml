@@ -10,6 +10,7 @@ before_install:
  #Install Megacmd
  - wget https://mega.nz/linux/MEGAsync/xUbuntu_14.04/amd64/megacmd-xUbuntu_14.04_amd64.deb
  - sudo dpkg -i ./megacmd-xUbuntu_14.04_amd64.deb
+ - mega-version
  - mega-help
 before_deploy:
  #GPG keys
