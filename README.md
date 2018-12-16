@@ -117,11 +117,10 @@ You will be able to notice those who are used in this library and others which d
 reasons, but that will provide you additional capabilities. Try them out.
 
 ## Status
-Pre-release or Beta: The project has gone through multiple rounds of active development with a goal 
-of reaching 
-a stable release version, but is not there yet.
+Release candidate: is a beta version with potential to be a final product, which is ready to release unless significant 
+bugs emerge.
 
-Path of Development: Active (November 4th 2018)
+Path of Development: Active (December 16th 2018)
 
 ## Author
 
