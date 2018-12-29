@@ -36,7 +36,10 @@ public interface MegaUtils {
   }
 
   static void handleResult(int code) {
-    switch (code) {
+    int posixExitStatus = Optional.ofNullable(code)
+            .map(Math::abs)
+            .orElse(-1);
+    switch (posixExitStatus) {
       case 0:
         //Its Ok
         break;
