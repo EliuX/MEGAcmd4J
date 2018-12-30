@@ -20,6 +20,9 @@ public abstract class OSPlatform {
         return current;
     }
 
+    protected OSPlatform() {
+    }
+
     public static boolean isWindows() {
         return System.getProperty("os.name").toLowerCase().startsWith("windows");
     }

@@ -30,6 +30,7 @@ There is a [Quick Start][quick-start] available for developers who want to start
 | Shares folder             | `share`   | Shares/Unshares folder with user
 | Export to the Internet    | `export`  | Create, delete or list existing public links
 | Signup user               | `signup`  | Register as user with a given email
+| Version                   | `version` | Prints MEGAcmd versioning and extra info
         
 If you have any doubt about how each feature works, please run
 
