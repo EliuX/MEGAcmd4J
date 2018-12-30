@@ -2,7 +2,7 @@ package io.github.eliux.mega.cmd;
 
 public abstract class AbstractMegaCmdPathHandler extends AbstractMegaCmdRunnerWithParams {
 
-    private boolean remoteFolderCreatedIfNotPresent;
+    private boolean remotePathCreatedIfNotPresent;
 
     private boolean uploadQueued;
 
@@ -12,7 +12,7 @@ public abstract class AbstractMegaCmdPathHandler extends AbstractMegaCmdRunnerWi
     String cmdParams() {
         StringBuilder cmdParamsBuilder = new StringBuilder();
 
-        if (remoteFolderCreatedIfNotPresent) {
+        if (remotePathCreatedIfNotPresent) {
             cmdParamsBuilder.append("-c ");
         }
 
@@ -29,18 +29,18 @@ public abstract class AbstractMegaCmdPathHandler extends AbstractMegaCmdRunnerWi
         return cmdParamsBuilder.toString();
     }
 
-    public <R extends AbstractMegaCmdPathHandler> R createRemoteIfNotPresent() {
-        remoteFolderCreatedIfNotPresent = true;
+    public <R extends AbstractMegaCmdPathHandler> R createRemotePathIfNotPresent() {
+        remotePathCreatedIfNotPresent = true;
         return (R) this;
     }
 
-    public <R extends AbstractMegaCmdPathHandler> R skipIfRemoteNotPresent() {
-        remoteFolderCreatedIfNotPresent = false;
+    public <R extends AbstractMegaCmdPathHandler> R skipIfRemotePathNotPresent() {
+        remotePathCreatedIfNotPresent = false;
         return (R) this;
     }
 
-    public boolean isRemoteFolderCreatedIfNotPresent() {
-        return remoteFolderCreatedIfNotPresent;
+    public boolean isRemotePathCreatedIfNotPresent() {
+        return remotePathCreatedIfNotPresent;
     }
 
     public <R extends AbstractMegaCmdPathHandler> R queueUpload() {

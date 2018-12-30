@@ -78,7 +78,7 @@ public class BasicActionsTest {
     );
 
     sessionMega.uploadFile("target/yolo-infinite.txt", "megacmd4j/")
-        .createRemoteIfNotPresent()
+        .createRemotePathIfNotPresent()
         .run();
   }
 
@@ -87,7 +87,7 @@ public class BasicActionsTest {
     MegaTestUtils.createTextFiles("yolo", 10);
 
     final MegaCmdPutMultiple megaCmd = sessionMega.uploadFiles("megacmd4j/")
-        .createRemoteIfNotPresent();
+        .createRemotePathIfNotPresent();
 
     IntStream.rangeClosed(1, 10).forEach(i -> {
       String filename = MegaTestUtils.testTextFileName("yolo", i);

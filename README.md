@@ -81,7 +81,7 @@ and `MEGA_PWD`.
 as it don't be closed.
 
 ## Continuous Integrations
-As most OSS projects in github this one uses [Travis CI](https://travis-ci.com/EliuX/MEGAcmd4J). 
+As most OSS projects in github, this one uses [Travis CI](https://travis-ci.com/EliuX/MEGAcmd4J). 
 I you want a CLI for your project, its recommend to install the correspondent ruby gem:
 
 ```bash
