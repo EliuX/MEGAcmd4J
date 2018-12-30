@@ -24,5 +24,7 @@ public abstract class OSPlatform {
         return System.getProperty("os.name").toLowerCase().startsWith("windows");
     }
 
+    abstract public String parseLocalPath(String filePath);
+
     abstract public String cmdInstruction(String cmd);
 }
