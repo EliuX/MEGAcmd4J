@@ -9,7 +9,6 @@ import java.util.List;
 
 public class MegaCmdVersionTest {
 
-
     @Test
     public void shouldReturnValidVersion() {
         final MegaCmdVersion.MegaCmdVersionResponse megaCmdVersion =
@@ -23,8 +22,8 @@ public class MegaCmdVersionTest {
         );
 
         Assert.assertTrue(
-                "version code had not 5 characters",
-                megaCmdVersion.getVersionCode().matches("\\d{5}")
+                "version code had not 3 characters",
+                megaCmdVersion.getVersionCode().matches("\\d{3,}")
         );
     }
 
@@ -68,8 +67,8 @@ public class MegaCmdVersionTest {
         );
 
         Assert.assertTrue(
-                "version code had not 5 characters",
-                extendedVersion.getVersionCode().matches("\\d{5}")
+                "version code had not 3 characters",
+                extendedVersion.getVersionCode().matches("\\d{3,}")
         );
 
         Assert.assertTrue(
