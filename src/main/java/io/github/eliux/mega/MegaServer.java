@@ -1,6 +1,10 @@
 package io.github.eliux.mega;
 
+import io.github.eliux.mega.error.MegaIOException;
+import io.github.eliux.mega.error.MegaUnexpectedFailureException;
 import io.github.eliux.mega.platform.OSPlatform;
+
+import java.io.IOException;
 
 public class MegaServer {
 
@@ -18,7 +22,11 @@ public class MegaServer {
     }
 
     public void start() {
-
+        try {
+            MegaUtils.execCmd(OSPlatform.getCurrent().cmdInstruction("help"));
+        } catch (Exception e) {
+            throw new MegaUnexpectedFailureException();
+        }
     }
 
     public void stop() {

@@ -22,6 +22,7 @@ public interface Mega {
 
   public static MegaSession init() {
     try {
+      MegaServer.getCurrent().start();
       return currentSession();
     } catch (MegaException e) {
       return login(MegaAuthCredentials.createFromEnvVariables());

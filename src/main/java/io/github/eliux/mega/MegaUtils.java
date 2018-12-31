@@ -2,7 +2,9 @@ package io.github.eliux.mega;
 
 import io.github.eliux.mega.error.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -70,7 +72,7 @@ public interface MegaUtils {
     }
   }
 
-  static int execCmd(String cmd, String... envVars)
+  static int execCmd(String cmd)
       throws java.io.IOException, InterruptedException {
     final Process process = Runtime.getRuntime().exec(cmd);
 
@@ -81,15 +83,18 @@ public interface MegaUtils {
 
   static List<String> execCmdWithOutput(String cmd)
       throws java.io.IOException {
-    final Process process = Runtime.getRuntime().exec(cmd, envVars());
+    ProcessBuilder pb = new ProcessBuilder(cmd.split(" "));
+    pb.redirectErrorStream(true);
 
-    final Scanner scanner = new Scanner(process.getInputStream())
+    final Process process = pb.start();
+
+    final Scanner inputScanner = new Scanner(process.getInputStream())
         .useDelimiter(System.getProperty("line.separator"));
 
     final List<String> result = new ArrayList<>();
 
-    while (scanner.hasNext()) {
-      result.add(scanner.next());
+    while (inputScanner.hasNext()) {
+      result.add(inputScanner.next());
     }
 
     process.destroy();

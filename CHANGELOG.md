@@ -13,7 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - All exit codes are converted always to positive to comply with POSIX standard.
 ### Fixed 
-- Fixed #13 so local and dest paths can support whitespaces  
+- Fixed #13 so local and dest paths can support whitespaces 
+- Fixed #11, so now paths with whitespaces can be used  
+- Fixed #8, so when Mega.init is called the MEGAcmdServer is started
 
 ## Before 1.2.2 - 2018-12-16
 ### Changed

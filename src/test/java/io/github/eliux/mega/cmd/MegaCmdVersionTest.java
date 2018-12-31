@@ -61,6 +61,18 @@ public class MegaCmdVersionTest {
                 (MegaCmdVersion.MegaCmdVersionExtendedResponse) version;
 
         Assert.assertTrue(
+                "Invalid MEGAcmd version",
+                extendedVersion.getVersion().matches(
+                        ".{1,3}\\..{1,3}\\..{1,3}"
+                )
+        );
+
+        Assert.assertTrue(
+                "version code had not 5 characters",
+                extendedVersion.getVersionCode().matches("\\d{5}")
+        );
+
+        Assert.assertTrue(
                 "The SDK version had not the expected format",
                 extendedVersion.getSdkVersion().matches(".{1,3}\\..{1,3}\\..{1,3}")
         );
