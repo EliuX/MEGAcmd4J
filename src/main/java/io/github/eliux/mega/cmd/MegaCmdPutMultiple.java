@@ -1,6 +1,8 @@
 package io.github.eliux.mega.cmd;
 
+import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaCmdInvalidArguments;
+import io.github.eliux.mega.platform.OSPlatform;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,12 +43,15 @@ public class MegaCmdPutMultiple extends AbstractMegaCmdPut {
             );
         }
 
-        return localFiles.stream().collect(Collectors.joining(" "));
+        return localFiles.stream()
+                .map(OSPlatform.getCurrent()::parseLocalPath)
+                .collect(Collectors.joining(" "));
     }
 
     @Override
     protected String cmdFileParams() {
-        return cmdLocalFilesParams() + " " + getRemotePath();
+        final String remotePath = MegaUtils.parseRemotePath(getRemotePath());
+        return cmdLocalFilesParams() + " " + remotePath;
     }
 
     public void addLocalFileToUpload(String filename) {
