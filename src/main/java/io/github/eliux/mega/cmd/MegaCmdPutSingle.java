@@ -24,7 +24,7 @@ public class MegaCmdPutSingle extends AbstractMegaCmdPut {
     protected String cmdFileParams() {
         final String localFile = OSPlatform.getCurrent()
                 .parseLocalPath(getLocalFile());
-        StringBuilder cmdFileParamsBuilder = new StringBuilder(localFile);
+        final StringBuilder cmdFileParamsBuilder = new StringBuilder(localFile);
 
         getRemotePath().map(MegaUtils::parseRemotePath)
                 .map(" "::concat)

@@ -74,6 +74,7 @@ public interface MegaUtils {
 
   static int execCmd(String cmd)
       throws java.io.IOException, InterruptedException {
+    System.out.printf("Execute command: %s%n",cmd);
     final Process process = Runtime.getRuntime().exec(cmd);
 
     Boolean succeeded = process.waitFor(MEGA_TTL, TimeUnit.MILLISECONDS);
@@ -83,6 +84,7 @@ public interface MegaUtils {
 
   static List<String> execCmdWithOutput(String cmd)
       throws java.io.IOException {
+    System.out.printf("Execute command with output: %s%n",cmd);
     ProcessBuilder pb = new ProcessBuilder(cmd.split(" "));
     pb.redirectErrorStream(true);
 
