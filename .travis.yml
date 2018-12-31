@@ -1,8 +1,5 @@
 dist: trusty
 language: java
-cache:
-  directories:
-    - $HOME/.megaCmd
 sudo: required
 before_install:
  #Megacmd required ubuntu packages
