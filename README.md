@@ -106,7 +106,7 @@ reasons, but that will provide you additional capabilities. Try them out.
 Release candidate: is a beta version with potential to be a final product, which is ready to release unless significant 
 bugs emerge.
 
-Path of Development: Active (December 30th 2018)
+Path of Development: Active (December 31th 2018)
 
 ## Author
 
