@@ -125,4 +125,8 @@ public interface MegaUtils {
   static boolean isDirectory(String token) {
     return !isEmail(token) && DIRECTORY_PATTERN.matcher(token).find();
   }
+
+  static String parseRemotePath(String remotePath) {
+    return String.format("\"%s\"", remotePath);
+  }
 }

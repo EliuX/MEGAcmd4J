@@ -14,6 +14,6 @@ public class UnixPlatform extends OSPlatform {
     }
 
     public String parseLocalPath(String filePath) {
-        return filePath;
+        return String.format("\"%s\"", filePath);
     }
 }

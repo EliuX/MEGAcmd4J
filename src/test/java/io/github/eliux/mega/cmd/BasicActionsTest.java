@@ -27,8 +27,7 @@ public class BasicActionsTest {
   @AfterClass
   public static void finishSession() {
     sessionMega.removeDirectory("megacmd4j").run();
-    sessionMega.remove("yolo*.txt").run();
-
+    sessionMega.remove("yolo*.txt").ignoreErrorIfNotPresent().run();
     sessionMega.logout();
   }
 
@@ -215,109 +214,147 @@ public class BasicActionsTest {
   }
 
   @Test
-  public void stage14_shouldDisableHTTPS() {
-    Assert.assertFalse(
-        "HTTPS should be disabled",
-        sessionMega.disableHttps()
-    );
-  }
-
-  @Test
-  public void stage14_given_emptyfolder_when_ls_then_exists_is_true() {
-    Assert.assertTrue(
-        "The directory level3 should exist",
-        sessionMega.ls("megacmd4j/level2/level3").exists()
-    );
-  }
-
-  @Test
-  public void stage15_given_nonExistingFile_when_ls_then_exists_is_false() {
-    Assert.assertFalse(
-        "That file/directory doesnt exist",
-        sessionMega.ls("megacmd4j/level2/level33").exists()
-    );
-  }
-
-  @Test
-  public void stage15_deleteMultipleFilesWithMaskShouldBeOk() {
-    if (sessionMega.exists("megacmd4j/level2/yolo-*.txt")) {
-      sessionMega.remove("megacmd4j/level2/yolo-*.txt").run();
-    }
-
-    Assert.assertEquals(
-        "There should be only 1 file",
-        1,
-        sessionMega.count("megacmd4j/level2", FileInfo::isFile)
+  public void stage13_uploadFile_using_folders_with_whitespace() {
+    MegaTestUtils.createTextFile(
+            "target/folder with white spaces/yolo.txt",
+            "You only live infinitive times..."
     );
 
-    Assert.assertTrue(
-        "There should be left a directory",
-        sessionMega.exists("megacmd4j/level2/level3")
-    );
+    sessionMega.uploadFile("target/folder with white spaces/yolo.txt",
+            "megacmd4j/remote folder/")
+            .createRemotePathIfNotPresent()
+            .run();
+
+    Assert.assertTrue(sessionMega.ls("megacmd4j/remote folder/yolo.txt")
+            .exists());
   }
 
-  @Test
-  public void stage16_given_directory_when_remove_then_success() {
-    sessionMega.removeDirectory("megacmd4j/level2/level3").run();
-  }
-
-  @Test(expected = MegaException.class)
-  public void stage17_given_unexistingDirectory_when_remove_then_fail() {
-    sessionMega.removeDirectory("megacmd4j/level2/level3").run();
-  }
-
-  @Test
-  public void stage17_httpsShouldBeDisabled() {
-    Assert.assertFalse(
-        "HTTPS should be disabled",
-        sessionMega.isHttpsEnabled()
-    );
-  }
-
-  @Test(expected = MegaResourceNotFoundException.class)
-  public void stage18_given_unexistingDirectory_when_share_then_fail() {
-    String username = System.getenv(Mega.USERNAME_ENV_VAR);
-    sessionMega.share("megacmd4j/unexisting-folder", username)
-        .grantReadAndWriteAccess()
-        .run();
-  }
-
-  @Test
-  public void stage18_given_existingDirectory_when_share_then_success() {
-    String username = System.getenv(Mega.USERNAME_ENV_VAR);
-    sessionMega.share("megacmd4j/level2", username)
-        .grantReadAndWriteAccess()
-        .run();
-  }
-
-  @Test(expected = MegaResourceNotFoundException.class)
-  public void stage19_given_unexistingDirectory_when_export_then_fail() {
-    final ExportInfo info = sessionMega.export("megacmd4j/unexisting-folder")
-            .enablePublicLink()
-            .call();
-  }
-
-  @Test
-  public void stage19_given_existingDirectory_when_export_then_success() {
-    final ExportInfo exportInfo = sessionMega.export("megacmd4j/level2")
-        .enablePublicLink()
-        .call();
-
-    Assert.assertEquals("/megacmd4j/level2", exportInfo.getRemotePath());
-
-    Assert.assertTrue(exportInfo.getPublicLink().startsWith("https://mega.nz/"));
-    Assert.assertTrue(exportInfo.getPublicLink().length()
-        - "https://mega.nz/".length() > 5);
-  }
-
-  @Test
-  public void stage20_exportedFolderShouldAppearInListings() {
-    final List<ExportInfo> exportedFiles
-        = sessionMega.export("megacmd4j").list();
-
-    Assert.assertTrue(exportedFiles.stream()
-        .map(ExportInfo::getRemotePath)
-        .filter("megacmd4j/level2"::equals)
-        .findAny().isPresent());
-  }
+//  @Test
+//  public void stage14_should_create_folder_with_whitespaces() {
+//    sessionMega.makeDirectory("megacmd4j/level2/another folder/")
+//            .recursively()
+//            .run();
+//
+//    Assert.assertTrue(sessionMega.ls("megacmd4j/level2/another folder/")
+//            .exists());
+//  }
+//
+//  @Test
+//  public void stage14_should_disable_HTTPS() {
+//    Assert.assertFalse(
+//        "HTTPS should be disabled",
+//        sessionMega.disableHttps()
+//    );
+//  }
+//
+//  @Test
+//  public void stage14_given_emptyfolder_when_ls_then_exists_is_true() {
+//    Assert.assertTrue(
+//        "The directory level3 should exist",
+//        sessionMega.ls("megacmd4j/level2/level3").exists()
+//    );
+//  }
+//
+//  @Test
+//  public void stage15_given_nonExistingFile_when_ls_then_exists_is_false() {
+//    Assert.assertFalse(
+//        "That file/directory doesnt exist",
+//        sessionMega.ls("megacmd4j/level2/level33").exists()
+//    );
+//  }
+//
+//
+//  @Test
+//  public void stage15_should_move_file_from_path_with_whitespace() {
+//    sessionMega.move("megacmd4j/remote folder/yolo.txt",
+//            "megacmd4j/level2/another folder/yolo moved.txt")
+//            .run();
+//
+//    Assert.assertTrue(sessionMega.ls(
+//            "megacmd4j/level2/another folder/yolo moved.txt"
+//    ).exists());
+//  }
+//
+//  @Test
+//  public void stage15_deleteMultipleFilesWithMaskShouldBeOk() {
+//    if (sessionMega.exists("megacmd4j/level2/yolo-*.txt")) {
+//      sessionMega.remove("megacmd4j/level2/yolo-*.txt").run();
+//    }
+//
+//    Assert.assertEquals(
+//        "There should be only 1 file",
+//        1,
+//        sessionMega.count("megacmd4j/level2", FileInfo::isFile)
+//    );
+//
+//    Assert.assertTrue(
+//        "There should be left a directory",
+//        sessionMega.exists("megacmd4j/level2/level3")
+//    );
+//  }
+//
+//  @Test
+//  public void stage16_given_directory_when_remove_then_success() {
+//    sessionMega.removeDirectory("megacmd4j/level2/level3").run();
+//  }
+//
+//  @Test(expected = MegaException.class)
+//  public void stage17_given_unexistingDirectory_when_remove_then_fail() {
+//    sessionMega.removeDirectory("megacmd4j/level2/level3").run();
+//  }
+//
+//  @Test
+//  public void stage17_httpsShouldBeDisabled() {
+//    Assert.assertFalse(
+//        "HTTPS should be disabled",
+//        sessionMega.isHttpsEnabled()
+//    );
+//  }
+//
+//  @Test(expected = MegaResourceNotFoundException.class)
+//  public void stage18_given_unexistingDirectory_when_share_then_fail() {
+//    String username = System.getenv(Mega.USERNAME_ENV_VAR);
+//    sessionMega.share("megacmd4j/unexisting-folder", username)
+//        .grantReadAndWriteAccess()
+//        .run();
+//  }
+//
+//  @Test
+//  public void stage18_given_existingDirectory_when_share_then_success() {
+//    String username = System.getenv(Mega.USERNAME_ENV_VAR);
+//    sessionMega.share("megacmd4j/level2", username)
+//        .grantReadAndWriteAccess()
+//        .run();
+//  }
+//
+//  @Test(expected = MegaResourceNotFoundException.class)
+//  public void stage19_given_unexistingDirectory_when_export_then_fail() {
+//    final ExportInfo info = sessionMega.export("megacmd4j/unexisting-folder")
+//            .enablePublicLink()
+//            .call();
+//  }
+//
+//  @Test
+//  public void stage19_given_existingDirectory_when_export_then_success() {
+//    final ExportInfo exportInfo = sessionMega.export("megacmd4j/level2")
+//        .enablePublicLink()
+//        .call();
+//
+//    Assert.assertEquals("/megacmd4j/level2", exportInfo.getRemotePath());
+//
+//    Assert.assertTrue(exportInfo.getPublicLink().startsWith("https://mega.nz/"));
+//    Assert.assertTrue(exportInfo.getPublicLink().length()
+//        - "https://mega.nz/".length() > 5);
+//  }
+//
+//  @Test
+//  public void stage20_exportedFolderShouldAppearInListings() {
+//    final List<ExportInfo> exportedFiles
+//        = sessionMega.export("megacmd4j").list();
+//
+//    Assert.assertTrue(exportedFiles.stream()
+//        .map(ExportInfo::getRemotePath)
+//        .filter("megacmd4j/level2"::equals)
+//        .findAny().isPresent());
+//  }
 }

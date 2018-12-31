@@ -1,5 +1,6 @@
 package io.github.eliux.mega.cmd;
 
+import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaWrongArgumentsException;
 
 public class MegaCmdMakeDirectory extends AbstractMegaCmdRunnerWithParams {
@@ -27,7 +28,7 @@ public class MegaCmdMakeDirectory extends AbstractMegaCmdRunnerWithParams {
             sb.append("-p ");
         }
 
-        sb.append(getRemotePath());
+        sb.append(MegaUtils.parseRemotePath(getRemotePath()));
 
         return sb.toString();
     }

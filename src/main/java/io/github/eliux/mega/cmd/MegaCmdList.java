@@ -29,7 +29,7 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
 
     @Override
     String cmdParams() {
-        return "-l " + remotePath;
+        return "-l " + MegaUtils.parseRemotePath(remotePath);
     }
 
     @Override
