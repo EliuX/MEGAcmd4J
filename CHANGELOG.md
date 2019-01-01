@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added command to start and stop Mega local server 
 - Added support for command "version"
 ### Changed
+- Travis tests are now run in Ubuntu xenial
 - All exit codes are converted always to positive to comply with POSIX standard.
 ### Fixed 
 - Fixed #13 so local and dest paths can support whitespaces 
