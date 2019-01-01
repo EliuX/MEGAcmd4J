@@ -76,7 +76,7 @@ public class BasicActionsTest {
         "You only live infinitive times..."
     );
 
-    sessionMega.uploadFile("target/yolo-infinite.txt", "megacmd4j/")
+    sessionMega.uploadFile("target/yolo-infinite.txt", "/megacmd4j/")
         .createRemotePathIfNotPresent()
         .run();
   }
@@ -85,7 +85,7 @@ public class BasicActionsTest {
   public void stage03_shouldUploadMultipleFilesAndCreateRemoteFolderSuccessfully() {
     MegaTestUtils.createTextFiles("yolo", 10);
 
-    final MegaCmdPutMultiple megaCmd = sessionMega.uploadFiles("megacmd4j/")
+    final MegaCmdPutMultiple megaCmd = sessionMega.uploadFiles("/megacmd4j/")
         .createRemotePathIfNotPresent();
 
     IntStream.rangeClosed(1, 10).forEach(i -> {
@@ -186,7 +186,7 @@ public class BasicActionsTest {
 
   @Test
   public void stage13_moveMultipleFilesUsingPatternIntoSubpath() {
-    sessionMega.move("megacmd4j/*-*.txt", "megacmd4j/level2/")
+    sessionMega.move("megacmd4j/*-*.txt", "/megacmd4j/level2/")
         .run();
 
     final List<FileInfo> currentFiles = sessionMega.ls("megacmd4j/").call();
