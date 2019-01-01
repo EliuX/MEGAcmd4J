@@ -2,9 +2,7 @@ package io.github.eliux.mega;
 
 import io.github.eliux.mega.error.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -12,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import static io.github.eliux.mega.Mega.CMD_TTL_ENV_VAR;
-import static io.github.eliux.mega.Mega.envVars;
 
 public interface MegaUtils {
 
@@ -129,6 +126,10 @@ public interface MegaUtils {
   }
 
   static String parseRemotePath(String remotePath) {
-    return String.format("\"%s\"", remotePath);
+    if (remotePath.contains(" ")) {
+      return String.format("\"%s\"", remotePath);
+    } else {
+      return remotePath;
+    }
   }
 }

@@ -14,7 +14,11 @@ public class WindowsPlatform extends OSPlatform {
     }
 
     public String parseLocalPath(String filePath) {
-        File file = Paths.get(filePath).toFile();
-        return String.format("\"%s\"", file.getAbsolutePath());
+        if(filePath.contains(" ")){
+            File file = Paths.get(filePath).toFile();
+            return String.format("\"%s\"", file.getAbsolutePath());
+        }else{
+            return filePath;
+        }
     }
 }
