@@ -221,11 +221,11 @@ public class BasicActionsTest {
     );
 
     sessionMega.uploadFile("target/folder with white spaces/yolo.txt",
-            "megacmd4j/remote folder/")
+            "/megacmd4j/remote folder/")
             .createRemotePathIfNotPresent()
             .run();
 
-    Assert.assertTrue(sessionMega.ls("megacmd4j/remote folder/yolo.txt")
+    Assert.assertTrue(sessionMega.ls("/megacmd4j/remote folder/yolo.txt")
             .exists());
   }
 

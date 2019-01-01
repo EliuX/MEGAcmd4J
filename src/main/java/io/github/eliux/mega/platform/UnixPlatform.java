@@ -15,7 +15,7 @@ public class UnixPlatform extends OSPlatform {
 
     public String parseLocalPath(String filePath) {
         if(filePath.contains(" ")){
-            return String.format("\"%s\"", filePath);
+            return Paths.get(filePath).toUri().getPath();
         }else{
             return filePath;
         }
