@@ -11,10 +11,10 @@ public abstract class AbstractMegaCmdRunner extends AbstractMegaCmd implements R
 
     @Override
     public void run() {
-        executeSysCmd(getCmdAdaptedToPlatform());
+        executeSysCmd(executableCommandArray());
     }
 
-    protected void executeSysCmd(String cmdStr) {
+    protected void executeSysCmd(String... cmdStr) {
         try {
           final int result = MegaUtils.execCmd(cmdStr);
           MegaUtils.handleResult(result);

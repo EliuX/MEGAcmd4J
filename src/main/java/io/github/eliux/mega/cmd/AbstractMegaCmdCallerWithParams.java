@@ -1,12 +1,21 @@
 package io.github.eliux.mega.cmd;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public abstract class AbstractMegaCmdCallerWithParams<T>
         extends AbstractMegaCmdCaller<T> {
 
     @Override
-    protected String executableCommand() {
-        return String.format("%s %s", getCmdAdaptedToPlatform(), cmdParams());
+    protected List<String> executableCommand() {
+        List<String> command = new LinkedList<>();
+
+        command.add(getCmdAdaptedToPlatform());
+
+        command.addAll(cmdParams());
+
+        return command;
     }
 
-    abstract String cmdParams();
+    abstract List<String> cmdParams();
 }

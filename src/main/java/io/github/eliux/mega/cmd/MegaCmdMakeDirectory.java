@@ -3,6 +3,9 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaWrongArgumentsException;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class MegaCmdMakeDirectory extends AbstractMegaCmdRunnerWithParams {
 
     private final String remotePath;
@@ -21,16 +24,16 @@ public class MegaCmdMakeDirectory extends AbstractMegaCmdRunnerWithParams {
     }
 
     @Override
-    String cmdParams() {
-        StringBuilder sb = new StringBuilder();
+    List<String> cmdParams() {
+        List<String> params = new LinkedList<>();
 
         if (recursively) {
-            sb.append("-p ");
+            params.add("-p");
         }
 
-        sb.append(MegaUtils.parseRemotePath(getRemotePath()));
+        params.add(getRemotePath());
 
-        return sb.toString();
+        return params;
     }
 
     public String getRemotePath() {

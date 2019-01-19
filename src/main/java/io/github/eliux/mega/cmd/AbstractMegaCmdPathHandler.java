@@ -1,5 +1,8 @@
 package io.github.eliux.mega.cmd;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public abstract class AbstractMegaCmdPathHandler extends AbstractMegaCmdRunnerWithParams {
 
     private boolean remotePathCreatedIfNotPresent;
@@ -9,24 +12,24 @@ public abstract class AbstractMegaCmdPathHandler extends AbstractMegaCmdRunnerWi
     private boolean isQuotaWarningIgnored = true;
 
     @Override
-    String cmdParams() {
-        StringBuilder cmdParamsBuilder = new StringBuilder();
+    List<String> cmdParams() {
+        List<String> cmdParams = new LinkedList<>();
 
         if (remotePathCreatedIfNotPresent) {
-            cmdParamsBuilder.append("-c ");
+            cmdParams.add("-c");
         }
 
         if (uploadQueued) {
-            cmdParamsBuilder.append("-q ");
+            cmdParams.add("-q");
         }
 
         if (isQuotaWarningIgnored) {
-            cmdParamsBuilder.append("--ignore-quota-warn ");
+            cmdParams.add("--ignore-quota-warn");
         }
 
-        cmdParamsBuilder.append(cmdFileParams());
+        cmdParams.addAll(cmdFileParams());
 
-        return cmdParamsBuilder.toString();
+        return cmdParams;
     }
 
     public <R extends AbstractMegaCmdPathHandler> R createRemotePathIfNotPresent() {
@@ -71,5 +74,5 @@ public abstract class AbstractMegaCmdPathHandler extends AbstractMegaCmdRunnerWi
         return isQuotaWarningIgnored;
     }
 
-    protected abstract String cmdFileParams();
+    protected abstract List<String> cmdFileParams();
 }

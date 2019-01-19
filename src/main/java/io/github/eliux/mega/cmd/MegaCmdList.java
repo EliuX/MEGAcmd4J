@@ -6,6 +6,7 @@ import io.github.eliux.mega.error.MegaIOException;
 import io.github.eliux.mega.error.MegaResourceNotFoundException;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -28,14 +29,14 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
     }
 
     @Override
-    String cmdParams() {
-        return "-l " + MegaUtils.parseRemotePath(remotePath);
+    List<String> cmdParams() {
+        return Arrays.asList("-l", remotePath);
     }
 
     @Override
     public List<FileInfo> call() {
         try {
-            return MegaUtils.execCmdWithOutput(executableCommand()).stream().skip(1)
+            return MegaUtils.handleCmdWithOutput(executableCommandArray()).stream().skip(1)
                     .filter(FileInfo::isValid)  //To avoid complementary info
                     .map(FileInfo::parseInfo)
                     .collect(Collectors.toList());
@@ -46,9 +47,10 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
 
     public List<FileInfo> filter(Predicate<FileInfo> predicate) {
         try {
-            return MegaUtils.execCmdWithOutput(executableCommand()).stream()
-                    .skip(1)                    // For sure the first is not valid
-                    .filter(FileInfo::isValid)  //To avoid complementary info
+            return MegaUtils.handleCmdWithOutput(executableCommandArray())
+                    .stream()
+                    .skip(1)                    // The first one is not valid
+                    .filter(FileInfo::isValid)  // To avoid complementary info
                     .map(FileInfo::parseInfo)
                     .filter(predicate)
                     .collect(Collectors.toList());
@@ -59,7 +61,8 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
 
     public long count() throws MegaResourceNotFoundException {
         try {
-            return MegaUtils.execCmdWithOutput(executableCommand()).stream()
+            return MegaUtils.handleCmdWithOutput(executableCommandArray())
+                    .stream()
                     .filter(FileInfo::isValid)
                     .count();
         } catch (IOException e) {
@@ -70,7 +73,8 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
     public long count(Predicate<FileInfo> predicate)
             throws MegaResourceNotFoundException {
         try {
-            return MegaUtils.execCmdWithOutput(executableCommand()).stream()
+            return MegaUtils.handleCmdWithOutput(executableCommandArray())
+                    .stream()
                     .filter(FileInfo::isValid)  //To avoid complementary info
                     .map(FileInfo::parseInfo)
                     .filter(predicate)
@@ -82,7 +86,7 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
 
     public boolean exists() {
         try {
-            MegaUtils.execCmdWithOutput(executableCommand());
+            MegaUtils.handleCmdWithOutput(executableCommandArray());
             return true;
         } catch (MegaException e) {
             return false;

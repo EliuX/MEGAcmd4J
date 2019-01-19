@@ -4,10 +4,7 @@ import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaCmdInvalidArguments;
 import io.github.eliux.mega.platform.OSPlatform;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MegaCmdPutMultiple extends AbstractMegaCmdPut {
@@ -33,25 +30,26 @@ public class MegaCmdPutMultiple extends AbstractMegaCmdPut {
     }
 
     public List<String> localFiles() {
-        return Collections.unmodifiableList(localFiles);
+        return localFiles;
     }
 
-    private String cmdLocalFilesParams() {
+    private List<String> cmdLocalFilesParams() {
         if (localFiles == null || localFiles.isEmpty()) {
             throw new MegaCmdInvalidArguments(
                     "There are not local files specified!"
             );
         }
 
-        return localFiles.stream()
-                .map(OSPlatform.getCurrent()::parseLocalPath)
-                .collect(Collectors.joining(" "));
+        return Collections.unmodifiableList(localFiles);
     }
 
     @Override
-    protected String cmdFileParams() {
-        final String remotePath = MegaUtils.parseRemotePath(getRemotePath());
-        return cmdLocalFilesParams() + " " + remotePath;
+    protected List<String> cmdFileParams() {
+        List<String> result = new LinkedList<>(localFiles);
+
+        result.add(getRemotePath());
+
+        return result;
     }
 
     public void addLocalFileToUpload(String filename) {

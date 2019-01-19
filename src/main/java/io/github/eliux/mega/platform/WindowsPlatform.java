@@ -12,13 +12,4 @@ public class WindowsPlatform extends OSPlatform {
     public String cmdInstruction(String cmd) {
         return String.format("cmd.exe /c MegaClient %s", cmd);
     }
-
-    public String parseLocalPath(String filePath) {
-        if(filePath.contains(" ")){
-            File file = Paths.get(filePath).toFile();
-            return String.format("\"%s\"", file.getPath());
-        }else{
-            return filePath;
-        }
-    }
 }

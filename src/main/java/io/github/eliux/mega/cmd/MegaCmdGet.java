@@ -3,6 +3,9 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.platform.OSPlatform;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 public class MegaCmdGet extends AbstractMegaCmdPathHandler {
@@ -50,14 +53,13 @@ public class MegaCmdGet extends AbstractMegaCmdPathHandler {
     }
 
     @Override
-    protected String cmdFileParams() {
-        final String remotePath = MegaUtils.parseRemotePath(getRemotePath());
-        StringBuilder cmdFileParamsBuilder = new StringBuilder(remotePath);
+    protected List<String> cmdFileParams() {
+        List<String> cmdFileParams = new LinkedList<>();
 
-        getLocalPath().map(OSPlatform.getCurrent()::parseLocalPath).ifPresent(
-                x -> cmdFileParamsBuilder.append(" ".concat(x))
-        );
+        cmdFileParams.add(getRemotePath());
 
-        return cmdFileParamsBuilder.toString();
+        getLocalPath().ifPresent(cmdFileParams::add);
+
+        return cmdFileParams;
     }
 }

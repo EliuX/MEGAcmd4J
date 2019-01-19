@@ -1,5 +1,8 @@
 package io.github.eliux.mega.cmd;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MegaCmdChangePassword extends AbstractMegaCmdRunnerWithParams {
 
     private final String oldPassword;
@@ -12,8 +15,8 @@ public class MegaCmdChangePassword extends AbstractMegaCmdRunnerWithParams {
     }
 
     @Override
-    String cmdParams() {
-        return oldPassword + " " + newPassword;
+    List<String> cmdParams() {
+        return Arrays.asList(oldPassword, newPassword);
     }
 
     @Override

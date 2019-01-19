@@ -3,6 +3,9 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.platform.OSPlatform;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MegaCmdMove extends AbstractMegaCmdRunnerWithParams {
 
     private final String sourceRemotePath;
@@ -15,10 +18,8 @@ public class MegaCmdMove extends AbstractMegaCmdRunnerWithParams {
     }
 
     @Override
-    String cmdParams() {
-        final String localPath = MegaUtils.parseRemotePath(sourceRemotePath);
-        final String remotePath = MegaUtils.parseRemotePath(remoteTarget);
-        return String.format("%s %s", localPath, remotePath);
+    List<String> cmdParams() {
+        return Arrays.asList(sourceRemotePath, remoteTarget);
     }
 
     @Override

@@ -5,16 +5,17 @@ import io.github.eliux.mega.error.MegaLoginException;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class MegaCmdLogin extends AbstractMegaCmdRunnerWithParams {
 
-    private final String cmdParams;
+    private final List<String> cmdParams;
 
     public MegaCmdLogin(String... cmdParams) {
         super();
-        this.cmdParams = Arrays.asList(cmdParams).stream()
-                .collect(Collectors.joining(" "));
+        this.cmdParams = Arrays.asList(cmdParams);
     }
 
     @Override
@@ -23,7 +24,7 @@ public class MegaCmdLogin extends AbstractMegaCmdRunnerWithParams {
     }
 
     @Override
-    protected void executeSysCmd(String cmdStr) {
+    protected void executeSysCmd(String... cmdStr) {
         try {
             final int result = MegaUtils.execCmd(cmdStr);
             MegaUtils.handleResult(result);
@@ -37,7 +38,7 @@ public class MegaCmdLogin extends AbstractMegaCmdRunnerWithParams {
     }
 
     @Override
-    protected String cmdParams() {
+    protected List<String> cmdParams() {
         return cmdParams;
     }
 }

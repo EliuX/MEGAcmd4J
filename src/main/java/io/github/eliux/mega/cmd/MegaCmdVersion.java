@@ -4,6 +4,7 @@ import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
 import io.github.eliux.mega.error.MegaUnexpectedFailureException;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -43,15 +44,16 @@ public class MegaCmdVersion extends
     }
 
     @Override
-    String cmdParams() {
-        return isExtendedInfoShown ? "-l" : "";
+    List<String> cmdParams() {
+        return isExtendedInfoShown ? Collections.singletonList("-l")
+                : Collections.emptyList();
     }
 
     @Override
     public MegaCmdVersionResponse call() {
         try {
             final List<String> versionDataLines =
-                    MegaUtils.execCmdWithOutput(executableCommand());
+                    MegaUtils.handleCmdWithOutput(executableCommandArray());
             MegaCmdVersionResponse version = parseCmdVersion(versionDataLines.get(0));
 
             if (isExtendedInfoShown) {

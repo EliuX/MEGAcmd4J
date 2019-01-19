@@ -69,9 +69,9 @@ public interface MegaUtils {
     }
   }
 
-  static int execCmd(String cmd)
+  static int execCmd(String... cmd)
       throws java.io.IOException, InterruptedException {
-    System.out.printf("Execute command: %s%n",cmd);
+    System.out.printf("Execute command: %s%n", cmd);
     final Process process = Runtime.getRuntime().exec(cmd);
 
     Boolean succeeded = process.waitFor(MEGA_TTL, TimeUnit.MILLISECONDS);
@@ -79,10 +79,10 @@ public interface MegaUtils {
     return succeeded ? process.exitValue() : -1;
   }
 
-  static List<String> execCmdWithOutput(String cmd)
+  static List<String> handleCmdWithOutput(String... cmd)
       throws java.io.IOException {
     System.out.printf("Execute command with output: %s%n",cmd);
-    ProcessBuilder pb = new ProcessBuilder(cmd.split(" "));
+    ProcessBuilder pb = new ProcessBuilder(cmd);
     pb.redirectErrorStream(true);
 
     final Process process = pb.start();
@@ -109,9 +109,9 @@ public interface MegaUtils {
     return result;
   }
 
-  static String execCmdWithSingleOutput(String cmd) throws IOException {
+  static String execCmdWithSingleOutput(String... cmd) throws IOException {
     try{
-      return execCmdWithOutput(cmd).get(0);
+      return handleCmdWithOutput(cmd).get(0);
     }catch (IndexOutOfBoundsException ex){
       return "";
     }
@@ -123,13 +123,5 @@ public interface MegaUtils {
 
   static boolean isDirectory(String token) {
     return !isEmail(token) && DIRECTORY_PATTERN.matcher(token).find();
-  }
-
-  static String parseRemotePath(String remotePath) {
-    if (remotePath.contains(" ")) {
-      return String.format("\"%s\"", remotePath);
-    } else {
-      return remotePath;
-    }
   }
 }

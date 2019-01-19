@@ -1,5 +1,7 @@
 package io.github.eliux.mega.cmd;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 public class MegaCmdShare extends AbstractMegaCmdRunnerWithParams {
@@ -28,21 +30,21 @@ public class MegaCmdShare extends AbstractMegaCmdRunnerWithParams {
     }
 
     @Override
-    String cmdParams() {
-        final StringBuilder cmdParamsBuilder = new StringBuilder();
+    List<String> cmdParams() {
+        final List<String> cmdParamsBuilder = new LinkedList<>();
 
-        cmdParamsBuilder.append(shared ? "-a " : "-d ");
+        cmdParamsBuilder.add(shared ? "-a" : "-d");
 
         username.ifPresent(x -> cmdParamsBuilder
-                .append(String.format("--with=%s ", x)));
+                .add(String.format("--with=%s", x)));
 
         if (shared) {
-            cmdParamsBuilder.append(String.format("--level=%s ", accessLevel));
+            cmdParamsBuilder.add(String.format("--level=%s", accessLevel));
         }
 
-        remotePath.ifPresent(cmdParamsBuilder::append);
+        remotePath.ifPresent(cmdParamsBuilder::add);
 
-        return cmdParamsBuilder.toString();
+        return cmdParamsBuilder;
     }
 
     public boolean isShared() {

@@ -12,12 +12,4 @@ public class UnixPlatform extends OSPlatform {
     public String cmdInstruction(String cmd) {
         return String.format("mega-%s", cmd);
     }
-
-    public String parseLocalPath(String filePath) {
-        if(filePath.contains(" ")){
-            return String.format("\"%s\"", filePath);
-        }else{
-            return filePath;
-        }
-    }
 }
