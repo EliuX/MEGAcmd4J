@@ -13,10 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Travis tests are now run in Ubuntu xenial
 - All exit codes are converted always to positive to comply with POSIX standard.
+- Commands instead of being passed as a String to the process builder they are now 
+passed as an array: It avoids problems related to the use of spaces on paths and parameters. 
+It also makes more sense to get the parameters as a list.
 ### Fixed 
-- Fixed #13 so local and dest paths can support whitespaces 
-- Fixed #11, so now paths with whitespaces can be used  
-- Fixed #8, so when Mega.init is called the MEGAcmdServer is started
+- Fixed #13 so local and dest paths can support whitespaces. 
+- Fixed #11, so now paths with whitespaces can be used.
+- Fixed #8, so when Mega.init is called the MEGAcmdServer is started.
 
 ## Before 1.2.2 - 2018-12-16
 ### Changed

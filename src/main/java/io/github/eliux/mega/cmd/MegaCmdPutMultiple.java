@@ -26,6 +26,7 @@ public class MegaCmdPutMultiple extends AbstractMegaCmdPut {
         if (remotePath != null) {
             this.remotePath = remotePath;
         }
+
         return this;
     }
 
