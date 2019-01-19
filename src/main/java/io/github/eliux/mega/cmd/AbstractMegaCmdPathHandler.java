@@ -6,7 +6,7 @@ public abstract class AbstractMegaCmdPathHandler extends AbstractMegaCmdRunnerWi
 
     private boolean uploadQueued;
 
-    private boolean isQuotaWarningIgnored;
+    private boolean isQuotaWarningIgnored = true;
 
     @Override
     String cmdParams() {
