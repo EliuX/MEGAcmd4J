@@ -1,24 +1,23 @@
-dist: xenial
 language: java
+matrix:
+    include:
+        - os: linux
+          dist: xenial
+          language: java
+        - os: osx
+          osx_image: xcode9.3
 sudo: required
 before_install:
- #Megacmd required ubuntu packages
- - sudo apt-get -y install libc-ares2 libcrypto++9v5 libmediainfo0v5 libzen0v5
- #Install Megacmd
- - wget https://mega.nz/linux/MEGAsync/xUbuntu_16.04/amd64/megacmd-xUbuntu_16.04_amd64.deb
- - sudo dpkg -i ./megacmd-xUbuntu_16.04_amd64.deb
+ -  ./.travis/before_install.sh
  - mega-version
  - mega-help
 before_deploy:
  #GPG keys
- - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
- - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
- - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
- - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+ -  ./.travis/before_deploy.sh
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: target/megacmd4j-$project_version.jar
+  file: target/megacmd4j-$PROJECT_VERSION.jar
   skip_cleanup: true
   on:
     tags: true
