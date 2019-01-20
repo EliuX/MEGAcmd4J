@@ -2,7 +2,10 @@
 
 if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
  # Install some custom requirements on macOS
-
+ curl -O https://mega.nz/MEGAcmdSetup.dmg
+ sudo hdiutil attach MEGAcmdSetup.dmg
+ sudo cp -R /Volumes/MEGAcmd/MEGAcmd.app /Applications
+ export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH
 else
  # It must be linux
  # Megacmd required ubuntu packages
