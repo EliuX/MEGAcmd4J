@@ -8,7 +8,8 @@ if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
 else
  # It must be linux
  # Megacmd required ubuntu packages
- sudo apt-get -y install libc-ares2 libcrypto++9 libmediainfo0 libzen0
+ sudo apt-get -y update
+ sudo apt-get -y install libc-ares2 libcrypto++9v5 libmediainfo0v5 libzen0v5
 
  # Install Megacmd
  wget https://mega.nz/linux/MEGAsync/xUbuntu_14.04/amd64/megacmd-xUbuntu_14.04_amd64.deb
