@@ -30,6 +30,7 @@ public interface MegaTestUtils {
 
     static void createTextFile(String filename, String... content) {
         try {
+            new File(filename).getParentFile().mkdirs();
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(filename), "utf-8"))) {
                 for (String line : content) {

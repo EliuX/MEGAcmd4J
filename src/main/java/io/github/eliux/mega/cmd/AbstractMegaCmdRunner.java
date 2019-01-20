@@ -2,8 +2,8 @@ package io.github.eliux.mega.cmd;
 
 
 import io.github.eliux.mega.MegaUtils;
-
 import io.github.eliux.mega.error.MegaIOException;
+
 import java.io.IOException;
 
 
@@ -11,10 +11,10 @@ public abstract class AbstractMegaCmdRunner extends AbstractMegaCmd implements R
 
     @Override
     public void run() {
-        executeSysCmd(getCmdAdaptedToPlatform());
+        executeSysCmd(executableCommandArray());
     }
 
-    protected void executeSysCmd(String cmdStr) {
+    protected void executeSysCmd(String... cmdStr) {
         try {
           final int result = MegaUtils.execCmd(cmdStr);
           MegaUtils.handleResult(result);

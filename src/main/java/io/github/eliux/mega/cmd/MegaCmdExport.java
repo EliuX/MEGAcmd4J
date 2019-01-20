@@ -5,6 +5,7 @@ import io.github.eliux.mega.error.MegaIOException;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,19 +23,19 @@ public class MegaCmdExport extends AbstractMegaCmdCallerWithParams<ExportInfo> {
     }
 
     @Override
-    String cmdParams() {
-        final StringBuilder cmdParamsBuilder = new StringBuilder();
+    List<String> cmdParams() {
+        final List<String> cmdParams = new LinkedList<>();
 
         remotePath
                 .filter(x -> !listOnly)
-                .ifPresent(x -> cmdParamsBuilder
-                        .append(exportDeleted ? "-d " : "-a ")
-                        .append("-f ")
-                );
+                .ifPresent(x -> {
+                    cmdParams.add(exportDeleted ? "-d" : "-a");
+                    cmdParams.add("-f");
+                });
 
-        remotePath.ifPresent(cmdParamsBuilder::append);
+        remotePath.ifPresent(cmdParams::add);
 
-        return cmdParamsBuilder.toString();
+        return cmdParams;
     }
 
     @Override
@@ -45,7 +46,7 @@ public class MegaCmdExport extends AbstractMegaCmdCallerWithParams<ExportInfo> {
     @Override
     public ExportInfo call() {
         try {
-            return MegaUtils.execCmdWithOutput(executableCommand())
+            return MegaUtils.handleCmdWithOutput(executableCommandArray())
                     .stream().findFirst()
                     .map(ExportInfo::parseExportInfo)
                     .orElseThrow(() -> new MegaInvalidResponseException(
@@ -59,7 +60,7 @@ public class MegaCmdExport extends AbstractMegaCmdCallerWithParams<ExportInfo> {
     public List<ExportInfo> list() {
         justList();
         try {
-            return MegaUtils.execCmdWithOutput(executableCommand()).stream()
+            return MegaUtils.handleCmdWithOutput(executableCommandArray()).stream()
                     .map((ExportInfo::parseExportListInfo))
                     .collect(Collectors.toList());
         } catch (IOException e) {

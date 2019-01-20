@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import static io.github.eliux.mega.Mega.CMD_TTL_ENV_VAR;
-import static io.github.eliux.mega.Mega.envVars;
 
 public interface MegaUtils {
 
@@ -36,7 +35,10 @@ public interface MegaUtils {
   }
 
   static void handleResult(int code) {
-    switch (code) {
+    int posixExitStatus = Optional.ofNullable(code)
+            .map(Math::abs)
+            .orElse(-1);
+    switch (posixExitStatus) {
       case 0:
         //Its Ok
         break;
@@ -60,14 +62,14 @@ public interface MegaUtils {
         throw new MegaUnexpectedFailureException();
       case 60:
         throw new MegaConfirmationRequiredException();
-      case 61:
-        //TODO throw new StringRequiredException();
+      case 2:
+        throw new MegaCmdInvalidArgumentException();
       default:
         throw new MegaUnexpectedFailureException(code);
     }
   }
 
-  static int execCmd(String cmd, String... envVars)
+  static int execCmd(String... cmd)
       throws java.io.IOException, InterruptedException {
     final Process process = Runtime.getRuntime().exec(cmd);
 
@@ -76,17 +78,20 @@ public interface MegaUtils {
     return succeeded ? process.exitValue() : -1;
   }
 
-  static List<String> execCmdWithOutput(String cmd)
+  static List<String> handleCmdWithOutput(String... cmd)
       throws java.io.IOException {
-    final Process process = Runtime.getRuntime().exec(cmd, envVars());
+    ProcessBuilder pb = new ProcessBuilder(cmd);
+    pb.redirectErrorStream(true);
 
-    final Scanner scanner = new Scanner(process.getInputStream())
+    final Process process = pb.start();
+
+    final Scanner inputScanner = new Scanner(process.getInputStream())
         .useDelimiter(System.getProperty("line.separator"));
 
     final List<String> result = new ArrayList<>();
 
-    while (scanner.hasNext()) {
-      result.add(scanner.next());
+    while (inputScanner.hasNext()) {
+      result.add(inputScanner.next());
     }
 
     process.destroy();
@@ -102,9 +107,9 @@ public interface MegaUtils {
     return result;
   }
 
-  static String execCmdWithSingleOutput(String cmd) throws IOException {
+  static String execCmdWithSingleOutput(String... cmd) throws IOException {
     try{
-      return execCmdWithOutput(cmd).get(0);
+      return handleCmdWithOutput(cmd).get(0);
     }catch (IndexOutOfBoundsException ex){
       return "";
     }
