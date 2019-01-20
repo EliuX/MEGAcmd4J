@@ -8,11 +8,12 @@ matrix:
           osx_image: xcode9.3
 sudo: required
 before_install:
+ - chmod +x ./.travis/before_install.sh
  -  ./.travis/before_install.sh
  - mega-version
  - mega-help
 before_deploy:
- #GPG keys
+ - chmod +x ./.travis/before_deploy.sh
  -  ./.travis/before_deploy.sh
 deploy:
   provider: releases
