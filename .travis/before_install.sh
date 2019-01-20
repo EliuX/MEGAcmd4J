@@ -1,5 +1,4 @@
 #!/bin/bash
-
 if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
  # Install some custom requirements on macOS
  curl -O https://mega.nz/MEGAcmdSetup.dmg
