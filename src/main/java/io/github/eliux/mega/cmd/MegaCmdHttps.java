@@ -5,6 +5,8 @@ import io.github.eliux.mega.error.MegaIOException;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -45,7 +47,7 @@ public class MegaCmdHttps extends AbstractMegaCmdCallerWithParams<Boolean> {
     public Boolean call() {
         try {
             final String response =
-                    MegaUtils.execCmdWithSingleOutput(executableCommand());
+                    MegaUtils.execCmdWithSingleOutput(executableCommandArray());
 
             return parseResponseToHttpsEnabled(response)
                     .orElseThrow(() -> new MegaInvalidResponseException(
@@ -57,8 +59,12 @@ public class MegaCmdHttps extends AbstractMegaCmdCallerWithParams<Boolean> {
     }
 
     @Override
-    String cmdParams() {
-        return enable.map(isEnabled -> isEnabled ? "on" : "off")
-                .orElse("");
+    List<String> cmdParams() {
+        List<String> cmdParams = new LinkedList<>();
+
+        enable.map(isEnabled -> isEnabled ? "on" : "off")
+                .ifPresent(cmdParams::add);
+
+        return cmdParams;
     }
 }

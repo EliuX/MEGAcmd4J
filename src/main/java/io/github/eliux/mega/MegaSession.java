@@ -1,22 +1,8 @@
 package io.github.eliux.mega;
 
 import io.github.eliux.mega.auth.MegaAuth;
-import io.github.eliux.mega.cmd.FileInfo;
-import io.github.eliux.mega.cmd.MegaCmdChangePassword;
-import io.github.eliux.mega.cmd.MegaCmdCopy;
-import io.github.eliux.mega.cmd.MegaCmdExport;
-import io.github.eliux.mega.cmd.MegaCmdGet;
-import io.github.eliux.mega.cmd.MegaCmdHttps;
-import io.github.eliux.mega.cmd.MegaCmdList;
-import io.github.eliux.mega.cmd.MegaCmdLogout;
-import io.github.eliux.mega.cmd.MegaCmdMakeDirectory;
-import io.github.eliux.mega.cmd.MegaCmdMove;
-import io.github.eliux.mega.cmd.MegaCmdPutMultiple;
-import io.github.eliux.mega.cmd.MegaCmdPutSingle;
-import io.github.eliux.mega.cmd.MegaCmdRemove;
-import io.github.eliux.mega.cmd.MegaCmdSession;
-import io.github.eliux.mega.cmd.MegaCmdShare;
-import io.github.eliux.mega.cmd.MegaCmdWhoAmI;
+import io.github.eliux.mega.cmd.*;
+
 import java.util.concurrent.Callable;
 import java.util.function.Predicate;
 

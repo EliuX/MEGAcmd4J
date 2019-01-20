@@ -1,5 +1,7 @@
 package io.github.eliux.mega.cmd;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 public class MegaCmdPutSingle extends AbstractMegaCmdPut {
@@ -18,15 +20,14 @@ public class MegaCmdPutSingle extends AbstractMegaCmdPut {
         this.remotePath = Optional.of(remotePath);
     }
 
-    protected String cmdFileParams() {
-        StringBuilder cmdFileParamsBuilder =
-                new StringBuilder(getLocalFile());
+    protected List<String> cmdFileParams() {
+        final List<String> cmdFileParams = new LinkedList<>();
 
-        getRemotePath().ifPresent(
-                x -> cmdFileParamsBuilder.append(" ".concat(x))
-        );
+        cmdFileParams.add(getLocalFile());
 
-        return cmdFileParamsBuilder.toString();
+        getRemotePath().ifPresent(cmdFileParams::add);
+
+        return cmdFileParams;
     }
 
     public String getLocalFile() {

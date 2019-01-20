@@ -27,8 +27,7 @@ public class BasicActionsTest {
   @AfterClass
   public static void finishSession() {
     sessionMega.removeDirectory("megacmd4j").run();
-    sessionMega.remove("yolo*.txt").run();
-
+    sessionMega.remove("yolo*.txt").ignoreErrorIfNotPresent().run();
     sessionMega.logout();
   }
 
@@ -77,8 +76,8 @@ public class BasicActionsTest {
         "You only live infinitive times..."
     );
 
-    sessionMega.uploadFile("target/yolo-infinite.txt", "megacmd4j/")
-        .createRemoteIfNotPresent()
+    sessionMega.uploadFile("target/yolo-infinite.txt", "/megacmd4j/")
+        .createRemotePathIfNotPresent()
         .run();
   }
 
@@ -86,8 +85,8 @@ public class BasicActionsTest {
   public void stage03_shouldUploadMultipleFilesAndCreateRemoteFolderSuccessfully() {
     MegaTestUtils.createTextFiles("yolo", 10);
 
-    final MegaCmdPutMultiple megaCmd = sessionMega.uploadFiles("megacmd4j/")
-        .createRemoteIfNotPresent();
+    final MegaCmdPutMultiple megaCmd = sessionMega.uploadFiles("/megacmd4j/")
+        .createRemotePathIfNotPresent();
 
     IntStream.rangeClosed(1, 10).forEach(i -> {
       String filename = MegaTestUtils.testTextFileName("yolo", i);
@@ -187,7 +186,7 @@ public class BasicActionsTest {
 
   @Test
   public void stage13_moveMultipleFilesUsingPatternIntoSubpath() {
-    sessionMega.move("megacmd4j/*-*.txt", "megacmd4j/level2/")
+    sessionMega.move("megacmd4j/*-*.txt", "/megacmd4j/level2/")
         .run();
 
     final List<FileInfo> currentFiles = sessionMega.ls("megacmd4j/").call();
@@ -215,7 +214,33 @@ public class BasicActionsTest {
   }
 
   @Test
-  public void stage14_shouldDisableHTTPS() {
+  public void stage13_uploadFile_using_folders_with_whitespace() {
+    MegaTestUtils.createTextFile(
+            "target/folder with white spaces/yolo.txt",
+            "You only live infinitive times..."
+    );
+
+    sessionMega.uploadFile("target/folder with white spaces/yolo.txt",
+            "/megacmd4j/remote folder/")
+            .createRemotePathIfNotPresent()
+            .run();
+
+    Assert.assertTrue(sessionMega.ls("/megacmd4j/remote folder/yolo.txt")
+            .exists());
+  }
+
+  @Test
+  public void stage14_should_create_folder_with_whitespaces() {
+    sessionMega.makeDirectory("megacmd4j/level2/another folder/")
+            .recursively()
+            .run();
+
+    Assert.assertTrue(sessionMega.ls("megacmd4j/level2/another folder/")
+            .exists());
+  }
+
+  @Test
+  public void stage14_should_disable_HTTPS() {
     Assert.assertFalse(
         "HTTPS should be disabled",
         sessionMega.disableHttps()
@@ -236,6 +261,18 @@ public class BasicActionsTest {
         "That file/directory doesnt exist",
         sessionMega.ls("megacmd4j/level2/level33").exists()
     );
+  }
+
+
+  @Test
+  public void stage15_should_move_file_from_path_with_whitespace() {
+    sessionMega.move("megacmd4j/remote folder/yolo.txt",
+            "megacmd4j/level2/another folder/yolo moved.txt")
+            .run();
+
+    Assert.assertTrue(sessionMega.ls(
+            "megacmd4j/level2/another folder/yolo moved.txt"
+    ).exists());
   }
 
   @Test

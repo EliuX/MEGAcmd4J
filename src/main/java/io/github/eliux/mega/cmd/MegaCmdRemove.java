@@ -2,6 +2,9 @@ package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.error.MegaException;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class MegaCmdRemove extends AbstractMegaCmdRunnerWithParams {
 
     private final String remotePath;
@@ -19,15 +22,19 @@ public class MegaCmdRemove extends AbstractMegaCmdRunnerWithParams {
     }
 
     @Override
-    String cmdParams() {
-        StringBuilder cmdParamsBuilder
-                = new StringBuilder("-f ");  //Never asks
+    List<String> cmdParams() {
+        final List<String> cmdParams
+                = new LinkedList<>();  //Never asks
+
+        cmdParams.add("-f");
 
         if (recursivelyDeleted) {
-            cmdParamsBuilder.append("-r ");
+            cmdParams.add("-r");
         }
 
-        return cmdParamsBuilder.append(remotePath).toString();
+        cmdParams.add(remotePath);
+
+        return cmdParams;
     }
 
     @Override

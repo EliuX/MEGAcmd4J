@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Before 1.2.3 
+### Added 
+- Added CODEOWNERS
+- Added templates for github issues and PRs
+- Added command to start and stop Mega local server 
+- Added support for command "version"
+### Changed
+- Travis tests are now run in Ubuntu xenial
+- All exit codes are converted always to positive to comply with POSIX standard.
+- Commands instead of being passed as a String to the process builder they are now 
+passed as an array: It avoids problems related to the use of spaces on paths and parameters. 
+It also makes more sense to get the parameters as a list.
+### Fixed 
+- Fixed #13 so local and dest paths can support whitespaces. 
+- Fixed #11, so now paths with whitespaces can be used.
+- Fixed #8, so when Mega.init is called the MEGAcmdServer is started.
+
 ## Before 1.2.2 - 2018-12-16
 ### Changed
 - Use new Unix/POSIX compliant error codes to create exceptions.

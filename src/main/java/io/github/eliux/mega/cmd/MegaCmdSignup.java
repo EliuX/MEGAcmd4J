@@ -1,5 +1,7 @@
 package io.github.eliux.mega.cmd;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 public class MegaCmdSignup extends AbstractMegaCmdRunnerWithParams {
@@ -18,17 +20,18 @@ public class MegaCmdSignup extends AbstractMegaCmdRunnerWithParams {
   }
 
   @Override
-  protected String cmdParams() {
-    final StringBuilder cmdParamsBuilder = new StringBuilder();
+  List<String> cmdParams() {
+    final List<String> cmdParams = new LinkedList<>();
 
-    cmdParamsBuilder.append(username).append(" ")
-        .append(password).append(" ");
+    cmdParams.add(username);
 
-    name.ifPresent(n -> cmdParamsBuilder.append(
+    cmdParams.add(password);
+
+    name.ifPresent(n -> cmdParams.add(
         String.format("--name=%s", n)
     ));
 
-    return cmdParamsBuilder.toString();
+    return cmdParams;
   }
 
   public Optional<String> getName() {

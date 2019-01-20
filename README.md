@@ -30,6 +30,8 @@ There is a [Quick Start][quick-start] available for developers who want to start
 | Shares folder             | `share`   | Shares/Unshares folder with user
 | Export to the Internet    | `export`  | Create, delete or list existing public links
 | Signup user               | `signup`  | Register as user with a given email
+| Version                   | `version` | Prints MEGAcmd versioning and extra info
+| Quit                      | `quit`    | Quits MEGAcmd. Stops the server without killing the session
         
 If you have any doubt about how each feature works, please run
 
@@ -61,7 +63,8 @@ indicates any non null response. E.g.
 ```java
     sessionMega.exists("remote/path/filesprefix*.ext");
 ```
-
+### MEGAcmdServer
+Thanks to the class `io.github.eliux.mega.MegaServer` you can now `start` and `stop` the local MEGAcmdServer on command.
 
 ## System requirements
 * Install [MEGAcmd][megacmd]. Available packages for MEGAcmd in all supported 
@@ -81,7 +84,7 @@ and `MEGA_PWD`.
 as it don't be closed.
 
 ## Continuous Integrations
-As most OSS projects in github this one uses [Travis CI](https://travis-ci.com/EliuX/MEGAcmd4J). 
+As most OSS projects in github, this one uses [Travis CI](https://travis-ci.com/EliuX/MEGAcmd4J). 
 I you want a CLI for your project, its recommend to install the correspondent ruby gem:
 
 ```bash
@@ -94,23 +97,6 @@ I you want a CLI for your project, its recommend to install the correspondent ru
 * Follow the [Google Java Style Guide][google-java-style-guide] as much as possible.
 * Install the [Google Java Style Guide settings in your IDE][google-java-style-settings-intellij].
 
-## Known Bugs
-There were tests that moved a file to a folder where another file with the same name was present.
-In Windows boths files were identified as one and when I ran a move instruction for that file
-name it operated over the last moved file and left the oldest one in that folder. In Linux
-both files are keep in the folder but identified as different ones, even if the properties where the
-same; when a move operation was run over such filename it operated over both.  
-
-Also when I tested this on Windows I got more detailed error code, which also gives more detailed 
-exceptions.
-
-I suppose these issues has to do with the libraries used for making calls to the Mega API, because 
-in the  Linux version I had more features enabled that in the Windows one, whilst the Mega Cmd and 
-SDK version were the same. It has already been reported as an 
-[issue](https://github.com/meganz/MEGAcmd/issues/52) in the MEGAcmd project. It was afterwards solved
-by keeping return errors always positive to be compliant with POSIX standard. Thats why an
-issue was raised in this repository to provide support for this new feature.
-
 ## More information
 * Once installed [MEGAcmd][megacmd] in your system execute `mega-help` to check all commands.
 You will be able to notice those who are used in this library and others which don't, for practical
@@ -120,7 +106,7 @@ reasons, but that will provide you additional capabilities. Try them out.
 Release candidate: is a beta version with potential to be a final product, which is ready to release unless significant 
 bugs emerge.
 
-Path of Development: Active (December 16th 2018)
+Path of Development: Active (December 31th 2018)
 
 ## Author
 

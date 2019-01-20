@@ -1,27 +1,23 @@
-dist: trusty
 language: java
-cache:
-  directories:
-    - $HOME/.megaCmd
+matrix:
+    include:
+        - os: linux
+          dist: trusty
+          language: java
+        - os: osx
+          osx_image: xcode9.3
+          env: PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH
 sudo: required
 before_install:
- #Megacmd required ubuntu packages
- - sudo apt-get -y install libc-ares2 libcrypto++9 libmediainfo0 libzen0
- #Install Megacmd
- - wget https://mega.nz/linux/MEGAsync/xUbuntu_14.04/amd64/megacmd-xUbuntu_14.04_amd64.deb
- - sudo dpkg -i ./megacmd-xUbuntu_14.04_amd64.deb
+ -  ./.travis/before_install.sh
  - mega-version
  - mega-help
 before_deploy:
- #GPG keys
- - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
- - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
- - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
- - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+ -  ./.travis/before_deploy.sh
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: target/megacmd4j-$project_version.jar
+  file: target/megacmd4j-$PROJECT_VERSION.jar
   skip_cleanup: true
   on:
     tags: true
