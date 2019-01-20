@@ -62,8 +62,8 @@ public interface MegaUtils {
         throw new MegaUnexpectedFailureException();
       case 60:
         throw new MegaConfirmationRequiredException();
-      case 61:
-        //TODO throw new StringRequiredException();
+      case 2:
+        throw new MegaCmdInvalidArgumentException();
       default:
         throw new MegaUnexpectedFailureException(code);
     }

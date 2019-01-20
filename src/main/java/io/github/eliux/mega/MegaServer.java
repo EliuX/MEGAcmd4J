@@ -1,10 +1,7 @@
 package io.github.eliux.mega;
 
-import io.github.eliux.mega.error.MegaIOException;
 import io.github.eliux.mega.error.MegaUnexpectedFailureException;
 import io.github.eliux.mega.platform.OSPlatform;
-
-import java.io.IOException;
 
 public class MegaServer {
 

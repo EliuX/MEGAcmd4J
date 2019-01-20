@@ -5,9 +5,7 @@ import io.github.eliux.mega.error.MegaLoginException;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MegaCmdLogin extends AbstractMegaCmdRunnerWithParams {
 

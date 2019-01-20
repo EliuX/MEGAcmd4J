@@ -1,8 +1,5 @@
 package io.github.eliux.mega.cmd;
 
-import io.github.eliux.mega.MegaUtils;
-import io.github.eliux.mega.platform.OSPlatform;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;

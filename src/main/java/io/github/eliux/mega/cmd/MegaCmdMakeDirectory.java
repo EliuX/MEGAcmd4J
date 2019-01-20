@@ -1,6 +1,5 @@
 package io.github.eliux.mega.cmd;
 
-import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaWrongArgumentsException;
 
 import java.util.LinkedList;

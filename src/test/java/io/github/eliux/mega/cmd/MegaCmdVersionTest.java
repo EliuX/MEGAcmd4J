@@ -14,16 +14,10 @@ public class MegaCmdVersionTest {
         final MegaCmdVersion.MegaCmdVersionResponse megaCmdVersion =
                 Mega.version().call();
 
-        Assert.assertTrue(
-                "Invalid MEGAcmd version",
-                megaCmdVersion.getVersion().matches(
-                        ".{1,3}\\..{1,3}\\..{1,3}"
-                )
-        );
-
-        Assert.assertTrue(
-                "version code had not 3 characters",
-                megaCmdVersion.getVersionCode().matches("\\d{3,}")
+        Assert.assertFalse(
+                "No MEGAcmd version",
+                megaCmdVersion.getVersion() == null
+                        || megaCmdVersion.getVersion().isEmpty()
         );
     }
 
@@ -59,11 +53,10 @@ public class MegaCmdVersionTest {
         MegaCmdVersion.MegaCmdVersionExtendedResponse extendedVersion =
                 (MegaCmdVersion.MegaCmdVersionExtendedResponse) version;
 
-        Assert.assertTrue(
+        Assert.assertFalse(
                 "Invalid MEGAcmd version",
-                extendedVersion.getVersion().matches(
-                        ".{1,3}\\..{1,3}\\..{1,3}"
-                )
+                extendedVersion.getVersion() == null
+                        || extendedVersion.getVersion().isEmpty()
         );
 
         Assert.assertTrue(

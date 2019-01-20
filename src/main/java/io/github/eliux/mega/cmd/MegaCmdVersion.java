@@ -4,7 +4,6 @@ import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
 import io.github.eliux.mega.error.MegaUnexpectedFailureException;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;

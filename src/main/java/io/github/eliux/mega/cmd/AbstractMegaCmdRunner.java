@@ -2,8 +2,8 @@ package io.github.eliux.mega.cmd;
 
 
 import io.github.eliux.mega.MegaUtils;
-
 import io.github.eliux.mega.error.MegaIOException;
+
 import java.io.IOException;
 
 

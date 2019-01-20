@@ -1,8 +1,5 @@
 package io.github.eliux.mega.platform;
 
-import java.io.File;
-import java.nio.file.Paths;
-
 /**
  * Encapsulate actions related to Unix based OS/Platforms
  */
