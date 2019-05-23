@@ -1,5 +1,7 @@
 package io.github.eliux.mega.cmd;
 
+import io.github.eliux.mega.MegaUtils;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +12,7 @@ public abstract class AbstractMegaCmdCallerWithParams<T>
     protected List<String> executableCommand() {
         List<String> command = new LinkedList<>();
 
-        command.add(getCmdAdaptedToPlatform());
+        command.addAll(super.executableCommand());
 
         command.addAll(cmdParams());
 

@@ -10,7 +10,7 @@ public abstract class AbstractMegaCmdRunnerWithParams
     protected List<String> executableCommand() {
         List<String> cmdWithParams = new LinkedList<>();
 
-        cmdWithParams.add(getCmdAdaptedToPlatform());
+        cmdWithParams.addAll(super.executableCommand());
 
         cmdWithParams.addAll(cmdParams());
 

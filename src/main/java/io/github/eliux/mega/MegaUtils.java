@@ -69,6 +69,10 @@ public interface MegaUtils {
     }
   }
 
+  static String[] convertInstructionsToExecParams(String cmdInstructions){
+    return cmdInstructions.split("\\s+");
+  }
+
   static int execCmd(String... cmd)
       throws java.io.IOException, InterruptedException {
     final Process process = Runtime.getRuntime().exec(cmd);
