@@ -4,7 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Before 1.3.0 
+## Before 1.4.0 - 2019-05-24
+### Update
+- Updated implementation of `passwd`.
+### Changed
+- Increase MEGA_CMD_TTL to 1 minute in Travis CI: Allow hardworking tasks to pass.
+- MegaWrongArgumentsException will replace MegaCmdInvalidArgumentException (Different codes for Win and Unix)
+
+### Fixed
+- Fixed parsing of commands, which made that the server could not start in Windows.
+- Fixed parsing of the version, i.e. New prefix (MEGAcmd version). Now it is not fixed.
+
+## Before 1.3.0 - 2019-01-20
 ### Added 
 - Added CODEOWNERS
 - Added github templates for issues and PRs

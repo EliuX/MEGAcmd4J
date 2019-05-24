@@ -24,7 +24,7 @@ public class MegaCmdVersionTest {
     @Test
     public void shouldReturnExpectedFeaturesEnabled() {
         final List<String> versionResponse = Arrays.asList(
-                "MEGA CMD version: 0.9.9: code 90900",
+                "MEGAcmd version: 1.1.0: code 1010000",
                 "MEGA SDK version: 3.3.5",
                 "etc",
                 "Features enabled:",

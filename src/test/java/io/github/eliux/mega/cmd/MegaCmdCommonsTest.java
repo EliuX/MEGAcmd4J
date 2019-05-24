@@ -28,7 +28,7 @@ public class MegaCmdCommonsTest {
     Assert.assertNotNull(sessionMega.whoAmI());
   }
 
-  @Test(expected = MegaException.class, timeout = 30000)
+  @Test(expected = MegaException.class, timeout = 60000)
   public void given_emptyPassword_when_changePassword_then_fail() {
     final String currentPassword = System.getenv(Mega.PASSWORD_ENV_VAR);
 

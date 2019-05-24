@@ -42,7 +42,8 @@ public interface MegaUtils {
       case 0:
         //Its Ok
         break;
-      case 51:
+      case 51:  //Win
+      case 2:   //Unix
         throw new MegaWrongArgumentsException();
       case 52:
         throw new MegaInvalidEmailException();
@@ -62,11 +63,13 @@ public interface MegaUtils {
         throw new MegaUnexpectedFailureException();
       case 60:
         throw new MegaConfirmationRequiredException();
-      case 2:
-        throw new MegaCmdInvalidArgumentException();
       default:
         throw new MegaUnexpectedFailureException(code);
     }
+  }
+
+  static String[] convertInstructionsToExecParams(String cmdInstructions){
+    return cmdInstructions.split("\\s+");
   }
 
   static int execCmd(String... cmd)

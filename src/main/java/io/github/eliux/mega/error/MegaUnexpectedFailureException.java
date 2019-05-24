@@ -7,6 +7,6 @@ public class MegaUnexpectedFailureException extends MegaException {
     }
 
     public MegaUnexpectedFailureException() {
-        super("Unexpected failure");
+        super("Unexpected failure catched by MEGA");
     }
 }

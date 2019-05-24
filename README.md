@@ -74,47 +74,38 @@ platforms should be found [here][megacmd-install].
 
 * `MEGA_EMAIL`: Email used as username (lowercase)
 * `MEGA_PWD`: Corresponding password
-* `CMD_TTL_ENV_VAR`: Maximum time to live of a running MEGAcmd command.
+* `CMD_TTL_ENV_VAR`: Maximum time to live of a running MEGAcmd command. By default, 20 seconds.
 
 ### Setup your credentials
-1. The most common way to setup your credentials would be using environment variables `MEGA_EMAIL` 
+1. The most common way to setup your credentials would be using the environment variables `MEGA_EMAIL` 
 and `MEGA_PWD`.
 
-2. Use an existing session can be a saver way. You can use it from your app as long 
-as it don't be closed.
-
-## Continuous Integrations
-As most OSS projects in github, this one uses [Travis CI](https://travis-ci.com/EliuX/MEGAcmd4J). 
-I you want a CLI for your project, its recommend to install the correspondent ruby gem:
+2. To use an existing session can be a safer way. You can use it from your app as long as it don't be closed.
 
 ```bash
     gem install travis
 ```
 
+## For users
+* Once installed [MEGAcmd][megacmd] in your system, execute `mega-help` to check all commands.
+You will be able to notice those who are already implemented in this library and those who don't. Try them out.
 
-## Code style
+## Contributing
+Please read CONTRIBUTING.md for details on the code of conduct, and the process for submitting pull requests to the project.
+* Follow the [Google Java Style Guide][google-java-style-guide] as much as possible: Its recommended that you install the 
+[Google Java Style Guide settings in your IDE][google-java-style-settings-intellij]. 
+* Respect as much as possible the format of the provided templates for issues and PRs.
 
-* Follow the [Google Java Style Guide][google-java-style-guide] as much as possible.
-* Install the [Google Java Style Guide settings in your IDE][google-java-style-settings-intellij].
-
-## More information
-* Once installed [MEGAcmd][megacmd] in your system execute `mega-help` to check all commands.
-You will be able to notice those who are used in this library and others which don't, for practical
-reasons, but that will provide you additional capabilities. Try them out.
-
-## Status
-Release candidate: is a beta version with potential to be a final product, which is ready to release unless significant 
-bugs emerge.
-
-Path of Development: Active (December 31th 2018)
+## Built With
+* [Java SDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) -  Java™ Platform
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [MEGAcmd](https://github.com/meganz/MEGAcmd) - Command Line Interactive and Scriptable Application
 
 ## Author
-
 * **Eliecer Hernandez** - [eliecerhdz@gmail.com](mailto:eliecerhdz@gmail.com). 
-To know more of me please visit my [website](http://eliux.github.io).
+For more information, please visit my [website](http://eliux.github.io).
 
 ## License
-
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 [google-java-style-guide]: https://google.github.io/styleguide/javaguide.html 

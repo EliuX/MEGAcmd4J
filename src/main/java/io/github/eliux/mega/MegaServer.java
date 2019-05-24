@@ -20,7 +20,10 @@ public class MegaServer {
 
     public void start() {
         try {
-            MegaUtils.execCmd(OSPlatform.getCurrent().cmdInstruction("help"));
+            final String[] cmdParams = MegaUtils.convertInstructionsToExecParams(
+                OSPlatform.getCurrent().cmdInstruction("help")
+            );
+            MegaUtils.execCmd(cmdParams);
         } catch (Exception e) {
             throw new MegaUnexpectedFailureException();
         }

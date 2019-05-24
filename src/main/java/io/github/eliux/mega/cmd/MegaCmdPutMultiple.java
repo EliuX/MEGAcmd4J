@@ -1,7 +1,6 @@
 package io.github.eliux.mega.cmd;
 
-import io.github.eliux.mega.error.MegaCmdInvalidArgumentException;
-
+import io.github.eliux.mega.error.MegaWrongArgumentsException;
 import java.util.*;
 
 public class MegaCmdPutMultiple extends AbstractMegaCmdPut {
@@ -33,7 +32,7 @@ public class MegaCmdPutMultiple extends AbstractMegaCmdPut {
 
     private List<String> cmdLocalFilesParams() {
         if (localFiles == null || localFiles.isEmpty()) {
-            throw new MegaCmdInvalidArgumentException(
+            throw new MegaWrongArgumentsException(
                     "There are not local files specified!"
             );
         }

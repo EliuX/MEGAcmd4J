@@ -77,7 +77,7 @@ public class MegaCmdVersion extends
             String versionResponse
     ) {
         final Matcher versionMatcher = Pattern.compile(
-                "MEGA CMD version: (?<version>.+): code (?<versionCode>.+)"
+                "(.+) version: (?<version>.+): code (?<versionCode>.+)"
         ).matcher(versionResponse);
 
         if (versionMatcher.find()) {
