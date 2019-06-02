@@ -1,42 +1,38 @@
 package io.github.eliux.mega.cmd;
 
+import static java.time.Duration.ofMinutes;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeout;
+
 import io.github.eliux.mega.Mega;
-import io.github.eliux.mega.MegaSession;
 import io.github.eliux.mega.error.MegaException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
+@DisplayName("MEGAcmd Common Commands")
+public class MegaCmdCommonsTest extends AbstractRemoteTests {
 
-public class MegaCmdCommonsTest {
-
-  MegaSession sessionMega;
-
-  @Before
-  public void setup() {
-    sessionMega = Mega.init();
-  }
-
+  @DisplayName("Session should exist")
   @Test
   public void sessionShouldExist() {
-    Assert.assertNotNull(sessionMega.sessionID());
+    Assertions.assertNotNull(sessionMega.sessionID());
   }
 
+  @DisplayName("Retrieve username (WhoAmI)")
   @Test
   public void shouldReturnUsername() {
-    Assert.assertNotNull(sessionMega.whoAmI());
+    Assertions.assertNotNull(sessionMega.whoAmI());
   }
 
-  @Test(expected = MegaException.class, timeout = 60000)
-  public void given_emptyPassword_when_changePassword_then_fail() {
+  @DisplayName("When change password to empty string then fail")
+  @Test()
+  public void emptyPasswordWhenChangePasswordThenFail() {
     final String currentPassword = System.getenv(Mega.PASSWORD_ENV_VAR);
 
-    sessionMega.changePassword(currentPassword, "  ");
-  }
-
-  @After
-  public void logout() {
-    sessionMega.logout();
+    assertTimeout(ofMinutes(30), () ->
+        assertThrows(MegaException.class,
+            () -> sessionMega.changePassword(currentPassword, "  "))
+    );
   }
 }

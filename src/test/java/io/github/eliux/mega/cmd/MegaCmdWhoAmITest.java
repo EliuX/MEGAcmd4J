@@ -1,12 +1,19 @@
 package io.github.eliux.mega.cmd;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
+@DisplayName("Parse WhoAmI")
+@Tag("whoami")
 public class MegaCmdWhoAmITest {
 
+  @DisplayName("When parse username then return email")
   @Test
   public void parseUsernameShouldReturnEmail() {
     //Given
@@ -16,14 +23,15 @@ public class MegaCmdWhoAmITest {
     final Optional<String> username = MegaCmdWhoAmI.parseUsername(validResponse);
 
     //Then
-    Assert.assertTrue(username.isPresent());
+    assertTrue(username.isPresent());
 
-    Assert.assertEquals(
+    assertEquals(
         "user@domain.com",
         username.get()
     );
   }
 
+  @DisplayName("When parse username of not logged in user then return nothing (Optional#empty)")
   @Test
   public void parseUsernameShouldFail() {
     //Given
@@ -33,6 +41,6 @@ public class MegaCmdWhoAmITest {
     final Optional<String> username = MegaCmdWhoAmI.parseUsername(invalidResponse);
 
     //Then
-    Assert.assertFalse(username.isPresent());
+    assertFalse(username.isPresent());
   }
 }

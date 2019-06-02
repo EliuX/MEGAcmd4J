@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 public interface MegaTestUtils {
 
-    static final List<String> EMPTY_SUFFIX_ENTRIES = Arrays.asList("0", "1", "");
+    List<String> EMPTY_SUFFIX_ENTRIES = Arrays.asList("0", "1", "");
 
     static String testTextFileName(String namePrefix, Object suffix) {
         String suffixStr = EMPTY_SUFFIX_ENTRIES.contains(suffix.toString())
