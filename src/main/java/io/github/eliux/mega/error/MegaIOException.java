@@ -1,6 +1,6 @@
 package io.github.eliux.mega.error;
 
-public class MegaIOException extends RuntimeException {
+public class MegaIOException extends MegaException {
 
     public MegaIOException(String message) {
         super(message);

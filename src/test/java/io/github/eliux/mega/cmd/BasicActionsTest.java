@@ -1,64 +1,88 @@
 package io.github.eliux.mega.cmd;
 
-import io.github.eliux.mega.Mega;
-import io.github.eliux.mega.MegaSession;
-import io.github.eliux.mega.MegaTestUtils;
-import io.github.eliux.mega.error.*;
-import org.junit.*;
-import org.junit.runners.MethodSorters;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import io.github.eliux.mega.Mega;
+import io.github.eliux.mega.MegaTestUtils;
+import io.github.eliux.mega.error.MegaException;
+import io.github.eliux.mega.error.MegaInvalidStateException;
+import io.github.eliux.mega.error.MegaInvalidTypeException;
+import io.github.eliux.mega.error.MegaResourceNotFoundException;
+import io.github.eliux.mega.error.MegaWrongArgumentsException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class BasicActionsTest {
+@DisplayName("MEGAcmd Basic Commands")
+@Tag("cmd")
+@Tag("integration")
+@TestMethodOrder(OrderAnnotation.class)
+public class BasicActionsTest extends AbstractRemoteTests {
 
-  private static MegaSession sessionMega;
-
-  @BeforeClass
-  public static void setupSession() {
-    sessionMega = Mega.init();
-  }
-
-  @AfterClass
-  public static void finishSession() {
+  @AfterAll
+  static void finishSession() {
     sessionMega.removeDirectory("megacmd4j").run();
     sessionMega.remove("yolo*.txt").ignoreErrorIfNotPresent().run();
-    sessionMega.logout();
   }
 
-  @Test
-  public void stage00_shouldEnableHttps() {
-    Assert.assertTrue(
-        "HTTPS should be enabled after the action",
-        sessionMega.enableHttps()
+  @DisplayName("Enable HTTPS")
+  @Tag("https")
+  @Order(0)
+  @Test()
+  public void shouldEnableHttps() {
+    assertTrue(
+        sessionMega.enableHttps(),
+        "HTTPS should be enabled after the action"
     );
   }
 
-  @Test
-  public void stage00_shouldDeleteWorkingDirectoryIfExist() {
+  @DisplayName("Delete directory if exists")
+  @Tag("rm")
+  @Order(0)
+  @Test()
+  public void shouldDeleteWorkingDirectoryIfExist() {
     sessionMega.remove("megacmd4j")
         .deleteRecursively()
         .ignoreErrorIfNotPresent()
         .run();
   }
 
-  @Test
-  public void stage00_sessionShouldHaveAuthenticationObject() {
-    Assert.assertNotNull(sessionMega.getAuthentication());
+  @DisplayName("Session should have authentication object")
+  @Tag("auth")
+  @Order(0)
+  @Test()
+  public void sessionShouldHaveAuthenticationObject() {
+    assertNotNull(sessionMega.getAuthentication());
   }
 
-  @Test
-  public void stage01_httpsShouldBeEnabled() {
-    Assert.assertTrue("HTTPS should be enabled", sessionMega.isHttpsEnabled());
+  @DisplayName("HTTPS should be enabled")
+  @Tag("https")
+  @Order(1)
+  @Test()
+  public void httpsShouldBeEnabled() {
+    assertTrue(sessionMega.isHttpsEnabled(), "HTTPS should be enabled");
   }
 
-  @Test
-  public void stage01_shouldUploadFileToRoot() {
+  @DisplayName("Upload file to root folder")
+  @Tag("put")
+  @Order(1)
+  @Test()
+  public void shouldUploadFileToRoot() {
     MegaTestUtils.createTextFile(
         "target/yolo-test.txt",
         "You only live once..."
@@ -69,8 +93,11 @@ public class BasicActionsTest {
     MegaTestUtils.removeFile("target/yolo-test.txt");
   }
 
-  @Test
-  public void stage02_shouldUploadFileToTargetFolder() {
+  @DisplayName("Upload file to target folder")
+  @Tag("put")
+  @Order(2)
+  @Test()
+  public void shouldUploadFileToTargetFolder() {
     MegaTestUtils.createTextFile(
         "target/yolo-infinite.txt",
         "You only live infinitive times..."
@@ -81,8 +108,11 @@ public class BasicActionsTest {
         .run();
   }
 
-  @Test
-  public void stage03_shouldUploadMultipleFilesAndCreateRemoteFolderSuccessfully() {
+  @DisplayName("Upload multiple files and create remote folder")
+  @Tag("put")
+  @Order(3)
+  @Test()
+  public void shouldUploadMultipleFilesAndCreateRemoteFolderSuccessfully() {
     MegaTestUtils.createTextFiles("yolo", 10);
 
     final MegaCmdPutMultiple megaCmd = sessionMega.uploadFiles("/megacmd4j/")
@@ -96,263 +126,360 @@ public class BasicActionsTest {
     megaCmd.run();
   }
 
-  @Test(expected = MegaWrongArgumentsException.class)
-  public void stage04_given_multilevelfolder_when_mkdir_withoutRecursivelyFlag_then_fail() {
-    sessionMega.makeDirectory("megacmd4j/level2/level3").run();
+  @DisplayName("When create folder with multilevel structure without recursively flag then fail")
+  @Tag("mkdir")
+  @Order(4)
+  @Test()
+  public void failWhenCreateMultiLevelDirectoryWithoutRecursivelyFlag() {
+    assertThrows(MegaWrongArgumentsException.class,
+        () -> sessionMega.makeDirectory("megacmd4j/level2/level3").run());
   }
 
-  @Test
-  public void stage05_given_multilevelfolder_when_mkdir_withRecursivelyAndIgnoreErrorIfExistsFlag_then_success() {
+  @DisplayName("When create folder with multilevel structure with recursively flag then success")
+  @Tag("mkdir")
+  @Order(5)
+  @Test()
+  public void succeedWhenCreateMultiLevelDirectoryWithRecursivelyFlag() {
     sessionMega.makeDirectory("megacmd4j/level2/level3")
         .recursively()
         .ignoreErrorIfExists()
         .run();
   }
 
-  @Test(expected = MegaInvalidStateException.class)
-  public void stage06_given_multilevelfolder_when_mkdir_withRecursivelyAndthrowErrorIfExistsFlag_then_fail() {
-    sessionMega.makeDirectory("megacmd4j/level2/level3")
-        .recursively()
-        .throwErrorIfExists()
-        .run();
+  @DisplayName("When try to create existing folder with multilevel structure then fail")
+  @Tag("mkdir")
+  @Order(6)
+  @Test()
+  public void failWhenCreateExistingMultiLevelDirectory() {
+    assertThrows(MegaInvalidStateException.class,
+        () -> sessionMega.makeDirectory("megacmd4j/level2/level3")
+            .recursively()
+            .throwErrorIfExists()
+            .run());
   }
 
-  @Test
-  public void stage07_given_a_file_when_copy_then_success() {
+  @DisplayName("Upload file remotely")
+  @Tag("cp")
+  @Order(7)
+  @Test()
+  public void succeedCopyFileRemotely() {
     sessionMega.copy("megacmd4j/yolo.txt", "megacmd4j/level2/yolo.txt")
         .run();
   }
 
-  @Test
-  public void stage08_lsShouldReturnAFileAndADirectory() {
+  @DisplayName("Should return previously uploaded file")
+  @Tag("ls")
+  @Order(8)
+  @Test()
+  public void lsShouldReturnAFileAndADirectory() {
     final List<FileInfo> files = sessionMega.ls("megacmd4j/level2").call();
 
-    Assert.assertEquals(
-        "There should be 2 elements",
+    assertEquals(
         2,
-        files.size()
+        files.size(),
+        "There should be 2 elements"
     );
 
-    final FileInfo fileInfo = files.stream().filter(x -> x.getName().equals("yolo.txt"))
+    final FileInfo fileInfo = files.stream()
+        .filter(x -> x.getName().equals("yolo.txt"))
         .findAny().orElseThrow(() -> new MegaInvalidStateException(
-            "The previously copied filed was not found"
+            "The previously uploaded filed was not found"
         ));
 
-    Assert.assertTrue(fileInfo.isFile());
+    assertTrue(fileInfo.isFile(), "The found object is not a file");
 
-    final FileInfo directoryInfo = files.stream().filter(x -> x.getName().equals("level3"))
+    final FileInfo directoryInfo = files.stream()
+        .filter(x -> x.getName().equals("level3"))
         .findAny().orElseThrow(() -> new MegaInvalidStateException(
-            "The previously copied filed was not found"
+            "The previously uploaded folder was not found"
         ));
 
-    Assert.assertTrue(directoryInfo.isDirectory());
+    assertTrue(
+        directoryInfo.isDirectory(),
+        "The found object is not a directory"
+    );
   }
 
-  @Test(expected = MegaInvalidTypeException.class)
-  public void stage09_given_localPathDoesntExist_when_get_then_fail() {
-    sessionMega.get("megacmd4j/level2", "target/savedLevel2")
-        .run();
+  @DisplayName("When download remote folder to nonexistent local folder then fail")
+  @Tag("get")
+  @Order(9)
+  @Test()
+  public void failWhenDownloadRemoteFolderToNonExistentLocalFolder() {
+    assertThrows(MegaInvalidTypeException.class,
+        () -> sessionMega.get("megacmd4j/level2", "target/savedLevel2")
+            .run());
   }
 
-  @Test
-  public void stage10_given_localPathWhichExist_when_get_then_success() {
+  @DisplayName("When download remote folder to existing local folder then success")
+  @Tag("get")
+  @Order(10)
+  @Test()
+  public void succeedWhenDownloadRemoteFolderToExistingLocalFolder() {
     sessionMega.get("megacmd4j/level2", "target")
         .run();
 
-    Assert.assertTrue(new File("target/level2/yolo.txt").isFile());
-    Assert.assertTrue(new File("target/level2/level3").isDirectory());
+    assertTrue(
+        new File("target/level2/yolo.txt").isFile(),
+        "Invalid downloaded file"
+    );
+    assertTrue(
+        new File("target/level2/level3").isDirectory(),
+        "Invalid downloaded directory"
+    );
   }
 
-  @Test
-  public void stage11_shouldDownloadASingleFileIntoLocalFolder() {
+  @DisplayName("Download single remote file to local folder")
+  @Tag("get")
+  @Order(11)
+  @Test()
+  public void shouldDownloadASingleFileIntoLocalFolder() {
     sessionMega.get("megacmd4j/yolo-infinite.txt", "target/level2")
         .run();
 
-    Assert.assertTrue(new File("target/level2/yolo-infinite.txt").exists());
+    assertTrue(
+        new File("target/level2/yolo-infinite.txt").exists(),
+        "The downloaded file should exist locally"
+    );
   }
 
-  @Test
-  public void stage12_downloadedContentShouldBeConsistent() throws IOException {
+  @DisplayName("Downloaded file should have the same content as when it was uploaded")
+  @Tag("get")
+  @Order(12)
+  @Test()
+  public void downloadedContentShouldBeConsistent() throws IOException {
     final String lineSeparator = System.getProperty("line.separator");
 
-    final String firstlineOfGeneratedFile =
+    final String firstLineOfGeneratedFile =
         Files.lines(new File("target/yolo-infinite.txt").toPath())
             .collect(Collectors.joining(lineSeparator));
+
     final String firstLineOfDownloadedFile =
         Files.lines(new File("target/level2/yolo-infinite.txt").toPath())
             .collect(Collectors.joining(lineSeparator));
-    Assert.assertEquals(firstlineOfGeneratedFile, firstLineOfDownloadedFile);
+
+    assertEquals(firstLineOfGeneratedFile, firstLineOfDownloadedFile,
+        "The downloaded file has differed its content");
   }
 
-  @Test
-  public void stage13_moveMultipleFilesUsingPatternIntoSubpath() {
+  @DisplayName("Move multiple files using pattern into sub-path: *")
+  @Tag("ls")
+  @Order(13)
+  @Test()
+  public void moveMultipleFilesUsingPatternIntoSubpath() {
     sessionMega.move("megacmd4j/*-*.txt", "/megacmd4j/level2/")
         .run();
 
     final List<FileInfo> currentFiles = sessionMega.ls("megacmd4j/").call();
-    Assert.assertEquals(
-        "Only 2 files were expected",
-        2,
-        currentFiles.size()
-    );
+    assertEquals(2, currentFiles.size(),
+        "Only 2 files were expected");
 
     final long amountOfDirectoriesLeft = currentFiles.stream()
         .filter(FileInfo::isDirectory).count();
-    Assert.assertEquals(
-        "There should be only 1 directory left",
-        1,
-        amountOfDirectoriesLeft
-    );
+    assertEquals(1, amountOfDirectoriesLeft,
+        "There should be only 1 directory left");
 
     final long amountOfFilesLeft = currentFiles.stream()
-        .filter(FileInfo::isFile).count();
-    Assert.assertEquals(
-        "There should be only 1 file left",
-        1,
-        amountOfFilesLeft
-    );
+        .filter(FileInfo::isFile)
+        .count();
+    assertEquals(1, amountOfFilesLeft,
+        "There should be only 1 file left");
   }
 
-  @Test
-  public void stage13_uploadFile_using_folders_with_whitespace() {
+  @DisplayName("Upload file to remote folder with whitespace")
+  @Tag("put")
+  @Order(13)
+  @Test()
+  public void uploadFileToFoldersWithWhitespace() {
     MegaTestUtils.createTextFile(
-            "target/folder with white spaces/yolo.txt",
-            "You only live infinitive times..."
+        "target/folder with white spaces/yolo.txt",
+        "You only live infinitive times..."
     );
 
     sessionMega.uploadFile("target/folder with white spaces/yolo.txt",
-            "/megacmd4j/remote folder/")
-            .createRemotePathIfNotPresent()
-            .run();
+        "/megacmd4j/remote folder/")
+        .createRemotePathIfNotPresent()
+        .run();
 
-    Assert.assertTrue(sessionMega.ls("/megacmd4j/remote folder/yolo.txt")
-            .exists());
+    assertTrue(sessionMega.ls("/megacmd4j/remote folder/yolo.txt")
+        .exists());
   }
 
-  @Test
-  public void stage14_should_create_folder_with_whitespaces() {
+
+  @DisplayName("Create remote folder with whitespaces")
+  @Tag("put")
+  @Order(14)
+  @Test()
+  public void shouldCreateFolderWithWhitespaces() {
     sessionMega.makeDirectory("megacmd4j/level2/another folder/")
-            .recursively()
-            .run();
+        .recursively()
+        .run();
 
-    Assert.assertTrue(sessionMega.ls("megacmd4j/level2/another folder/")
-            .exists());
+    assertTrue(sessionMega.ls("megacmd4j/level2/another folder/")
+        .exists());
   }
 
-  @Test
-  public void stage14_should_disable_HTTPS() {
-    Assert.assertFalse(
-        "HTTPS should be disabled",
-        sessionMega.disableHttps()
+  @DisplayName("HTTPS should be disabled")
+  @Tag("https")
+  @Order(14)
+  @Test()
+  public void shouldDisableHTTPS() {
+    assertFalse(
+        sessionMega.disableHttps(),
+        "HTTPS should be disabled"
     );
   }
 
-  @Test
-  public void stage14_given_emptyfolder_when_ls_then_exists_is_true() {
-    Assert.assertTrue(
-        "The directory level3 should exist",
-        sessionMega.ls("megacmd4j/level2/level3").exists()
+  @DisplayName("When list an existing empty remote folder then exits should return true")
+  @Tag("ls")
+  @Order(14)
+  @Test()
+  public void givenEmptyFolderWhenListThenExistsIsTrue() {
+    assertTrue(
+        sessionMega.ls("megacmd4j/level2/level3").exists(),
+        "The directory level3 should exist"
     );
   }
 
-  @Test
-  public void stage15_given_nonExistingFile_when_ls_then_exists_is_false() {
-    Assert.assertFalse(
-        "That file/directory doesnt exist",
-        sessionMega.ls("megacmd4j/level2/level33").exists()
+  @DisplayName("When list a non-existing empty remote folder then exits should return false")
+  @Tag("ls")
+  @Order(15)
+  @Test()
+  public void givenNonExistingFileWhenListThenExistsIsFalse() {
+    assertFalse(
+        sessionMega.ls("megacmd4j/level2/level33").exists(),
+        "That file/directory doesnt exist"
     );
   }
 
-
-  @Test
-  public void stage15_should_move_file_from_path_with_whitespace() {
+  @DisplayName("Move file from/to remote path with whitespaces")
+  @Tag("ls")
+  @Tag("mv")
+  @Order(15)
+  @Test()
+  public void shouldMoveFileFromPathWithWhitespace() {
     sessionMega.move("megacmd4j/remote folder/yolo.txt",
-            "megacmd4j/level2/another folder/yolo moved.txt")
-            .run();
+        "megacmd4j/level2/another folder/yolo moved.txt")
+        .run();
 
-    Assert.assertTrue(sessionMega.ls(
-            "megacmd4j/level2/another folder/yolo moved.txt"
+    assertTrue(sessionMega.ls(
+        "megacmd4j/level2/another folder/yolo moved.txt"
     ).exists());
   }
 
-  @Test
-  public void stage15_deleteMultipleFilesWithMaskShouldBeOk() {
+  @DisplayName("Delete multiple files with mask: *")
+  @Tag("exists")
+  @Tag("rm")
+  @Order(15)
+  @Test()
+  public void deleteMultipleFilesWithMaskShouldBeOk() {
     if (sessionMega.exists("megacmd4j/level2/yolo-*.txt")) {
       sessionMega.remove("megacmd4j/level2/yolo-*.txt").run();
     }
 
-    Assert.assertEquals(
-        "There should be only 1 file",
+    assertEquals(
         1,
-        sessionMega.count("megacmd4j/level2", FileInfo::isFile)
+        sessionMega.count("megacmd4j/level2", FileInfo::isFile),
+        "There should be only 1 file"
     );
 
-    Assert.assertTrue(
-        "There should be left a directory",
-        sessionMega.exists("megacmd4j/level2/level3")
+    assertTrue(
+        sessionMega.exists("megacmd4j/level2/level3"),
+        "There should be left a directory"
     );
   }
 
-  @Test
-  public void stage16_given_directory_when_remove_then_success() {
+  @DisplayName("Remove remote directory")
+  @Tag("rm")
+  @Order(16)
+  @Test()
+  public void shouldRemoveRemoteDirectory() {
     sessionMega.removeDirectory("megacmd4j/level2/level3").run();
   }
 
-  @Test(expected = MegaException.class)
-  public void stage17_given_unexistingDirectory_when_remove_then_fail() {
-    sessionMega.removeDirectory("megacmd4j/level2/level3").run();
+  @DisplayName("When remove nonexistent remote folder")
+  @Tag("rm")
+  @Order(17)
+  @Test()
+  public void givenNonexistentDirectoryWhenRemoveThenFail() {
+    assertThrows(MegaException.class,
+        () -> sessionMega.removeDirectory("megacmd4j/level2/level3").run());
   }
 
-  @Test
-  public void stage17_httpsShouldBeDisabled() {
-    Assert.assertFalse(
-        "HTTPS should be disabled",
-        sessionMega.isHttpsEnabled()
+  @DisplayName("HTTPS should be disabled")
+  @Tag("https")
+  @Order(17)
+  @Test()
+  public void httpsShouldBeDisabled() {
+    assertFalse(
+        sessionMega.isHttpsEnabled(),
+        "HTTPS should be disabled"
     );
   }
 
-  @Test(expected = MegaResourceNotFoundException.class)
-  public void stage18_given_unexistingDirectory_when_share_then_fail() {
+  @DisplayName("When share nonexistent remote folder then fail")
+  @Tag("share")
+  @Order(18)
+  @Test()
+  public void givenNonexistentDirectoryWhenShareThenFail() {
     String username = System.getenv(Mega.USERNAME_ENV_VAR);
-    sessionMega.share("megacmd4j/unexisting-folder", username)
-        .grantReadAndWriteAccess()
-        .run();
+
+    assertThrows(MegaResourceNotFoundException.class,
+        () -> sessionMega.share("megacmd4j/unexisting-folder", username)
+            .grantReadAndWriteAccess()
+            .run());
   }
 
-  @Test
-  public void stage18_given_existingDirectory_when_share_then_success() {
+  @DisplayName("Share existing remote folder")
+  @Tag("share")
+  @Order(18)
+  @Test()
+  public void givenExistingDirectoryWhenShareThenSuccess() {
     String username = System.getenv(Mega.USERNAME_ENV_VAR);
     sessionMega.share("megacmd4j/level2", username)
         .grantReadAndWriteAccess()
         .run();
   }
 
-  @Test(expected = MegaResourceNotFoundException.class)
-  public void stage19_given_unexistingDirectory_when_export_then_fail() {
-    final ExportInfo info = sessionMega.export("megacmd4j/unexisting-folder")
+  @DisplayName("When export nonexistent remote folder then fail")
+  @Tag("export")
+  @Order(19)
+  @Test()
+  public void givenNonexistentDirectoryWhenExportThenFail() {
+    assertThrows(MegaResourceNotFoundException.class,
+        () -> sessionMega.export("megacmd4j/unexisting-folder")
             .enablePublicLink()
-            .call();
+            .call());
   }
 
-  @Test
-  public void stage19_given_existingDirectory_when_export_then_success() {
+  @DisplayName("Export existing remote folder")
+  @Tag("export")
+  @Order(19)
+  @Test()
+  public void givenExistingDirectoryWhenExportThenSuccess() {
     final ExportInfo exportInfo = sessionMega.export("megacmd4j/level2")
         .enablePublicLink()
         .call();
 
-    Assert.assertEquals("/megacmd4j/level2", exportInfo.getRemotePath());
+    assertEquals("/megacmd4j/level2", exportInfo.getRemotePath());
 
-    Assert.assertTrue(exportInfo.getPublicLink().startsWith("https://mega.nz/"));
-    Assert.assertTrue(exportInfo.getPublicLink().length()
-        - "https://mega.nz/".length() > 5);
+    assertTrue(
+        exportInfo.getPublicLink().startsWith("https://mega.nz/"),
+        "The exported public link should be located in MEGA.nz"
+    );
+    assertTrue(exportInfo.getPublicLink().length()
+            - "https://mega.nz/".length() > 5,
+        "The exported url should have more than 5 characters at least");
   }
 
-  @Test
-  public void stage20_exportedFolderShouldAppearInListings() {
+  @DisplayName("Get information about exported folder")
+  @Tag("export")
+  @Order(20)
+  @Test()
+  public void exportedFolderShouldAppearInListings() {
     final List<ExportInfo> exportedFiles
         = sessionMega.export("megacmd4j").list();
 
-    Assert.assertTrue(exportedFiles.stream()
+    assertTrue(exportedFiles.stream()
         .map(ExportInfo::getRemotePath)
         .filter("megacmd4j/level2"::equals)
         .findAny().isPresent());
