@@ -83,7 +83,7 @@ public class ExportInfoTest {
     //Given
     String responseWithRemotePathWithSubPaths =
         "megacmd4j/level2/level3 (folder, shared as exported permanent " +
-            "folder link: https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA)";
+            "folder link: https://mega.nz/folder/xSx1ybja#cBos0Ly_71GXu6v-rKZXzg)";
 
     //When
     final ExportInfo exportInfo =
@@ -92,7 +92,7 @@ public class ExportInfoTest {
     //Then
     Assert.assertEquals("megacmd4j/level2/level3", exportInfo.getRemotePath());
     Assert.assertEquals(
-        "https://mega.nz/#F!APJmCbiJ!lfKu3tVd8pNceLoH6qe_tA",
+        "https://mega.nz/folder/xSx1ybja#cBos0Ly_71GXu6v-rKZXzg",
         exportInfo.getPublicLink()
     );
   }

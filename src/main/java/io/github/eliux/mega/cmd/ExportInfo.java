@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class ExportInfo {
 
     private static final Pattern LIST_PATTERN =
-            Pattern.compile("(?<remotePath>\\S+) \\(.+link: (?<publicLink>http[s]?://mega.nz/#.+)\\)");
+            Pattern.compile("(?<remotePath>\\S+) \\(.+link: (?<publicLink>http[s]?://mega.nz/\\S*#.+)\\)");
 
     private final String remotePath;
 

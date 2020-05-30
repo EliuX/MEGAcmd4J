@@ -45,6 +45,8 @@ public interface MegaUtils {
       case 51:  //Win
       case 2:   //Unix
         throw new MegaWrongArgumentsException();
+      case 12:
+        throw new MegaResourceAlreadyExistsException();
       case 52:
         throw new MegaInvalidEmailException();
       case 53:

@@ -22,13 +22,22 @@ public class BasicActionsTest {
   @BeforeClass
   public static void setupSession() {
     sessionMega = Mega.init();
+    removeTestResourcesIfExist();
   }
 
   @AfterClass
   public static void finishSession() {
-    sessionMega.removeDirectory("megacmd4j").run();
-    sessionMega.remove("yolo*.txt").ignoreErrorIfNotPresent().run();
+    removeTestResourcesIfExist();
     sessionMega.logout();
+  }
+
+  private static void removeTestResourcesIfExist() {
+    sessionMega.removeDirectory("megacmd4j")
+        .ignoreErrorIfNotPresent()
+        .run();
+    sessionMega.remove("yolo*.txt")
+        .ignoreErrorIfNotPresent()
+        .run();
   }
 
   @Test
@@ -64,7 +73,8 @@ public class BasicActionsTest {
         "You only live once..."
     );
 
-    sessionMega.uploadFile("target/yolo-test.txt").run();
+    sessionMega.uploadFile("target/yolo-test.txt")
+        .run();
 
     MegaTestUtils.removeFile("target/yolo-test.txt");
   }
