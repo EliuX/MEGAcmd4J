@@ -291,6 +291,15 @@ public class MegaSession {
     return new MegaCmdImport(exportedLink);
   }
 
+  /**
+   * import exported link into your cloud
+   *
+   * @param exportedLink {@link String} the link to be imported
+   * @return {@link MegaCmdImport} to be configured and run.
+   */
+  public MegaCmdImport importLinkWithPassword(String exportedLink, String password) {
+    return new MegaCmdImport(exportedLink, Optional.empty(), Optional.of(password));
+  }
 
   /**
    * import exported link to personal cloud
