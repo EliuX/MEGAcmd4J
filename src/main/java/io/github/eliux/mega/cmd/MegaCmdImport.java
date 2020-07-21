@@ -7,13 +7,12 @@ import io.github.eliux.mega.error.MegaInvalidResponseException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 public class MegaCmdImport extends AbstractMegaCmdCallerWithParams<ImportInfo> {
 
-    private Optional<String> remotePath = Optional.empty();
+    private String remotePath;
 
-    private Optional<String> password = Optional.empty();
+    private String password;
 
     private String exportedLink;
 
@@ -21,15 +20,14 @@ public class MegaCmdImport extends AbstractMegaCmdCallerWithParams<ImportInfo> {
         this.exportedLink = exportedLink;
     }
 
-    public MegaCmdImport(String exportedLink, Optional<String> remotePath) {
+    public MegaCmdImport setRemotePath(String remotePath) {
         this.remotePath = remotePath;
-        this.exportedLink = exportedLink;
+        return  this;
     }
 
-    public MegaCmdImport(String exportedLink, Optional<String> remotePath, Optional<String> password) {
-        this.remotePath = remotePath;
+    public MegaCmdImport setPassword(String password) {
         this.password = password;
-        this.exportedLink = exportedLink;
+        return  this;
     }
 
     @Override
@@ -38,10 +36,12 @@ public class MegaCmdImport extends AbstractMegaCmdCallerWithParams<ImportInfo> {
 
         cmdFileParams.add(getExportedLink());
 
-        getPassword().ifPresent(password -> cmdFileParams.add("--password="+password));
+        if(password != null) {
+            cmdFileParams.add("--password="+password);
+        }
 
-        if(getRemotePath().isPresent()) {
-            cmdFileParams.add(getRemotePath().get());
+        if(remotePath != null) {
+            cmdFileParams.add(remotePath);
         } else {
             cmdFileParams.add("/");
         }
@@ -55,28 +55,9 @@ public class MegaCmdImport extends AbstractMegaCmdCallerWithParams<ImportInfo> {
         return "import";
     }
 
-    public Optional<String> getRemotePath() {
-        return remotePath;
-    }
-
-    public void setRemotePath(Optional<String> remotePath) {
-        this.remotePath = remotePath;
-    }
 
     public String getExportedLink() {
         return exportedLink;
-    }
-
-    public void setExportedLink(String exportedLink) {
-        this.exportedLink = exportedLink;
-    }
-
-    public Optional<String> getPassword() {
-        return password;
-    }
-
-    public void setPassword(Optional<String> password) {
-        this.password = password;
     }
 
     @Override

@@ -19,7 +19,6 @@ public class ImportInfo {
     }
 
     public static ImportInfo parseImportInfo(String importInfoStr) {
-
         try {
             if (importInfoStr.contains("Imported folder complete:")) {
                 final String[] tokens = importInfoStr.split(": ");
@@ -31,6 +30,4 @@ public class ImportInfo {
 
         throw new MegaInvalidResponseException(importInfoStr);
     }
-
-
 }

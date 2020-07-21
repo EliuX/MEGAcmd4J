@@ -19,7 +19,7 @@ public class ImportInfoTest {
 
   @AfterClass
   public static void finishSession() {
-    //sessionMega.logout();
+    sessionMega.logout();
   }
 
 
@@ -41,7 +41,6 @@ public class ImportInfoTest {
     ImportInfo result = ImportInfo.parseImportInfo(entryWithInvalidRemotePath);
 
     Assert.assertEquals(result.getRemotePath(), "/test");
-
   }
 
 
@@ -68,7 +67,10 @@ public class ImportInfoTest {
             "https://mega.nz/folder/SjZG1aZQ#8mx728HHlN7Ev9sLb1RARg";
 
     //When
-    final ImportInfo importInfo = sessionMega.importLink(responseWithRemotePath, "/megacmd4j/testImport/").call();
+    final ImportInfo importInfo =
+            sessionMega.importLink(responseWithRemotePath)
+                        .setRemotePath("/megacmd4j/testImport/")
+                        .call();
 
     //Then
     Assert.assertEquals("/megacmd4j/testImport/folder2", importInfo.getRemotePath());
@@ -82,7 +84,11 @@ public class ImportInfoTest {
     String key = "cemotdepasseestvraimentvraimentrobuste";
 
     //When
-    final ImportInfo importInfo = sessionMega.importLink(responseWithRemotePath, "/megacmd4j/testImport/", key).call();
+    final ImportInfo importInfo =
+            sessionMega.importLink(responseWithRemotePath)
+                        .setRemotePath("/megacmd4j/testImport/")
+                        .setPassword(key)
+                        .call();
 
     //Then
     Assert.assertEquals("/megacmd4j/testImport/folder3", importInfo.getRemotePath());
@@ -97,7 +103,10 @@ public class ImportInfoTest {
     String password = "cemotdepasseestvraimentvraimentrobuste";
 
     //When
-    final ImportInfo importInfo = sessionMega.importLinkWithPassword(responseWithRemotePath,  password).call();
+    final ImportInfo importInfo =
+                sessionMega.importLink(responseWithRemotePath)
+                .setPassword(password)
+                .call();
 
     //Then
     Assert.assertEquals("/folder4", importInfo.getRemotePath());

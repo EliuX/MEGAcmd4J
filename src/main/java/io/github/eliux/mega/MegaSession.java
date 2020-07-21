@@ -3,7 +3,6 @@ package io.github.eliux.mega;
 import io.github.eliux.mega.auth.MegaAuth;
 import io.github.eliux.mega.cmd.*;
 
-import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.function.Predicate;
 
@@ -280,7 +279,6 @@ public class MegaSession {
     return new MegaCmdHttps().call();
   }
 
-
   /**
    * import exported link into your cloud
    *
@@ -290,40 +288,4 @@ public class MegaSession {
   public MegaCmdImport importLink(String exportedLink) {
     return new MegaCmdImport(exportedLink);
   }
-
-  /**
-   * import exported link into your cloud
-   *
-   * @param exportedLink {@link String} the link to be imported
-   * @return {@link MegaCmdImport} to be configured and run.
-   */
-  public MegaCmdImport importLinkWithPassword(String exportedLink, String password) {
-    return new MegaCmdImport(exportedLink, Optional.empty(), Optional.of(password));
-  }
-
-  /**
-   * import exported link to personal cloud
-   *
-   * @param exportedLink {@link String} the exported link to be imported
-   * @param remotePath {@link String} with the remote path of a folder
-   * @param password {@link String} the password
-   * @return {@link MegaCmdImport} to be configured and run.
-   */
-  public MegaCmdImport importLink(String exportedLink, String remotePath, String password) {
-    return new MegaCmdImport(exportedLink, Optional.of(remotePath), Optional.of(password));
-  }
-
-
-  /**
-   * import exported link to personal cloud
-   *
-   * @param exportedLink {@link String} the exported link to be imported
-   * @param remotePath {@link String} with the remote path of a folder
-   * @return {@link MegaCmdImport} to be configured and run.
-   */
-  public MegaCmdImport importLink(String exportedLink, String remotePath) {
-    return new MegaCmdImport(exportedLink, Optional.of(remotePath));
-  }
-
-
 }
