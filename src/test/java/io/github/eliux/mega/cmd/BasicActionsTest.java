@@ -88,7 +88,8 @@ public class BasicActionsTest extends AbstractRemoteTests {
         "You only live once..."
     );
 
-    sessionMega.uploadFile("target/yolo-test.txt").run();
+    sessionMega.uploadFile("target/yolo-test.txt")
+        .run();
 
     MegaTestUtils.removeFile("target/yolo-test.txt");
   }
