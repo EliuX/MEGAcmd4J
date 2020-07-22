@@ -278,4 +278,14 @@ public class MegaSession {
   public Boolean isHttpsEnabled() {
     return new MegaCmdHttps().call();
   }
+
+  /**
+   * import exported link into your cloud
+   *
+   * @param exportedLink {@link String} the link to be imported
+   * @return {@link MegaCmdImport} to be configured and run.
+   */
+  public MegaCmdImport importLink(String exportedLink) {
+    return new MegaCmdImport(exportedLink);
+  }
 }
