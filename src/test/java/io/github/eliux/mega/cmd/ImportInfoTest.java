@@ -3,6 +3,7 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -15,11 +16,22 @@ public class ImportInfoTest {
   @BeforeClass
   public static void setupSession() {
     sessionMega = Mega.init();
+    removeTestResourcesIfExist();
+    sessionMega.makeDirectory("megacmd4j/testImport")
+        .recursively()
+        .run();
   }
 
   @AfterClass
   public static void finishSession() {
+    removeTestResourcesIfExist();
     sessionMega.logout();
+  }
+
+  private static void removeTestResourcesIfExist() {
+    sessionMega.removeDirectory("megacmd4j")
+        .ignoreErrorIfNotPresent()
+        .run();
   }
 
 
@@ -45,39 +57,53 @@ public class ImportInfoTest {
 
 
   @Test
-  public void given_remotePath_when_Import_then_success() throws Exception {
+  public void given_remotePath_without_key_when_import_then_create_directory_NO_KEY() throws Exception {
     //Given
-    // /megacmj/level1
-    String responseWithRemotePath =
-        "https://mega.nz/folder/ejYCBKBI#I0MDK6M3S-5rze9dk1oTow";
+    sessionMega.makeDirectory("megacmd4j/sampleDirToImportWithoutRemotePath")
+        .recursively()
+        .run();
+    final ExportInfo exportInfo = sessionMega.export("megacmd4j/sampleDirToImportWithoutRemotePath")
+        .enablePublicLink()
+        .call();
 
     //When
-    final ImportInfo importInfo = sessionMega.importLink(responseWithRemotePath).call();
+    final ImportInfo importInfo = sessionMega.importLink(exportInfo.getPublicLink()).call();
 
     //Then
-    Assert.assertEquals("/level1", importInfo.getRemotePath());
+    Assert.assertEquals("/NO_KEY", importInfo.getRemotePath());
+
+    //After
+    sessionMega.removeDirectory("/NO_KEY")
+        .ignoreErrorIfNotPresent()
+        .run();
   }
 
 
   @Test
-  public void given_remotePath_destination_when_Import_then_success() throws Exception {
+  public void given_remotePath_destination_when_import_without_password_then_create_directory_NO_KEY() throws Exception {
     //Given
-    // /megacmd4j/folder2
-    String responseWithRemotePath =
-            "https://mega.nz/folder/SjZG1aZQ#8mx728HHlN7Ev9sLb1RARg";
+    sessionMega.makeDirectory("megacmd4j/sampleDirToImportWithRemotePath")
+        .recursively()
+        .run();
+    final ExportInfo exportInfo = sessionMega.export("megacmd4j/sampleDirToImportWithRemotePath")
+        .enablePublicLink()
+        .call();
 
     //When
     final ImportInfo importInfo =
-            sessionMega.importLink(responseWithRemotePath)
-                        .setRemotePath("/megacmd4j/testImport/")
+            sessionMega.importLink(exportInfo.getPublicLink())
+                        .setRemotePath("megacmd4j/testImport/")
                         .call();
 
     //Then
-    Assert.assertEquals("/megacmd4j/testImport/folder2", importInfo.getRemotePath());
+    Assert.assertEquals("/megacmd4j/testImport/NO_KEY", importInfo.getRemotePath());
   }
 
+
   @Test
-  public void given_remotePath_destination_and_password_when_Import_then_success() throws Exception {
+  public void given_remotePath_destination_and_password_when_import_then_success() throws Exception {
+    //This requires Pro User
+
     //Given
     // /megacmd4j/folder3
     String responseWithRemotePath = "https://mega.nz/#P!AgDqMhBNisD3c8H98Uw6TNjW1lmgCDzxf_BoXc680RCJelSaQnOnFn-kgFiK21t0afxDJTp_8NW81Jl1JfX9ePp_34VzI9Z5aMTjQkLGMl9ePAdN-gidRg";
@@ -96,7 +122,7 @@ public class ImportInfoTest {
 
 
   @Test
-  public void given_remotePath_password_when_Import_then_success() throws Exception {
+  public void given_remotePath_password_when_import_then_success() throws Exception {
     //Given
     // /megacmd4j/folder4
     String responseWithRemotePath = "https://mega.nz/#P!AgDuIHIAgtrWosqbzuTgQVBVYMnjlfZdiC3alPI_jXxQzn72-gA1kegotSG7hC8Sv8Ck1q9Nxkfv7F9_jSMTa6VbA8qAyZHOYohfJODN7DER3aGzxcE2XQ";
@@ -110,5 +136,10 @@ public class ImportInfoTest {
 
     //Then
     Assert.assertEquals("/folder4", importInfo.getRemotePath());
+
+    //After
+    sessionMega.removeDirectory("/folder4")
+        .ignoreErrorIfNotPresent()
+        .run();
   }
 }
