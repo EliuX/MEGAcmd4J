@@ -3,7 +3,6 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -57,7 +56,8 @@ public class ImportInfoTest {
 
 
   @Test
-  public void given_remotePath_without_key_when_import_then_create_directory_NO_KEY() throws Exception {
+  public void given_remotePath_without_key_when_import_then_create_directory_NO_KEY()
+      throws Exception {
     //Given
     sessionMega.makeDirectory("megacmd4j/sampleDirToImportWithoutRemotePath")
         .recursively()
@@ -80,7 +80,8 @@ public class ImportInfoTest {
 
 
   @Test
-  public void given_remotePath_destination_when_import_without_password_then_create_directory_NO_KEY() throws Exception {
+  public void given_remotePath_destination_when_import_without_password_then_create_directory_NO_KEY()
+      throws Exception {
     //Given
     sessionMega.makeDirectory("megacmd4j/sampleDirToImportWithRemotePath")
         .recursively()
@@ -91,9 +92,9 @@ public class ImportInfoTest {
 
     //When
     final ImportInfo importInfo =
-            sessionMega.importLink(exportInfo.getPublicLink())
-                        .setRemotePath("megacmd4j/testImport/")
-                        .call();
+        sessionMega.importLink(exportInfo.getPublicLink())
+            .setRemotePath("megacmd4j/testImport/")
+            .call();
 
     //Then
     Assert.assertEquals("/megacmd4j/testImport/NO_KEY", importInfo.getRemotePath());
@@ -101,7 +102,8 @@ public class ImportInfoTest {
 
 
   @Test
-  public void given_remotePath_destination_and_password_when_import_then_success() throws Exception {
+  public void given_remotePath_destination_and_password_when_import_then_success()
+      throws Exception {
     //This requires Pro User
 
     //Given
@@ -111,10 +113,10 @@ public class ImportInfoTest {
 
     //When
     final ImportInfo importInfo =
-            sessionMega.importLink(responseWithRemotePath)
-                        .setRemotePath("/megacmd4j/testImport/")
-                        .setPassword(key)
-                        .call();
+        sessionMega.importLink(responseWithRemotePath)
+            .setRemotePath("/megacmd4j/testImport/")
+            .setPassword(key)
+            .call();
 
     //Then
     Assert.assertEquals("/megacmd4j/testImport/folder3", importInfo.getRemotePath());
@@ -130,9 +132,9 @@ public class ImportInfoTest {
 
     //When
     final ImportInfo importInfo =
-                sessionMega.importLink(responseWithRemotePath)
-                .setPassword(password)
-                .call();
+        sessionMega.importLink(responseWithRemotePath)
+            .setPassword(password)
+            .call();
 
     //Then
     Assert.assertEquals("/folder4", importInfo.getRemotePath());

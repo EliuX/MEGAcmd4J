@@ -14,7 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Increase MEGA_CMD_TTL to 1 minute in Travis CI: Allow hardworking tasks to pass.
 - MegaWrongArgumentsException will replace MegaCmdInvalidArgumentException (Different codes for Win and Unix)
-
 ### Fixed
 - Fixed parsing of commands, which made that the server could not start in Windows.
 - Fixed parsing of the version, i.e. New prefix (MEGAcmd version). Now it is not fixed.
