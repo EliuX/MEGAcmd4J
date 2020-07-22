@@ -32,6 +32,7 @@ There is a [Quick Start][quick-start] available for developers who want to start
 | Signup user               | `signup`  | Register as user with a given email
 | Version                   | `version` | Prints MEGAcmd versioning and extra info
 | Quit                      | `quit`    | Quits MEGAcmd. Stops the server without killing the session
+| Import                    | `import`  | Imports the contents of a remote link into user's cloud
         
 If you have any doubt about how each feature works, please run
 
@@ -95,6 +96,12 @@ Please read CONTRIBUTING.md for details on the code of conduct, and the process 
 * Follow the [Google Java Style Guide][google-java-style-guide] as much as possible: Its recommended that you install the 
 [Google Java Style Guide settings in your IDE][google-java-style-settings-intellij]. 
 * Respect as much as possible the format of the provided templates for issues and PRs.
+
+# Contributors
+Add your name and your account for Twitter, Github or LinkedIn:
+- NyoCe => Github: [ccenyo](https://github.com/ccenyo)
+
+
 
 ## Built With
 * [Java SDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) -  Java™ Platform

@@ -1,12 +1,19 @@
 package io.github.eliux.mega.cmd;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
+@DisplayName("Sessions")
+@Tag("session")
 public class MegaCmdSessionTest {
 
+  @DisplayName("When parse valid session id then return expected value")
   @Test
   public void parseSessionIDShouldBeOk() {
     //Given
@@ -16,23 +23,25 @@ public class MegaCmdSessionTest {
     final Optional<String> id = MegaCmdSession.parseSessionID(validResponse);
 
     //Then
-    Assert.assertTrue(id.isPresent());
+    assertTrue(id.isPresent(), "No id was found");
 
-    Assert.assertEquals(
+    assertEquals(
         "Ae9r6XXXqUZGhXEIUoy7C85XhPq9vOAr2Sc94axXXXX-T3JZZE9kOEt3dDjWGMscV2il65Zo-mFMEXXX",
-        id.get()
+        id.get(),
+        "The found id has not the expected value"
     );
   }
 
+  @DisplayName("When parse session id for a not logged in user then return nothing (Optional#empty)")
   @Test
   public void parseSessionIDShouldFail() {
     //Given
     String invalidResponse = "[API:err: 21:14:32] Not logged in.";
-    
+
     //When
     final Optional<String> noId = MegaCmdSession.parseSessionID(invalidResponse);
 
     //Then
-    Assert.assertFalse(noId.isPresent());
+    assertFalse(noId.isPresent(), "Unexpected session id");
   }
 }
