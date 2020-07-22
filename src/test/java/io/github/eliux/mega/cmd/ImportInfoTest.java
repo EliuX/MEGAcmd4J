@@ -1,18 +1,28 @@
 package io.github.eliux.mega.cmd;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
+
+@DisplayName("Import")
+@Tag("import")
+@TestMethodOrder(OrderAnnotation.class)
 public class ImportInfoTest {
 
   private static MegaSession sessionMega;
 
-  @BeforeClass
+  @BeforeAll
   public static void setupSession() {
     sessionMega = Mega.init();
     removeTestResourcesIfExist();
@@ -21,7 +31,7 @@ public class ImportInfoTest {
         .run();
   }
 
-  @AfterClass
+  @AfterAll
   public static void finishSession() {
     removeTestResourcesIfExist();
     sessionMega.logout();
@@ -34,13 +44,14 @@ public class ImportInfoTest {
   }
 
 
-  @Test(expected = MegaInvalidResponseException.class)
+  @Test
   public void given_invalid_remotePath_when_parseImportInfo_then_fail() {
     //Given
     String entryWithInvalidRemotePath = "Imported: /test";
 
     //When
-    ImportInfo.parseImportInfo(entryWithInvalidRemotePath);
+    assertThrows(MegaInvalidResponseException.class,
+        () -> ImportInfo.parseImportInfo(entryWithInvalidRemotePath));
   }
 
   @Test
@@ -51,7 +62,7 @@ public class ImportInfoTest {
     //When
     ImportInfo result = ImportInfo.parseImportInfo(entryWithInvalidRemotePath);
 
-    Assert.assertEquals(result.getRemotePath(), "/test");
+    assertEquals(result.getRemotePath(), "/test");
   }
 
 
@@ -70,7 +81,7 @@ public class ImportInfoTest {
     final ImportInfo importInfo = sessionMega.importLink(exportInfo.getPublicLink()).call();
 
     //Then
-    Assert.assertEquals("/NO_KEY", importInfo.getRemotePath());
+    assertEquals("/NO_KEY", importInfo.getRemotePath());
 
     //After
     sessionMega.removeDirectory("/NO_KEY")
@@ -97,7 +108,7 @@ public class ImportInfoTest {
             .call();
 
     //Then
-    Assert.assertEquals("/megacmd4j/testImport/NO_KEY", importInfo.getRemotePath());
+    assertEquals("/megacmd4j/testImport/NO_KEY", importInfo.getRemotePath());
   }
 
 
@@ -119,7 +130,7 @@ public class ImportInfoTest {
             .call();
 
     //Then
-    Assert.assertEquals("/megacmd4j/testImport/folder3", importInfo.getRemotePath());
+    assertEquals("/megacmd4j/testImport/folder3", importInfo.getRemotePath());
   }
 
 
@@ -137,7 +148,7 @@ public class ImportInfoTest {
             .call();
 
     //Then
-    Assert.assertEquals("/folder4", importInfo.getRemotePath());
+    assertEquals("/folder4", importInfo.getRemotePath());
 
     //After
     sessionMega.removeDirectory("/folder4")
