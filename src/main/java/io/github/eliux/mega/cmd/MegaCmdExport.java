@@ -1,8 +1,10 @@
 package io.github.eliux.mega.cmd;
 
+import io.github.eliux.mega.DateBuilder;
 import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaIOException;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
+
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,9 +21,12 @@ public class MegaCmdExport extends AbstractMegaCmdCallerWithParams<ExportInfo> {
 
   private boolean listOnly;
 
+  private DateBuilder expireDateBuilder;
+
   public MegaCmdExport(String remotePath) {
     this.remotePath = Optional.of(remotePath);
     this.password = Optional.empty();
+    this.expireDateBuilder = null;
   }
 
   @Override
@@ -32,6 +37,7 @@ public class MegaCmdExport extends AbstractMegaCmdCallerWithParams<ExportInfo> {
         .filter(x -> !listOnly)
         .ifPresent(x -> {
           cmdParams.add(exportDeleted ? "-d" : "-a");
+          if (expireDateBuilder != null) cmdParams.add("--expire=" + expireDateBuilder.build());
           cmdParams.add("-f");
         });
 
@@ -98,6 +104,16 @@ public class MegaCmdExport extends AbstractMegaCmdCallerWithParams<ExportInfo> {
 
   protected MegaCmdExport justList() {
     listOnly = true;
+    return this;
+  }
+
+  public MegaCmdExport setExpireDate(DateBuilder expireDateBuilder) {
+    this.expireDateBuilder = expireDateBuilder;
+    return this;
+  }
+
+  public MegaCmdExport removeExpireDate() {
+    this.expireDateBuilder = null;
     return this;
   }
 }

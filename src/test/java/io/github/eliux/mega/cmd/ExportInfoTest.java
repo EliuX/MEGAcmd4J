@@ -1,19 +1,64 @@
 package io.github.eliux.mega.cmd;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import io.github.eliux.mega.DateBuilder;
+import io.github.eliux.mega.Mega;
+import io.github.eliux.mega.MegaSession;
+import io.github.eliux.mega.error.MegaInvalidExpireDateException;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Exported info")
 @Tag("export")
 public class ExportInfoTest {
 
-  @DisplayName("Parse export Info")
+    private static MegaSession sessionMega;
+
+    @BeforeAll
+    public static void setupSession() {
+        sessionMega = Mega.init();
+        removeTestResourcesIfExist();
+        sessionMega.makeDirectory("megacmd4j/testExport")
+                .recursively()
+                .run();
+    }
+
+    @AfterAll
+    public static void finishSession() {
+        removeTestResourcesIfExist();
+        sessionMega.logout();
+    }
+
+    private static void removeTestResourcesIfExist() {
+        sessionMega.removeDirectory("megacmd4j")
+                .ignoreErrorIfNotPresent()
+                .run();
+    }
+
+
+    @DisplayName("Export folder and success")
+    @Test
+    public void exportFolderSuccess() {
+        //Given
+        String exportFolder = "megacmd4j/testExport";
+
+        //When
+        final ExportInfo exportInfo = sessionMega.export(exportFolder)
+                .setExpireDate(new DateBuilder().expireAt(LocalDate.of(2020, 9, 2)))
+                .call();
+
+        //Then
+        assertNotNull(exportInfo);
+        assertEquals("/megacmd4j/testExport", exportInfo.getRemotePath());
+        assertNotNull(exportInfo.getPublicLink());
+        assertEquals(LocalDate.of(2020, 9, 2), exportInfo.getExpireDate());
+    }
+
+
+    @DisplayName("Parse export Info")
   @Test
   public void parseExportInfoShouldBeOk() {
     //Given
@@ -29,6 +74,35 @@ public class ExportInfoTest {
         exportInfo.getPublicLink());
   }
 
+
+    @DisplayName("Parse export Info with expire date and success")
+    @Test
+    public void parseExportWithExpireDateInfoShouldBeOk() {
+        //Given
+        String validExportInfo = "Exported /level1: https://mega.nz/folder/bmxnAJ6C#DWxI3_NL5SEpI1LFJ67b8w expires at Mon, 10 Aug 2020 09:06:40 +0200";
+
+        //When
+        final ExportInfo exportInfo = ExportInfo.parseExportInfo(validExportInfo);
+
+        //Then
+        assertNotNull(exportInfo);
+        assertEquals("/level1", exportInfo.getRemotePath());
+        assertEquals("https://mega.nz/folder/bmxnAJ6C#DWxI3_NL5SEpI1LFJ67b8w", exportInfo.getPublicLink());
+        assertEquals("Mon, 10 Aug 2020 09:06:40 +0200", exportInfo.getExpireDateAsString());
+        assertEquals(LocalDate.of(2020, 8, 10), exportInfo.getExpireDate());
+    }
+
+
+    @DisplayName("Parse export Info with invalid expire date and failed")
+    @Test
+    public void parseExportWithInvalidExpireDateInfoShouldBeKO() {
+        //Given
+        String inValidExportInfo = "Exported /level1: https://mega.nz/folder/bmxnAJ6C#DWxI3_NL5SEpI1LFJ67b8w expires at Mon, no valid 2020 09:06:40 +0200";
+
+        //When
+        assertThrows(MegaInvalidExpireDateException.class, () -> ExportInfo.parseExportInfo(inValidExportInfo));
+    }
+
   @DisplayName("Given invalid remotePath, when parse export info then fail")
   @Test
   public void failWhenParseInvalidExportInfo() {
@@ -37,7 +111,6 @@ public class ExportInfoTest {
 
     assertThrows(MegaInvalidResponseException.class,
         () -> ExportInfo.parseExportListInfo(entryWithInvalidRemotePath));
-    ;
   }
 
   @DisplayName("Given invalid public link prefix, when parse export list info then fail")
