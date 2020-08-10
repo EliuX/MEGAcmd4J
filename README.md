@@ -99,7 +99,7 @@ Please read CONTRIBUTING.md for details on the code of conduct, and the process 
 
 # Contributors
 Add your name and your account for Twitter, Github or LinkedIn:
-- NyoCe => Github: [ccenyo](https://github.com/ccenyo)
+- **Cenyo Medewou** - [medewou@gmail.com](mailto:medewou@gmail.com) | [Github](https://github.com/ccenyo) 
 
 
 
