@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ExportInfoTest {
 
     private static MegaSession sessionMega;
+/*
 
     @BeforeAll
     public static void setupSession() {
@@ -38,6 +39,7 @@ public class ExportInfoTest {
                 .run();
     }
 
+*/
 
     @DisplayName("Export folder and success")
     @Test

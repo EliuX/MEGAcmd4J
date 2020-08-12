@@ -17,9 +17,11 @@ import java.util.regex.Pattern;
 public class ExportInfo {
 
     private static String dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z";
-
     private static final Pattern LIST_PATTERN =
             Pattern.compile("(?<remotePath>\\S+) \\(.+link: (?<publicLink>http[s]?://mega.nz/\\S*#.+)\\)");
+
+    private static final Pattern EXPORT_PATTERN =
+            Pattern.compile("\\s(?<remotePath>\\S+)(:)\\s(?<publicLink>http[s]?://mega.nz/\\S*#\\S*)( expires at (?<expireDate>\\S.+))?");
 
     private final String remotePath;
 
@@ -40,19 +42,25 @@ public class ExportInfo {
 
 
     public static ExportInfo parseExportInfo(String exportInfoStr) {
-        final String[] tokens = exportInfoStr.replace("Exported ", "")
-                .split(": ");
+        final Matcher matcher = EXPORT_PATTERN.matcher(exportInfoStr);
 
-        if (tokens[1].contains("expires at ")) {
-            String[] publicToken = tokens[1].split("expires at ");
+        if (matcher.find()) {
+            String remotePath = matcher.group("remotePath");
+            String publicLink = matcher.group("publicLink");
+            String expireDate = matcher.group("expireDate");
 
-            String dateString = publicToken[1];
-            if (isValidDateFormat(dateString)) {
-                return new ExportInfo(tokens[0], publicToken[0].trim(), dateString);
-            } else throw new MegaInvalidExpireDateException("Date should be in format: " + dateFormat);
-        } else {
-            return new ExportInfo(tokens[0], tokens[1]);
+            if (expireDate != null) {
+                if (isValidDateFormat(expireDate)) {
+                    return new ExportInfo(remotePath, publicLink, expireDate);
+                } else {
+                    throw new MegaInvalidExpireDateException(expireDate);
+                }
+            } else {
+                return new ExportInfo(remotePath, publicLink);
+            }
         }
+
+        throw new MegaInvalidResponseException(exportInfoStr);
     }
 
     public static ExportInfo parseExportListInfo(String exportInfoLine) {

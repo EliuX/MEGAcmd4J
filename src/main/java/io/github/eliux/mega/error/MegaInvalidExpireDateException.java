@@ -7,6 +7,6 @@ public class MegaInvalidExpireDateException extends MegaException {
     }
 
     public MegaInvalidExpireDateException(String errorMessage) {
-        super(errorMessage);
+        super("Date has wrong format: " + errorMessage);
     }
 }
