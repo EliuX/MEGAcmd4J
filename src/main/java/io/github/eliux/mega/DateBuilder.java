@@ -36,7 +36,6 @@ public class DateBuilder {
     }
 
     public String build() {
-
         if (this.targetDate == null) throw new MegaExpireDateRequiredException();
 
         if (this.currentDate.isAfter(this.targetDate))
