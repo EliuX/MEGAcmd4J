@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,17 +28,11 @@ public class ExportInfo {
 
     private final String publicLink;
 
-    private String expireDate;
+    private Optional<String> expireDate;
 
     public ExportInfo(String remotePath, String publicLink) {
         this.remotePath = remotePath;
         this.publicLink = publicLink;
-    }
-
-    public ExportInfo(String remotePath, String publicLink, String expireDate) {
-        this.remotePath = remotePath;
-        this.publicLink = publicLink;
-        this.expireDate = expireDate;
     }
 
 
@@ -51,7 +46,8 @@ public class ExportInfo {
 
             if (expireDate != null) {
                 if (isValidDateFormat(expireDate)) {
-                    return new ExportInfo(remotePath, publicLink, expireDate);
+                    return new ExportInfo(remotePath, publicLink)
+                                .setExpireDate(expireDate);
                 } else {
                     throw new MegaInvalidExpireDateException(expireDate);
                 }
@@ -99,14 +95,11 @@ public class ExportInfo {
     }
 
     public LocalDate getExpireDate() {
-        if (expireDate != null) {
-            return LocalDateTime.parse(expireDate, DateTimeFormatter.ofPattern(dateFormat, Locale.US)).toLocalDate();
-        }
-
-        return null;
+        return expireDate.map(s -> LocalDateTime.parse(s, DateTimeFormatter.ofPattern(dateFormat, Locale.US)).toLocalDate()).orElse(null);
     }
 
-    public String getExpireDateAsString() {
-        return expireDate;
+    public ExportInfo setExpireDate(String expireDate) {
+        this.expireDate = Optional.of(expireDate);
+        return this;
     }
 }

@@ -90,7 +90,6 @@ public class ExportInfoTest {
         assertNotNull(exportInfo);
         assertEquals("/level1", exportInfo.getRemotePath());
         assertEquals("https://mega.nz/folder/bmxnAJ6C#DWxI3_NL5SEpI1LFJ67b8w", exportInfo.getPublicLink());
-        assertEquals("Mon, 10 Aug 2020 09:06:40 +0200", exportInfo.getExpireDateAsString());
         assertEquals(LocalDate.of(2020, 8, 10), exportInfo.getExpireDate());
     }
 
