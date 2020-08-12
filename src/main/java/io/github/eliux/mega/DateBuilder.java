@@ -44,12 +44,7 @@ public class DateBuilder {
 
         Period period = Period.between(this.currentDate, this.targetDate);
 
-        return period.getYears() +
-                "y" +
-                period.getMonths() +
-                "m" +
-                period.getDays() +
-                "d";
+        return String.format("%dy%dm%dd", period.getYears(), period.getMonths(), period.getDays());
     }
 
 }
