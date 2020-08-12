@@ -34,10 +34,13 @@ public class DateBuilder {
     }
 
     public String build() {
-        if (this.targetDate == null) throw new MegaExpireDateRequiredException();
+        if (this.targetDate == null) {
+            throw new MegaExpireDateRequiredException();
+        }
 
-        if (this.currentDate.isAfter(this.targetDate))
+        if (this.currentDate.isAfter(this.targetDate)) {
             throw new MegaInvalidExpireDateException("The target date cannot be before the current date");
+        }
 
         Period period = Period.between(this.currentDate, this.targetDate);
 
