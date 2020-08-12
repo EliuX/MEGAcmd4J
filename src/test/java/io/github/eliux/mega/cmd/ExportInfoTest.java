@@ -1,6 +1,6 @@
 package io.github.eliux.mega.cmd;
 
-import io.github.eliux.mega.DateBuilder;
+import io.github.eliux.mega.LocalDateRange;
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
 import io.github.eliux.mega.error.MegaInvalidExpireDateException;
@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ExportInfoTest {
 
     private static MegaSession sessionMega;
-/*
 
     @BeforeAll
     public static void setupSession() {
@@ -39,7 +38,6 @@ public class ExportInfoTest {
                 .run();
     }
 
-*/
 
     @DisplayName("Export folder and success")
     @Test
@@ -49,7 +47,7 @@ public class ExportInfoTest {
 
         //When
         final ExportInfo exportInfo = sessionMega.export(exportFolder)
-                .setExpireDate(new DateBuilder().expireAt(LocalDate.of(2020, 9, 2)))
+                .setExpireDate(LocalDateRange.of(LocalDate.of(2020, 9, 2)).get())
                 .call();
 
         //Then
