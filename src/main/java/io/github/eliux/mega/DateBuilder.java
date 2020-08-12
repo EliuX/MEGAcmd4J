@@ -15,12 +15,10 @@ public class DateBuilder {
         currentDate = LocalDate.now();
     }
 
-
     public DateBuilder setCurrentDate(LocalDate currentDate) {
         this.currentDate = currentDate;
         return this;
     }
-
 
     public DateBuilder expireAt(LocalDate expireDate) {
         this.targetDate = expireDate;
@@ -45,5 +43,4 @@ public class DateBuilder {
 
         return String.format("%dy%dm%dd", period.getYears(), period.getMonths(), period.getDays());
     }
-
 }
