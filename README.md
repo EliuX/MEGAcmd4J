@@ -64,6 +64,17 @@ indicates any non null response. E.g.
 ```java
     sessionMega.exists("remote/path/filesprefix*.ext");
 ```
+
+### Export with expire date
+with a premium mega account, you can export and generate public folder links with expire date.
+```java
+    LocalDate expireDate = LocalDate.of(2020, 9, 2);
+
+    final ExportInfo exportInfo = sessionMega.export(exportFolder)
+            .setExpireDate(LocalDateRange.of(expireDate).get())
+            .call();
+```
+
 ### MEGAcmdServer
 Thanks to the class `io.github.eliux.mega.MegaServer` you can now `start` and `stop` the local MEGAcmdServer on command.
 
