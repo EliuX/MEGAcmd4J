@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.Period;
 
 /**
- *
+ * This class can generate a range using a start and endDate
  */
 public class DateRange {
 
@@ -20,8 +20,8 @@ public class DateRange {
     }
 
     /**
-     *
-     * @return
+     *This function generate the range in format %dy%dm%dd using startDate and endDate
+     * @return String of %dy%dm%dd
      */
     public String parse() {
         if (this.endDate == null) {
