@@ -6,7 +6,6 @@ import io.github.eliux.mega.error.MegaInvalidResponseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -22,7 +21,7 @@ public class ExportInfo {
             Pattern.compile("(?<remotePath>\\S+) \\(.+link: (?<publicLink>http[s]?://mega.nz/\\S*#.+)\\)");
 
     private static final Pattern EXPORT_PATTERN =
-            Pattern.compile("\\s(?<remotePath>\\S+)(:)\\s(?<publicLink>http[s]?://mega.nz/\\S*#\\S*)( expires at (?<expireDate>\\S.+))?");
+            Pattern.compile("\\s(?<remotePath>\\S+)(:)\\s(?<publicLink>http[s]?://mega.nz/\\S*#\\S*)( expires at (?<expireDate>.{3}, .{2} .{3} .{4} .{2}:.{2}:.{2} .+))?");
 
     private final String remotePath;
 
@@ -35,7 +34,6 @@ public class ExportInfo {
         this.publicLink = publicLink;
     }
 
-
     public static ExportInfo parseExportInfo(String exportInfoStr) {
         final Matcher matcher = EXPORT_PATTERN.matcher(exportInfoStr);
 
@@ -44,14 +42,13 @@ public class ExportInfo {
             String publicLink = matcher.group("publicLink");
             String expireDate = matcher.group("expireDate");
 
+            if (expireDate == null && exportInfoStr.contains("expires at")) {
+                throw new MegaInvalidExpireDateException(exportInfoStr);
+            }
             if (expireDate != null) {
-                if (isValidDateFormat(expireDate)) {
-                    return new ExportInfo(remotePath, publicLink)
-                                .setExpireDate(expireDate);
-                } else {
-                    throw new MegaInvalidExpireDateException(expireDate);
-                }
-            } else {
+                return new ExportInfo(remotePath, publicLink)
+                        .setExpireDate(expireDate);
+            }  else {
                 return new ExportInfo(remotePath, publicLink);
             }
         }
@@ -82,16 +79,6 @@ public class ExportInfo {
 
     public String getPublicLink() {
         return publicLink;
-    }
-
-    public static boolean isValidDateFormat(String value) {
-        try {
-            LocalDateTime.parse(value, DateTimeFormatter.ofPattern(dateFormat, Locale.US));
-            return true;
-        } catch (DateTimeParseException ignored) {
-        }
-
-        return false;
     }
 
     public LocalDate getExpireDate() {
