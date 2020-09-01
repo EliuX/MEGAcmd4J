@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Before 1.6.0 - 2020-08-10
 ### Added
 
-- Added `option` expire date to `export`
+- Added option `expire date` to `export`
 
 ## Before 1.5.0 - 2020-07-21
 ### Added
