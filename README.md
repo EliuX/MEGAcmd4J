@@ -66,7 +66,7 @@ indicates any non null response. E.g.
 ```
 
 ### Export with expire date
-with a premium mega account, you can export and generate public folder links with expire date.
+With a premium mega account, you can export and generate public folder links by setting the option `expire date`.
 ```java
     LocalDate expireDate = LocalDate.of(2020, 9, 2);
 
