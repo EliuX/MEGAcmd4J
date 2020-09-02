@@ -36,7 +36,7 @@ public class MegaCmdExport extends AbstractMegaCmdCallerWithParams<ExportInfo> {
         .filter(x -> !listOnly)
         .ifPresent(x -> {
           cmdParams.add(exportDeleted ? "-d" : "-a");
-          expireLocalDateRange.ifPresent(dateRange -> cmdParams.add("--expire=" + dateRange.parse()));
+          expireLocalDateRange.ifPresent(dateRange -> cmdParams.add("--expire=" + dateRange.toString()));
           cmdParams.add("-f");
         });
 
@@ -112,7 +112,7 @@ public class MegaCmdExport extends AbstractMegaCmdCallerWithParams<ExportInfo> {
   }
 
   public MegaCmdExport removeExpireDate() {
-    this.expireLocalDateRange = null;
+    this.expireLocalDateRange = Optional.empty();
     return this;
   }
 }

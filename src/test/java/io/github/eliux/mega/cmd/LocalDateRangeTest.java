@@ -26,7 +26,7 @@ public class LocalDateRangeTest {
 
         //Then
         assertNotNull(dateRange);
-        assertEquals("0y0m1d", dateRange.parse());
+        assertEquals("0y0m1d", dateRange.toString());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class LocalDateRangeTest {
 
         //Then
         assertNotNull(dateRange);
-        assertEquals("0y2m29d", dateRange.parse());
+        assertEquals("0y2m29d", dateRange.toString());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class LocalDateRangeTest {
 
         //Then
         assertNotNull(dateRange);
-        assertEquals("2y6m2d", dateRange.parse());
+        assertEquals("2y6m2d", dateRange.toString());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class LocalDateRangeTest {
 
         //Then
         assertNotNull(dateRange);
-        assertEquals("0y0m1d", dateRange.parse());
+        assertEquals("0y0m1d", dateRange.toString());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class LocalDateRangeTest {
 
         //Then
         assertNotNull(dateRange);
-        assertEquals("0y3m0d", dateRange.parse());
+        assertEquals("0y3m0d", dateRange.toString());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class LocalDateRangeTest {
 
         //Then
         assertNotNull(dateRange);
-        assertEquals("0y6m5d", dateRange.parse());
+        assertEquals("0y6m5d", dateRange.toString());
     }
 
     @Test
@@ -107,7 +107,7 @@ public class LocalDateRangeTest {
 
         //Then
         assertNotNull(dateRange);
-        assertEquals("2y6m15d", dateRange.parse());
+        assertEquals("2y6m15d", dateRange.toString());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class LocalDateRangeTest {
 
         //Then
         assertNotNull(dateRange);
-        assertEquals("0y0m0d", dateRange.parse());
+        assertEquals("0y0m0d", dateRange.toString());
     }
 
     @Test
@@ -134,6 +134,6 @@ public class LocalDateRangeTest {
 
         //Then
         assertNotNull(dateRange);
-        assertThrows(MegaInvalidExpireDateException.class, dateRange::parse);
+        assertThrows(MegaInvalidExpireDateException.class, dateRange::toString);
     }
 }
