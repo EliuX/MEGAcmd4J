@@ -40,17 +40,14 @@ public class ExportInfo {
         if (matcher.find()) {
             String remotePath = matcher.group("remotePath");
             String publicLink = matcher.group("publicLink");
-            String expireDate = matcher.group("expireDate");
+            Optional<String> expireDate = Optional.ofNullable(matcher.group("expireDate"));
 
-            if (expireDate == null && exportInfoStr.contains("expires at")) {
+            if (!expireDate.isPresent() && exportInfoStr.contains("expires at")) {
                 throw new MegaInvalidExpireDateException(exportInfoStr);
             }
-            if (expireDate != null) {
-                return new ExportInfo(remotePath, publicLink)
-                        .setExpireDate(expireDate);
-            }  else {
-                return new ExportInfo(remotePath, publicLink);
-            }
+
+            final ExportInfo result = new ExportInfo(remotePath, publicLink);
+            expireDate.ifPresent(result::setExpireDate);
         }
 
         throw new MegaInvalidResponseException(exportInfoStr);
