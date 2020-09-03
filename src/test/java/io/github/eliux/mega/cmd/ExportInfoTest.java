@@ -3,7 +3,6 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.LocalDateRange;
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
-import io.github.eliux.mega.error.MegaInvalidDateRangeException;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
 import org.junit.jupiter.api.*;
 
@@ -47,14 +46,14 @@ public class ExportInfoTest {
 
         //When
         final ExportInfo exportInfo = sessionMega.export(exportFolder)
-                .setExpireDate(LocalDateRange.of(LocalDate.of(2020, 9, 2)).get())
+                .setExpireDate(LocalDateRange.of(LocalDate.of(2030, 9, 2)).get())
                 .call();
 
         //Then
         assertNotNull(exportInfo);
         assertEquals("/megacmd4j/testExport", exportInfo.getRemotePath());
         assertNotNull(exportInfo.getPublicLink());
-        assertEquals(LocalDate.of(2020, 9, 2), exportInfo.getExpireDate());
+        assertEquals(LocalDate.of(2030, 9, 2), exportInfo.getExpireDate().get());
     }
 
 
@@ -88,18 +87,18 @@ public class ExportInfoTest {
         assertNotNull(exportInfo);
         assertEquals("/level1", exportInfo.getRemotePath());
         assertEquals("https://mega.nz/folder/bmxnAJ6C#DWxI3_NL5SEpI1LFJ67b8w", exportInfo.getPublicLink());
-        assertEquals(LocalDate.of(2020, 8, 10), exportInfo.getExpireDate());
+        assertEquals(LocalDate.of(2020, 8, 10), exportInfo.getExpireDate().get());
     }
 
 
-    @DisplayName("Parse export Info with invalid expire date and failed")
+    @DisplayName("Parse export Info with invalid message and failed")
     @Test
-    public void parseExportWithInvalidExpireDateInfoShouldBeKO() {
+    public void parseExportWithInvalidMessageInfoShouldBeKO() {
         //Given
-        String inValidExportInfo = "Exported /level1: https://mega.nz/folder/bmxnAJ6C#DWxI3_NL5SEpI1LFJ67b8w expires at Mon, no valid 2020 09:06:40 +0200";
+        String inValidExportInfo = "Error : unable to export the folder";
 
         //When
-        assertThrows(MegaInvalidDateRangeException.class, () -> ExportInfo.parseExportInfo(inValidExportInfo));
+        assertThrows(MegaInvalidResponseException.class, () -> ExportInfo.parseExportInfo(inValidExportInfo));
     }
 
   @DisplayName("Given invalid remotePath, when parse export info then fail")
