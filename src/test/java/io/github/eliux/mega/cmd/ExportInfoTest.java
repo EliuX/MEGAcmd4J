@@ -3,7 +3,7 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.LocalDateRange;
 import io.github.eliux.mega.Mega;
 import io.github.eliux.mega.MegaSession;
-import io.github.eliux.mega.error.MegaInvalidExpireDateException;
+import io.github.eliux.mega.error.MegaInvalidDateRangeException;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
 import org.junit.jupiter.api.*;
 
@@ -99,7 +99,7 @@ public class ExportInfoTest {
         String inValidExportInfo = "Exported /level1: https://mega.nz/folder/bmxnAJ6C#DWxI3_NL5SEpI1LFJ67b8w expires at Mon, no valid 2020 09:06:40 +0200";
 
         //When
-        assertThrows(MegaInvalidExpireDateException.class, () -> ExportInfo.parseExportInfo(inValidExportInfo));
+        assertThrows(MegaInvalidDateRangeException.class, () -> ExportInfo.parseExportInfo(inValidExportInfo));
     }
 
   @DisplayName("Given invalid remotePath, when parse export info then fail")

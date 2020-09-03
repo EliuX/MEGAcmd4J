@@ -39,6 +39,8 @@ public class ExportInfo {
 
             final ExportInfo result = new ExportInfo(remotePath, publicLink);
             Optional.ofNullable(matcher.group("expireDate")).ifPresent(result::setExpireDate);
+
+            return result;
         }
 
         throw new MegaInvalidResponseException(exportInfoStr);
