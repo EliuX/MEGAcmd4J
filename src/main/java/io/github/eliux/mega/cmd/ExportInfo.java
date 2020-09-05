@@ -45,7 +45,7 @@ public class ExportInfo {
             return result;
         }
 
-        throw new MegaInvalidResponseException("Unexpected export info format :"+exportInfoStr);
+        throw new MegaInvalidResponseException("Unexpected export info format : "+exportInfoStr);
     }
 
     public static ExportInfo parseExportListInfo(String exportInfoLine) {
