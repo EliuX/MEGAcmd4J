@@ -17,7 +17,7 @@ public class ExportInfo {
             Pattern.compile("(?<remotePath>\\S+) \\(.+link: (?<publicLink>http[s]?://mega.nz/\\S*#.+)\\)");
 
     private static final Pattern EXPORT_PATTERN =
-            Pattern.compile("\\s(?<remotePath>\\S+)(:)\\s(?<publicLink>http[s]?://mega.nz/\\S*#\\S*)( expires at (?<expireDate>.{3}, .{2} .{3} .{4} .{2}:.{2}:.{2} .+))?");
+            Pattern.compile("\\s(?<remotePath>\\S+)(:)\\s(?<publicLink>http[s]?://mega.nz/\\S*#\\S*)( expires at (?<expireDate>.+))?");
 
     private final String remotePath;
 
@@ -38,12 +38,14 @@ public class ExportInfo {
             String publicLink = matcher.group("publicLink");
 
             final ExportInfo result = new ExportInfo(remotePath, publicLink);
-            Optional.ofNullable(matcher.group("expireDate")).ifPresent(result::setExpireDate);
+            Optional.ofNullable(matcher.group("expireDate"))
+                    .map(MegaUtils::parseExpireDate)
+                    .ifPresent(result::setExpireDate);
 
             return result;
         }
 
-        throw new MegaInvalidResponseException(exportInfoStr);
+        throw new MegaInvalidResponseException("Unexpected export info format :"+exportInfoStr);
     }
 
     public static ExportInfo parseExportListInfo(String exportInfoLine) {
@@ -75,8 +77,8 @@ public class ExportInfo {
         return expireDate;
     }
 
-    public ExportInfo setExpireDate(String expireDate) {
-        this.expireDate = Optional.of(MegaUtils.parseExpireDate(expireDate));
+    public ExportInfo setExpireDate(LocalDate expireDate) {
+        this.expireDate = Optional.of(expireDate);
         return this;
     }
 }
