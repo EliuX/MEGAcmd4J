@@ -38,7 +38,7 @@ public interface MegaUtils {
     return LocalDateTime.parse(dateStr, MEGA_FILE_DATE_TIME_FORMATTER);
   }
 
-  static LocalDate parseExpireDate(String dateStr) {
+  static LocalDate parseBasicISODate(String dateStr) {
     return  LocalDateTime.parse(dateStr, MEGA_EXPORT_EXPIRE_DATE_FORMATTER).toLocalDate();
   }
 

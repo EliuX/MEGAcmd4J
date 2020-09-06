@@ -39,7 +39,7 @@ public class ExportInfo {
 
             final ExportInfo result = new ExportInfo(remotePath, publicLink);
             Optional.ofNullable(matcher.group("expireDate"))
-                    .map(MegaUtils::parseExpireDate)
+                    .map(MegaUtils::parseBasicISODate)
                     .ifPresent(result::setExpireDate);
 
             return result;
