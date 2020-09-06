@@ -11,12 +11,14 @@ import java.util.Optional;
  */
 public class DateRange {
 
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
 
     public DateRange(LocalDate startDate, LocalDate endDate) {
-        this.startDate = Optional.ofNullable(startDate).orElseThrow(() -> new MegaInvalidDateRangeException("The start date is missiong"));
-        this.endDate = Optional.ofNullable(endDate).orElseThrow(() -> new MegaInvalidDateRangeException("The end date is missing"));
+        this.startDate = Optional.ofNullable(startDate)
+                                 .orElseThrow(() -> new MegaInvalidDateRangeException("The start date is missing"));
+        this.endDate = Optional.ofNullable(endDate)
+                               .orElseThrow(() -> new MegaInvalidDateRangeException("The end date is missing"));
 
         this.validate();
     }
