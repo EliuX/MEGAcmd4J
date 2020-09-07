@@ -36,14 +36,6 @@ public class TimeDelayTest {
 
 
   @Test
-  public void getMonthsUsingDurationShouldBeOk() {
-    final TimeDelay timeDelay = TimeDelay.of(Duration.ofDays(3));
-
-    Assertions.assertEquals(3L, timeDelay.get(ChronoUnit.DAYS));
-  }
-
-
-  @Test
   public void getUnitsShouldSupportYEARS() {
     final TimeDelay timeDelay = TimeDelay.of(Period.ofYears(5));
 
@@ -59,10 +51,18 @@ public class TimeDelayTest {
 
 
   @Test
-  public void getUnitsShouldSupportDAYS() {
-    final TimeDelay timeDelay = TimeDelay.of(Period.ofDays(7));
+  public void getUnitsShouldSupportHOURS() {
+    final TimeDelay timeDelay = TimeDelay.of(Duration.ofHours(6));
 
-    Assertions.assertEquals(7, timeDelay.get(ChronoUnit.DAYS));
+    Assertions.assertEquals(6, timeDelay.get(ChronoUnit.HOURS));
+  }
+
+
+  @Test
+  public void getUnitsShouldSupportMinutes() {
+    final TimeDelay timeDelay = TimeDelay.of(Duration.ofMinutes(7));
+
+    Assertions.assertEquals(7, timeDelay.get(ChronoUnit.MINUTES));
   }
 
 

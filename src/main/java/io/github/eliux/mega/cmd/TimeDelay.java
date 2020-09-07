@@ -61,10 +61,12 @@ public class TimeDelay implements TemporalAmount {
       return this.period.getMonths();
     } else if (unit == ChronoUnit.DAYS) {
       return this.period.getDays();
+    } else if (unit == ChronoUnit.HOURS) {
+      return this.toHours();
     } else if (unit == ChronoUnit.MINUTES) {
-      return this.duration.toMinutes();
+      return this.toMinutes();
     } else if (unit == SECONDS) {
-      return this.duration.getSeconds();
+      return this.toSeconds();
     } else {
       throw new UnsupportedTemporalTypeException("Unsupported unit: " + unit);
     }
