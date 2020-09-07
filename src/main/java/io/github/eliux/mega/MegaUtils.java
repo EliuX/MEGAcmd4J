@@ -3,6 +3,7 @@ package io.github.eliux.mega;
 import io.github.eliux.mega.error.*;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
