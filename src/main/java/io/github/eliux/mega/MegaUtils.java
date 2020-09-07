@@ -3,7 +3,7 @@ package io.github.eliux.mega;
 import io.github.eliux.mega.error.*;
 
 import java.io.IOException;
-import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -16,6 +16,9 @@ public interface MegaUtils {
 
   DateTimeFormatter MEGA_FILE_DATE_TIME_FORMATTER = DateTimeFormatter
       .ofPattern("ddMMMyyyy HH:mm:ss", Locale.US);
+
+  DateTimeFormatter MEGA_EXPORT_EXPIRE_DATE_FORMATTER = DateTimeFormatter
+          .ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
 
   Pattern EMAIL_PATTERN = Pattern.compile(
       "^[\\w]+@[\\w]+\\.[a-zA-Z]{2,6}$",
@@ -33,6 +36,10 @@ public interface MegaUtils {
 
   static LocalDateTime parseFileDate(String dateStr) {
     return LocalDateTime.parse(dateStr, MEGA_FILE_DATE_TIME_FORMATTER);
+  }
+
+  static LocalDate parseBasicISODate(String dateStr) {
+    return  LocalDateTime.parse(dateStr, MEGA_EXPORT_EXPIRE_DATE_FORMATTER).toLocalDate();
   }
 
   static void handleResult(int code) {
