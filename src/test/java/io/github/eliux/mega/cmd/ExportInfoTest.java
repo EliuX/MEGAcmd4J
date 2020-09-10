@@ -33,7 +33,7 @@ public class ExportInfoTest {
 
   @DisplayName("Parse export info with invalid message and failed")
   @Test
-  public void parseExportWithInvalidMessageInfoShouldBeKO() {
+  public void parseExportWithInvalidMessageInfoShouldThrowException() {
     //Given
     String inValidExportInfo = "Error : unable to export the folder";
 
@@ -43,7 +43,7 @@ public class ExportInfoTest {
 
   @DisplayName("Parse export info with wrong date format and failed")
   @Test
-  public void parseExportWithInvalidDateFormatShouldBeKO() {
+  public void parseExportWithInvalidDateFormatShouldThrowException() {
     //Given
     String inValidExportInfo = "Exported /level1: https://mega.nz/folder/bmxnAJ6C#DWxI3_NL5SEpI1LFJ67b8w expires at 10 Aug 2020 09:06:40";
 
