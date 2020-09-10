@@ -65,14 +65,23 @@ indicates any non null response. E.g.
     sessionMega.exists("remote/path/filesprefix*.ext");
 ```
 
-### Export with expire date
+### Export with an expiration date
 With a premium mega account, you can export and generate public folder links by setting the option `expire date`.
 ```java
     LocalDate expireDate = LocalDate.of(2020, 9, 2);
-
     final ExportInfo exportInfo = sessionMega.export(exportFolder)
-            .setExpireDate(LocalDateRange.of(expireDate).get())
+            .setExpireDate(expireDate)
             .call();
+```
+
+or you can just specify a duration using `TimeDelay`.
+
+```java  
+    final ExportInfo exportInfo = sessionMega.export(exportFolder)
+        .setExpirationTimeDelay(TimeDelay.of(
+             Period.ofYears(3).plusMonths(11).plusDays(15)
+         ))
+        .call();
 ```
 
 ### MEGAcmdServer

@@ -1,12 +1,10 @@
 package io.github.eliux.mega.cmd;
 
-import io.github.eliux.mega.LocalDateRange;
-import io.github.eliux.mega.Mega;
-import io.github.eliux.mega.MegaSession;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
 import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,57 +12,52 @@ import static org.junit.jupiter.api.Assertions.*;
 @Tag("export")
 public class ExportInfoTest {
 
-    private static MegaSession sessionMega;
+  @DisplayName("Parse export Info with expire date and success")
+  @Test
+  public void parseExportWithExpireDateInfoShouldBeOk() {
+    //Given
+    String validExportInfo = "Exported /level1: https://mega.nz/folder/bmxnAJ6C#DWxI3_NL5SEpI1LFJ67b8w expires at Mon, 10 Aug 2020 09:06:40 +0200";
 
-    @BeforeAll
-    public static void setupSession() {
-        sessionMega = Mega.init();
-        removeTestResourcesIfExist();
-        sessionMega.makeDirectory("megacmd4j/testExport")
-                .recursively()
-                .run();
-    }
+    //When
+    final ExportInfo exportInfo = ExportInfo.parseExportInfo(validExportInfo);
 
-    @AfterAll
-    public static void finishSession() {
-        removeTestResourcesIfExist();
-        sessionMega.logout();
-    }
-
-    private static void removeTestResourcesIfExist() {
-        sessionMega.removeDirectory("megacmd4j")
-                .ignoreErrorIfNotPresent()
-                .run();
-    }
+    //Then
+    assertNotNull(exportInfo);
+    assertEquals("/level1", exportInfo.getRemotePath());
+    assertEquals("https://mega.nz/folder/bmxnAJ6C#DWxI3_NL5SEpI1LFJ67b8w", exportInfo.getPublicLink());
+    assertEquals(LocalDate.of(2020, 8, 10), exportInfo.getExpireDate().get());
+  }
 
 
-    @DisplayName("Export folder and success")
-    @Test
-    public void exportFolderSuccess() {
-        //Given
-        String exportFolder = "megacmd4j/testExport";
+  @DisplayName("Parse export Info with invalid message and failed")
+  @Test
+  public void parseExportWithInvalidMessageInfoShouldBeKO() {
+    //Given
+    String inValidExportInfo = "Error : unable to export the folder";
 
-        //When
-        final ExportInfo exportInfo = sessionMega.export(exportFolder)
-                .setExpireDate(LocalDateRange.of(LocalDate.of(2030, 9, 2)).get())
-                .call();
+    //When
+    assertThrows(MegaInvalidResponseException.class, () -> ExportInfo.parseExportInfo(inValidExportInfo));
+  }
 
-        //Then
-        assertNotNull(exportInfo);
-        assertEquals("/megacmd4j/testExport", exportInfo.getRemotePath());
-        assertNotNull(exportInfo.getPublicLink());
-        assertEquals(LocalDate.of(2030, 9, 2), exportInfo.getExpireDate().get());
-    }
+  @DisplayName("Parse export Info with wrong date format and failed")
+  @Test
+  public void parseExportWithInvalidDateFormatShouldBeKO() {
+    //Given
+    String inValidExportInfo = "Exported /level1: https://mega.nz/folder/bmxnAJ6C#DWxI3_NL5SEpI1LFJ67b8w expires at 10 Aug 2020 09:06:40";
+
+    //When
+    assertThrows(DateTimeParseException.class, () -> ExportInfo.parseExportInfo(inValidExportInfo));
+  }
 
 
-    @DisplayName("Parse export Info")
+  @DisplayName("Parse export Info")
   @Test
   public void parseExportInfoShouldBeOk() {
     //Given
     String validExportInfo = "Exported /megacmd4j/level2: https://mega.nz/#F!8OQxgYgY!xxxg0kyQ9wibextVq5FZbQ";
 
     //When
-    final ExportInfo exportInfo = ExportInfo.parseExportInfo(validExportInfo);
+    final ExportInfo exportInfo =  ExportInfo.parseExportInfo(validExportInfo);
 
     //Then
     assertNotNull(exportInfo);
@@ -72,34 +65,6 @@ public class ExportInfoTest {
     assertEquals("https://mega.nz/#F!8OQxgYgY!xxxg0kyQ9wibextVq5FZbQ",
         exportInfo.getPublicLink());
   }
-
-
-    @DisplayName("Parse export Info with expire date and success")
-    @Test
-    public void parseExportWithExpireDateInfoShouldBeOk() {
-        //Given
-        String validExportInfo = "Exported /level1: https://mega.nz/folder/bmxnAJ6C#DWxI3_NL5SEpI1LFJ67b8w expires at Mon, 10 Aug 2020 09:06:40 +0200";
-
-        //When
-        final ExportInfo exportInfo = ExportInfo.parseExportInfo(validExportInfo);
-
-        //Then
-        assertNotNull(exportInfo);
-        assertEquals("/level1", exportInfo.getRemotePath());
-        assertEquals("https://mega.nz/folder/bmxnAJ6C#DWxI3_NL5SEpI1LFJ67b8w", exportInfo.getPublicLink());
-        assertEquals(LocalDate.of(2020, 8, 10), exportInfo.getExpireDate().get());
-    }
-
-
-    @DisplayName("Parse export Info with invalid message and failed")
-    @Test
-    public void parseExportWithInvalidMessageInfoShouldBeKO() {
-        //Given
-        String inValidExportInfo = "Error : unable to export the folder";
-
-        //When
-        assertThrows(MegaInvalidResponseException.class, () -> ExportInfo.parseExportInfo(inValidExportInfo));
-    }
 
   @DisplayName("Given invalid remotePath, when parse export info then fail")
   @Test

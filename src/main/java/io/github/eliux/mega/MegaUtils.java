@@ -1,16 +1,30 @@
 package io.github.eliux.mega;
 
-import io.github.eliux.mega.error.*;
+import static io.github.eliux.mega.Mega.CMD_TTL_ENV_VAR;
 
+import io.github.eliux.mega.error.MegaConfirmationRequiredException;
+import io.github.eliux.mega.error.MegaIOException;
+import io.github.eliux.mega.error.MegaInvalidEmailException;
+import io.github.eliux.mega.error.MegaInvalidStateException;
+import io.github.eliux.mega.error.MegaInvalidTypeException;
+import io.github.eliux.mega.error.MegaLoginRequiredException;
+import io.github.eliux.mega.error.MegaNodesNotFetchedException;
+import io.github.eliux.mega.error.MegaOperationNotAllowedException;
+import io.github.eliux.mega.error.MegaResourceAlreadyExistsException;
+import io.github.eliux.mega.error.MegaResourceNotFoundException;
+import io.github.eliux.mega.error.MegaUnexpectedFailureException;
+import io.github.eliux.mega.error.MegaWrongArgumentsException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
-
-import static io.github.eliux.mega.Mega.CMD_TTL_ENV_VAR;
 
 public interface MegaUtils {
 
@@ -44,8 +58,8 @@ public interface MegaUtils {
 
   static void handleResult(int code) {
     int posixExitStatus = Optional.ofNullable(code)
-            .map(Math::abs)
-            .orElse(-1);
+        .map(Math::abs)
+        .orElse(-1);
     switch (posixExitStatus) {
       case 0:
         //Its Ok
@@ -78,7 +92,7 @@ public interface MegaUtils {
     }
   }
 
-  static String[] convertInstructionsToExecParams(String cmdInstructions){
+  static String[] convertInstructionsToExecParams(String cmdInstructions) {
     return cmdInstructions.split("\\s+");
   }
 
@@ -121,9 +135,9 @@ public interface MegaUtils {
   }
 
   static String execCmdWithSingleOutput(String... cmd) throws IOException {
-    try{
+    try {
       return handleCmdWithOutput(cmd).get(0);
-    }catch (IndexOutOfBoundsException ex){
+    } catch (IndexOutOfBoundsException ex) {
       return "";
     }
   }
