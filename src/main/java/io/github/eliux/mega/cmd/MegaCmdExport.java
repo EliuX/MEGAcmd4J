@@ -3,6 +3,7 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaIOException;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
+
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDate;

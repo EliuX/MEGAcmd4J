@@ -1,7 +1,9 @@
 package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.error.MegaInvalidResponseException;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
