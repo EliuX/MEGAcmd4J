@@ -116,14 +116,14 @@ public class TimeDelayTest {
   }
 
   @DisplayName("TimeDelay#toString should return 0m")
-  @org.junit.jupiter.api.Test
+  @Test
   public void toTimeDelayWithZERO() {
     Assertions.assertEquals("0m", TimeDelay.ZERO.toString());
   }
 
 
   @DisplayName("TimeDelay#toString should return 12d3h1m")
-  @org.junit.jupiter.api.Test
+  @Test
   public void toTimeDelayWithDurationOnly() {
     final TimeDelay timeDelay = TimeDelay.of(
         Duration.ofDays(12).plusHours(3).plusMinutes(1)
@@ -134,7 +134,7 @@ public class TimeDelayTest {
 
 
   @DisplayName("TimeDelay#toString should return 3y11m15d")
-  @org.junit.jupiter.api.Test
+  @Test
   public void toTimeDelayWithPeriodOnly() {
     final TimeDelay timeDelay = TimeDelay.of(
         Period.ofYears(3).plusMonths(11).plusDays(15)
@@ -145,7 +145,7 @@ public class TimeDelayTest {
 
 
   @DisplayName("TimeDelay#toString should return 5y2m4d11h1m31s")
-  @org.junit.jupiter.api.Test
+  @Test
   public void toTimeDelayWithPeriodAndDuration() {
     final TimeDelay timeDelay = TimeDelay.of(
         Period.ofYears(5).plusMonths(2).plusDays(4),
