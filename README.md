@@ -119,7 +119,7 @@ Please read CONTRIBUTING.md for details on the code of conduct, and the process 
 
 # Contributors
 Add your name and your account for Twitter, Github or LinkedIn:
-- **Cenyo Medewou** - [medewou@gmail.com](mailto:medewou@gmail.com) | [Github](https://github.com/ccenyo) 
+- **Cenyo Medewou** - [medewou@gmail.com](mailto:medewou@gmail.com) | [Github](https://github.com/ccenyo) | [Linkedin](https://www.linkedin.com/in/cenyomedewou)
 
 
 
