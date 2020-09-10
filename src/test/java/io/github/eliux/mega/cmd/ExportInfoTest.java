@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Tag("export")
 public class ExportInfoTest {
 
-  @DisplayName("Parse export Info with expire date and success")
+  @DisplayName("Parse export info with expire date and success")
   @Test
   public void parseExportWithExpireDateInfoShouldBeOk() {
     //Given
@@ -31,7 +31,7 @@ public class ExportInfoTest {
   }
 
 
-  @DisplayName("Parse export Info with invalid message and failed")
+  @DisplayName("Parse export info with invalid message and failed")
   @Test
   public void parseExportWithInvalidMessageInfoShouldBeKO() {
     //Given
@@ -41,7 +41,7 @@ public class ExportInfoTest {
     assertThrows(MegaInvalidResponseException.class, () -> ExportInfo.parseExportInfo(inValidExportInfo));
   }
 
-  @DisplayName("Parse export Info with wrong date format and failed")
+  @DisplayName("Parse export info with wrong date format and failed")
   @Test
   public void parseExportWithInvalidDateFormatShouldBeKO() {
     //Given
@@ -52,7 +52,7 @@ public class ExportInfoTest {
   }
 
 
-  @DisplayName("Parse export Info")
+  @DisplayName("Parse export info and success")
   @Test
   public void parseExportInfoShouldBeOk() {
     //Given
