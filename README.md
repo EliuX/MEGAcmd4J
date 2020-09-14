@@ -64,6 +64,26 @@ indicates any non null response. E.g.
 ```java
     sessionMega.exists("remote/path/filesprefix*.ext");
 ```
+
+### Export with an expiration date
+With a premium mega account, you can export and generate public folder links by setting the option `expire date`.
+```java
+    LocalDate expireDate = LocalDate.of(2020, 9, 2);
+    final ExportInfo exportInfo = sessionMega.export(exportFolder)
+            .setExpireDate(expireDate)
+            .call();
+```
+
+or you can just specify a duration using `TimeDelay`.
+
+```java  
+    final ExportInfo exportInfo = sessionMega.export(exportFolder)
+        .setExpirationTimeDelay(TimeDelay.of(
+             Period.ofYears(3).plusMonths(11).plusDays(15)
+         ))
+        .call();
+```
+
 ### MEGAcmdServer
 Thanks to the class `io.github.eliux.mega.MegaServer` you can now `start` and `stop` the local MEGAcmdServer on command.
 
@@ -99,7 +119,7 @@ Please read CONTRIBUTING.md for details on the code of conduct, and the process 
 
 # Contributors
 Add your name and your account for Twitter, Github or LinkedIn:
-- NyoCe => Github: [ccenyo](https://github.com/ccenyo)
+- **Cenyo Medewou** - [medewou@gmail.com](mailto:medewou@gmail.com) | [Github](https://github.com/ccenyo) | [Linkedin](https://www.linkedin.com/in/cenyomedewou)
 
 
 

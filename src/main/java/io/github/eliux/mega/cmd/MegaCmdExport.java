@@ -3,7 +3,12 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaIOException;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
+
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +24,12 @@ public class MegaCmdExport extends AbstractMegaCmdCallerWithParams<ExportInfo> {
 
   private boolean listOnly;
 
+  Optional<TimeDelay> expirationTimeDelay;
+
   public MegaCmdExport(String remotePath) {
     this.remotePath = Optional.of(remotePath);
     this.password = Optional.empty();
+    this.expirationTimeDelay = Optional.empty();
   }
 
   @Override
@@ -32,12 +40,14 @@ public class MegaCmdExport extends AbstractMegaCmdCallerWithParams<ExportInfo> {
         .filter(x -> !listOnly)
         .ifPresent(x -> {
           cmdParams.add(exportDeleted ? "-d" : "-a");
+          expirationTimeDelay.map(td -> String.format("--expire=%s", td))
+              .ifPresent(cmdParams::add);
           cmdParams.add("-f");
         });
 
-    remotePath.ifPresent(cmdParams::add);
-
     password.ifPresent(p -> cmdParams.add(String.format("--password=%s", p)));
+
+    remotePath.ifPresent(cmdParams::add);
 
     return cmdParams;
   }
@@ -93,6 +103,28 @@ public class MegaCmdExport extends AbstractMegaCmdCallerWithParams<ExportInfo> {
 
   public MegaCmdExport removePassword() {
     this.password = Optional.empty();
+    return this;
+  }
+
+  public MegaCmdExport setExpirationTimeDelay(TimeDelay expirationTimeDelay) {
+    this.expirationTimeDelay = Optional.of(expirationTimeDelay);
+    return this;
+  }
+
+  public MegaCmdExport setExpireDate(LocalDateTime endDateTimeExclusive) {
+    final Period period = Period.between(LocalDate.now(), endDateTimeExclusive.toLocalDate());
+    final Duration duration = Duration.between(LocalDateTime.now(), endDateTimeExclusive);
+
+    return this.setExpirationTimeDelay(TimeDelay.of(period, duration));
+  }
+
+  public MegaCmdExport setExpireDate(LocalDate date) {
+    final Period period = Period.between(LocalDate.now(), date);
+    return this.setExpirationTimeDelay(TimeDelay.of(period));
+  }
+
+  public MegaCmdExport withoutExpiration() {
+    this.expirationTimeDelay = Optional.empty();
     return this;
   }
 
