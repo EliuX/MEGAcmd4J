@@ -101,7 +101,12 @@ platforms should be found [here][megacmd-install].
 1. The most common way to setup your credentials would be using the environment variables `MEGA_EMAIL` 
 and `MEGA_PWD`.
 
-2. To use an existing session can be a safer way. You can use it from your app as long as it don't be closed.
+2. Use an existing session can be a saver way. You can use it from your app as long 
+as it don't be closed.
+
+## Continuous Integrations
+As most OSS projects in github, this one uses [Travis CI](https://travis-ci.com/EliuX/MEGAcmd4J). 
+I you want a CLI for your project, its recommend to install the correspondent ruby gem:
 
 ```bash
     gem install travis
@@ -112,13 +117,14 @@ and `MEGA_PWD`.
 You will be able to notice those who are already implemented in this library and those who don't. Try them out.
 
 ## Contributing
-Please read CONTRIBUTING.md for details on the code of conduct, and the process for submitting pull requests to the project.
+Make sure your contact data is included in the **Contributors** section, and
+
 * Follow the [Google Java Style Guide][google-java-style-guide] as much as possible: Its recommended that you install the 
 [Google Java Style Guide settings in your IDE][google-java-style-settings-intellij]. 
 * Respect as much as possible the format of the provided templates for issues and PRs.
 
 # Contributors
-Add your name and your account for Twitter, Github or LinkedIn:
+Add your name, email and your account for Twitter, Github or LinkedIn:
 - **Cenyo Medewou** - [medewou@gmail.com](mailto:medewou@gmail.com) | [Github](https://github.com/ccenyo) | [Linkedin](https://www.linkedin.com/in/cenyomedewou)
 
 
