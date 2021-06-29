@@ -4,7 +4,9 @@ import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Defines a remote file/Folder in MEGA
@@ -58,9 +60,11 @@ public class FileInfo {
         final String[] tokens = fileInfoStr.replace("\\t", "\\s").split("\\s+");
 
         if (tokens.length != 6) {
-            throw new MegaInvalidResponseException(
-                    "The gotten file format is incorrect: Should have 6 tokens"
-            );
+            //Instead of throwing an exception when we receive more than 6 tokens, we concatenate the last tokens.length - 6 tokens into one
+            String[] newTokens = new String[6];
+            System.arraycopy(tokens, 0, newTokens, 0, 5);
+            newTokens[5] = Arrays.stream(tokens).skip(5).collect(Collectors.joining(" "));
+            return newTokens;
         }
 
         return tokens;

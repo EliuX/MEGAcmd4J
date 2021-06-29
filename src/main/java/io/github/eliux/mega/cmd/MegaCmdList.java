@@ -35,8 +35,11 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
 
     @Override
     public List<FileInfo> call() {
+        //mega-cmd seems to print a line with the directory name before the usual "FLAGS VERS    SIZE            DATE       NAME" line when the path contains a space
+        int skipNLines = remotePath.contains(" ") ? 2 : 1;
+
         try {
-            return MegaUtils.handleCmdWithOutput(executableCommandArray()).stream().skip(1)
+            return MegaUtils.handleCmdWithOutput(executableCommandArray()).stream().skip(skipNLines)
                     .filter(FileInfo::isValid)  //To avoid complementary info
                     .map(FileInfo::parseInfo)
                     .collect(Collectors.toList());
