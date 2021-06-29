@@ -105,6 +105,14 @@ public interface MegaUtils {
     return succeeded ? process.exitValue() : -1;
   }
 
+  String[] RUNNING_OUT_OF_STORAGE_BANNER = new String[]{
+          "-------------------------------------------------------------------------------",
+          "|                   You are running out of available storage.                   |",
+          "|        You can change your account plan to increase your quota limit.         |",
+          "|                   See \"help --upgrade\" for further details.                   |",
+          "-------------------------------------------------------------------------------"
+  };
+
   static List<String> handleCmdWithOutput(String... cmd)
       throws java.io.IOException {
     ProcessBuilder pb = new ProcessBuilder(cmd);
@@ -117,8 +125,15 @@ public interface MegaUtils {
 
     final List<String> result = new ArrayList<>();
 
+    int runningOutOfStorage = 0;
     while (inputScanner.hasNext()) {
-      result.add(inputScanner.next());
+      String line = inputScanner.next();
+        if (runningOutOfStorage < RUNNING_OUT_OF_STORAGE_BANNER.length
+                && line.trim().equals(RUNNING_OUT_OF_STORAGE_BANNER[runningOutOfStorage])) {
+          runningOutOfStorage++;
+        } else {
+          result.add(line);
+        }
     }
 
     process.destroy();
