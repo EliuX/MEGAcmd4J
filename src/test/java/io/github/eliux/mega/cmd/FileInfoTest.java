@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
 import java.util.Optional;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -103,5 +104,15 @@ public class FileInfoTest {
 
     assertThrows(MegaInvalidResponseException.class,
         () -> FileInfo.parseInfo(fileInfoStr));
+  }
+
+  @DisplayName("Parse token of FileInfo where name has spaces")
+  @Test
+  public void parseTokenWithFileWithSpacesShouldBeOk() {
+    final String fileInfoString = "d---    -          - 29Jun2021 21:01:04 level 3 with spaces";
+
+    final FileInfo fileInfo = FileInfo.parseInfo(fileInfoString);
+
+    Assertions.assertEquals(fileInfo.getName(), "level 3 with spaces");
   }
 }

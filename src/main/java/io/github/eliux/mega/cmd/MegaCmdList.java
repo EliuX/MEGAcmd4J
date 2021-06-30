@@ -30,7 +30,7 @@ public class MegaCmdList extends AbstractMegaCmdCallerWithParams<List<FileInfo>>
 
     @Override
     List<String> cmdParams() {
-        return Arrays.asList("-l", remotePath);
+        return Arrays.asList("-l", "--time-format=SHORT", remotePath);
     }
 
     @Override

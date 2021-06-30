@@ -168,6 +168,17 @@ public class BasicActionsTest extends AbstractRemoteTests {
         .run();
   }
 
+  @DisplayName("Create folder with spaces in the name")
+  @Tag("mkdir")
+  @Order(7)
+  @Test()
+  public void shouldCreateFolderWithSpace() {
+    sessionMega.makeDirectory("megacmd4j/level2/level 3 with spaces")
+        .recursively()
+        .run();
+
+  }
+
   @DisplayName("Should return previously uploaded file")
   @Tag("ls")
   @Order(8)
@@ -176,9 +187,9 @@ public class BasicActionsTest extends AbstractRemoteTests {
     final List<FileInfo> files = sessionMega.ls("megacmd4j/level2").call();
 
     assertEquals(
-        2,
+        3,
         files.size(),
-        "There should be 2 elements"
+        "There should be 3 elements"
     );
 
     final FileInfo fileInfo = files.stream()
@@ -197,6 +208,17 @@ public class BasicActionsTest extends AbstractRemoteTests {
 
     assertTrue(
         directoryInfo.isDirectory(),
+        "The found object is not a directory"
+    );
+
+    final FileInfo directoryWithSpacesInfo = files.stream()
+        .filter(x -> x.getName().equals("level 3 with spaces"))
+        .findAny().orElseThrow(() -> new MegaInvalidStateException(
+            "The previously uploaded folder with spaces was not found"
+        ));
+
+    assertTrue(
+        directoryWithSpacesInfo.isDirectory(),
         "The found object is not a directory"
     );
   }
@@ -225,6 +247,10 @@ public class BasicActionsTest extends AbstractRemoteTests {
     );
     assertTrue(
         new File("target/level2/level3").isDirectory(),
+        "Invalid downloaded directory"
+    );
+    assertTrue(
+        new File("target/level2/level 3 with spaces").isDirectory(),
         "Invalid downloaded directory"
     );
   }
@@ -271,12 +297,12 @@ public class BasicActionsTest extends AbstractRemoteTests {
         .run();
 
     final List<FileInfo> currentFiles = sessionMega.ls("megacmd4j/").call();
-    assertEquals(2, currentFiles.size(),
+    assertEquals(3, currentFiles.size(),
         "Only 2 files were expected");
 
     final long amountOfDirectoriesLeft = currentFiles.stream()
         .filter(FileInfo::isDirectory).count();
-    assertEquals(1, amountOfDirectoriesLeft,
+    assertEquals(2, amountOfDirectoriesLeft,
         "There should be only 1 directory left");
 
     final long amountOfFilesLeft = currentFiles.stream()
