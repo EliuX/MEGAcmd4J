@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -32,7 +33,7 @@ public interface MegaUtils {
       .ofPattern("ddMMMyyyy HH:mm:ss", Locale.US);
 
   DateTimeFormatter MEGA_EXPORT_EXPIRE_DATE_FORMATTER = DateTimeFormatter
-          .ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+      .ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
 
   Pattern EMAIL_PATTERN = Pattern.compile(
       "^[\\w]+@[\\w]+\\.[a-zA-Z]{2,6}$",
@@ -48,12 +49,18 @@ public interface MegaUtils {
       .map(Integer::new)
       .orElse(20000);
 
+
+  Pattern BANNER_PATTERN = Pattern.compile(
+      "^\\s?(-){5,}(.+)(-){5,}\\R",
+      Pattern.MULTILINE | Pattern.DOTALL
+  );
+
   static LocalDateTime parseFileDate(String dateStr) {
     return LocalDateTime.parse(dateStr, MEGA_FILE_DATE_TIME_FORMATTER);
   }
 
   static LocalDate parseBasicISODate(String dateStr) {
-    return  LocalDateTime.parse(dateStr, MEGA_EXPORT_EXPIRE_DATE_FORMATTER).toLocalDate();
+    return LocalDateTime.parse(dateStr, MEGA_EXPORT_EXPIRE_DATE_FORMATTER).toLocalDate();
   }
 
   static void handleResult(int code) {
@@ -148,5 +155,19 @@ public interface MegaUtils {
 
   static boolean isDirectory(String token) {
     return !isEmail(token) && DIRECTORY_PATTERN.matcher(token).find();
+  }
+
+  static List<String> collectValidCmdOutput(Scanner inputScanner) {
+    final List<String> result = new ArrayList<>();
+
+    try {
+      inputScanner.skip(BANNER_PATTERN);
+    } catch (NoSuchElementException ex) { }
+
+    while (inputScanner.hasNext()) {
+      result.add(inputScanner.next());
+    }
+
+    return result;
   }
 }

@@ -3,6 +3,8 @@ package io.github.eliux.mega.cmd;
 import io.github.eliux.mega.MegaUtils;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
+import java.util.Scanner;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -58,5 +60,52 @@ public class MegaUtilsTest {
   public void isDirectoryShouldFail() {
     Assertions.assertFalse(MegaUtils.isDirectory("user@doma.in"));
     //TODO Improve
+  }
+
+  @DisplayName("MegaUtils#collectValidCmdOutput should not accept output with banner")
+  @Test
+  public void collectValidCmdOutputShouldNotAcceptOutputWithStoreBanner() {
+    final String OUTPUT_WITH_RUNNING_OUT_OF_STORAGE_BANNER =
+            "-------------------------------------------------------------------------------\n" +
+            "|                   You are running out of available storage.                   |\n" +
+            "|        You can change your account plan to increase your quota limit.         |\n" +
+            "|                   See \"help --upgrade\" for further details.                 |\n" +
+            "--------------------------------------------------------------------------------\n" +
+            "MEGAcmd version: 1.3.0.0: code 1030000\n" +
+            "MEGA SDK version: 3.7.0\n";
+    final Scanner inputScanner = new Scanner(OUTPUT_WITH_RUNNING_OUT_OF_STORAGE_BANNER)
+        .useDelimiter("\n");
+
+    final List<String> result = MegaUtils.collectValidCmdOutput(inputScanner);
+
+    Assertions.assertEquals( 2, result.size());
+    Assertions.assertEquals( "MEGAcmd version: 1.3.0.0: code 1030000", result.get(0));
+    Assertions.assertEquals("MEGA SDK version: 3.7.0", result.get(1));
+  }
+
+  @DisplayName("MegaUtils#collectValidCmdOutput should not trim alike content when banner is over")
+  @Test
+  public void collectValidCmdOutputShouldNotTrimAlikeContentWhenBannerIsOver() {
+    final String CONFUSING_BANNER =
+            "-------------------------------------------------------------------------------\n" +
+            "|                   You are running out of available storage.                   |\n" +
+            "|        You can change your account plan to increase your quota limit.         |\n" +
+            "|                   See \"help --upgrade\" for further details.                 |\n" +
+            "--------------------------------------------------------------------------------\n" +
+            "These are the results\n" +
+            "|----------------------------|\n" +
+            "|asd | vvvvv | zzzzz   | tttt|\n" +
+            "|----------------------------|\n";
+
+    final Scanner inputScanner = new Scanner(CONFUSING_BANNER)
+        .useDelimiter("\n");
+
+    final List<String> result = MegaUtils.collectValidCmdOutput(inputScanner);
+
+    Assertions.assertEquals(4, result.size());
+    Assertions.assertEquals("These are the results", result.get(0));
+    Assertions.assertEquals("|----------------------------|", result.get(1));
+    Assertions.assertEquals("|asd | vvvvv | zzzzz   | tttt|", result.get(2));
+    Assertions.assertEquals("|----------------------------|", result.get(3));
   }
 }
