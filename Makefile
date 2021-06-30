@@ -1,6 +1,6 @@
 # Made by Eliux for MEGAcmd4J
 #To update version
-# Update to version
+# Update to SNAPSHOT version with mvn versions:set -DnewVersion=<version>-SNAPSHOT
 # make release (Increase the version)
 # source tag.sh (This will create a tag a which in travis will call deploy)
 
