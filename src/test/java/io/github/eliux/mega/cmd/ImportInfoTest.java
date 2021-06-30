@@ -112,7 +112,7 @@ public class ImportInfoTest {
   }
 
 
-  @Test
+  //TODO Get pro account
   public void given_remotePath_destination_and_password_when_import_then_success()
       throws Exception {
     //This requires Pro User
@@ -134,7 +134,7 @@ public class ImportInfoTest {
   }
 
 
-  @Test
+  //TODO Get pro account
   public void given_remotePath_password_when_import_then_success() throws Exception {
     //Given
     // /megacmd4j/folder4

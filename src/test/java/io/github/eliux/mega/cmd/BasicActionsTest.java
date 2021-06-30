@@ -298,12 +298,12 @@ public class BasicActionsTest extends AbstractRemoteTests {
 
     final List<FileInfo> currentFiles = sessionMega.ls("megacmd4j/").call();
     assertEquals(3, currentFiles.size(),
-        "Only 3 files were expected");
+        "Only 2 files were expected");
 
     final long amountOfDirectoriesLeft = currentFiles.stream()
         .filter(FileInfo::isDirectory).count();
     assertEquals(2, amountOfDirectoriesLeft,
-        "There should be only 2 directories left");
+        "There should be only 1 directory left");
 
     final long amountOfFilesLeft = currentFiles.stream()
         .filter(FileInfo::isFile)
