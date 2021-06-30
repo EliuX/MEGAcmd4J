@@ -77,7 +77,7 @@ public class MegaUtilsTest {
   @Test
   public void collectValidCmdOutputShouldNotAcceptOutputWithStoreBanner() {
     final String OUTPUT_WITH_RUNNING_OUT_OF_STORAGE_BANNER =
-        "-------------------------------------------------------------------------------\n" +
+            "-------------------------------------------------------------------------------\n" +
             "|                   You are running out of available storage.                   |\n" +
             "|        You can change your account plan to increase your quota limit.         |\n" +
             "|                   See \"help --upgrade\" for further details.                 |\n" +
@@ -89,8 +89,9 @@ public class MegaUtilsTest {
 
     final List<String> result = MegaUtils.collectValidCmdOutput(inputScanner);
 
-    Assertions.assertEquals(2, result.size());
-    Assertions.assertEquals("MEGAcmd version: 1.3.0.0: code 1030000", result.get(0));
+
+    Assertions.assertEquals( 2, result.size());
+    Assertions.assertEquals( "MEGAcmd version: 1.3.0.0: code 1030000", result.get(0));
     Assertions.assertEquals("MEGA SDK version: 3.7.0", result.get(1));
   }
 
@@ -98,7 +99,7 @@ public class MegaUtilsTest {
   @Test
   public void collectValidCmdOutputShouldNotTrimAlikeContentWhenBannerIsOver() {
     final String CONFUSING_BANNER =
-        "-------------------------------------------------------------------------------\n" +
+            "-------------------------------------------------------------------------------\n" +
             "|                   You are running out of available storage.                   |\n" +
             "|        You can change your account plan to increase your quota limit.         |\n" +
             "|                   See \"help --upgrade\" for further details.                 |\n" +
