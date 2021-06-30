@@ -1,8 +1,11 @@
 package io.github.eliux.mega.cmd;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import io.github.eliux.mega.MegaUtils;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 import org.junit.jupiter.api.Assertions;
@@ -12,9 +15,9 @@ import org.junit.jupiter.api.Test;
 @DisplayName("MegaUtils")
 public class MegaUtilsTest {
 
-  @DisplayName("MegaUtils#parseFileDate")
+  @DisplayName("MegaUtils#parseFileDate well formed datetime like 04May2018 17:54:11")
   @Test
-  public void parseFileDateShouldBeOk() {
+  public void parseFileDateWithTimeShouldBeOk() {
     //Given
     String dateStr = "04May2018 17:54:11";
 
@@ -30,6 +33,14 @@ public class MegaUtilsTest {
     Assertions.assertEquals(54, date.getMinute());
     Assertions.assertEquals(11, date.getSecond());
   }
+
+  @DisplayName("MegaUtils#parseFileDate malformed datetime like 29Jun2021")
+  @Test()
+  public void parseFileDateWithoutTimeShouldFail() {
+    assertThrows(DateTimeParseException.class,
+        () -> MegaUtils.parseFileDate("29Jun2021"));
+  }
+
 
   @DisplayName("MegaUtils#isEmail")
   @Test
@@ -66,7 +77,7 @@ public class MegaUtilsTest {
   @Test
   public void collectValidCmdOutputShouldNotAcceptOutputWithStoreBanner() {
     final String OUTPUT_WITH_RUNNING_OUT_OF_STORAGE_BANNER =
-            "-------------------------------------------------------------------------------\n" +
+        "-------------------------------------------------------------------------------\n" +
             "|                   You are running out of available storage.                   |\n" +
             "|        You can change your account plan to increase your quota limit.         |\n" +
             "|                   See \"help --upgrade\" for further details.                 |\n" +
@@ -78,8 +89,8 @@ public class MegaUtilsTest {
 
     final List<String> result = MegaUtils.collectValidCmdOutput(inputScanner);
 
-    Assertions.assertEquals( 2, result.size());
-    Assertions.assertEquals( "MEGAcmd version: 1.3.0.0: code 1030000", result.get(0));
+    Assertions.assertEquals(2, result.size());
+    Assertions.assertEquals("MEGAcmd version: 1.3.0.0: code 1030000", result.get(0));
     Assertions.assertEquals("MEGA SDK version: 3.7.0", result.get(1));
   }
 
@@ -87,7 +98,7 @@ public class MegaUtilsTest {
   @Test
   public void collectValidCmdOutputShouldNotTrimAlikeContentWhenBannerIsOver() {
     final String CONFUSING_BANNER =
-            "-------------------------------------------------------------------------------\n" +
+        "-------------------------------------------------------------------------------\n" +
             "|                   You are running out of available storage.                   |\n" +
             "|        You can change your account plan to increase your quota limit.         |\n" +
             "|                   See \"help --upgrade\" for further details.                 |\n" +
