@@ -4,6 +4,9 @@ language: java
 sudo: required
 env:
  - MEGA_CMD_TTL=30000
+jdk:
+ - oraclejdk11
+
 before_install:
  #Megacmd required ubuntu packages
  - sudo apt-get -y install libc-ares2 libcrypto++9 libmediainfo0 libzen0
