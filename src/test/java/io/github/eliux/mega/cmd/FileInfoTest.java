@@ -115,4 +115,16 @@ public class FileInfoTest {
 
     Assertions.assertEquals(fileInfo.getName(), "level 3 with spaces");
   }
+
+  @DisplayName("----   22         29 24Apr2022 19:11:00 test123.txt  should be valid")
+  @Test
+  public void txtFileWithoutSpaceShouldBeValid() {
+    Assertions.assertTrue(FileInfo.isValid("----   22         29 24Apr2022 19:11:00 test123.txt"));
+  }
+
+  @DisplayName("d---    -          - 29Jun2021 23:15:48 MegaCMD4J test workplace should be valid")
+  @Test
+  public void emptyFolderShouldBeValid() {
+    Assertions.assertTrue(FileInfo.isValid("d---    -          - 29Jun2021 23:15:48 MegaCMD4J test workplace"));
+  }
 }
