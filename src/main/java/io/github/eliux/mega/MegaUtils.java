@@ -122,11 +122,7 @@ public interface MegaUtils {
     final Scanner inputScanner = new Scanner(process.getInputStream())
         .useDelimiter(System.getProperty("line.separator"));
 
-    final List<String> result = new ArrayList<>();
-
-    while (inputScanner.hasNext()) {
-      result.add(inputScanner.next());
-    }
+    final List<String> result = MegaUtils.collectValidCmdOutput(inputScanner);
 
     process.destroy();
 
