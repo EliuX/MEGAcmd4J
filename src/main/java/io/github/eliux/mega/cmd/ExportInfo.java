@@ -1,7 +1,10 @@
 package io.github.eliux.mega.cmd;
 
+import io.github.eliux.mega.MegaUtils;
 import io.github.eliux.mega.error.MegaInvalidResponseException;
 
+import java.time.LocalDate;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,9 +16,14 @@ public class ExportInfo {
     private static final Pattern LIST_PATTERN =
             Pattern.compile("(?<remotePath>\\S+) \\(.+link: (?<publicLink>http[s]?://mega.nz/\\S*#.+)\\)");
 
+    private static final Pattern EXPORT_PATTERN =
+            Pattern.compile("\\s(?<remotePath>\\S+)(:)\\s(?<publicLink>http[s]?://mega.nz/\\S*#\\S*)( expires at (?<expireDate>.+))?");
+
     private final String remotePath;
 
     private final String publicLink;
+
+    private Optional<LocalDate> expireDate;
 
     public ExportInfo(String remotePath, String publicLink) {
         this.remotePath = remotePath;
@@ -23,9 +31,21 @@ public class ExportInfo {
     }
 
     public static ExportInfo parseExportInfo(String exportInfoStr) {
-        final String[] tokens = exportInfoStr.replace("Exported ", "")
-                .split(": ");
-        return new ExportInfo(tokens[0], tokens[1]);
+        final Matcher matcher = EXPORT_PATTERN.matcher(exportInfoStr);
+
+        if (matcher.find()) {
+            String remotePath = matcher.group("remotePath");
+            String publicLink = matcher.group("publicLink");
+
+            final ExportInfo result = new ExportInfo(remotePath, publicLink);
+            Optional.ofNullable(matcher.group("expireDate"))
+                    .map(MegaUtils::parseBasicISODate)
+                    .ifPresent(result::setExpireDate);
+
+            return result;
+        }
+
+        throw new MegaInvalidResponseException("Unexpected export info format : "+exportInfoStr);
     }
 
     public static ExportInfo parseExportListInfo(String exportInfoLine) {
@@ -51,5 +71,14 @@ public class ExportInfo {
 
     public String getPublicLink() {
         return publicLink;
+    }
+
+    public Optional<LocalDate> getExpireDate() {
+        return expireDate;
+    }
+
+    public ExportInfo setExpireDate(LocalDate expireDate) {
+        this.expireDate = Optional.of(expireDate);
+        return this;
     }
 }

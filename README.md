@@ -32,6 +32,7 @@ There is a [Quick Start][quick-start] available for developers who want to start
 | Signup user               | `signup`  | Register as user with a given email
 | Version                   | `version` | Prints MEGAcmd versioning and extra info
 | Quit                      | `quit`    | Quits MEGAcmd. Stops the server without killing the session
+| Import                    | `import`  | Imports the contents of a remote link into user's cloud
         
 If you have any doubt about how each feature works, please run
 
@@ -63,6 +64,26 @@ indicates any non null response. E.g.
 ```java
     sessionMega.exists("remote/path/filesprefix*.ext");
 ```
+
+### Export with an expiration date
+With a premium mega account, you can export and generate public folder links by setting the option `expire date`.
+```java
+    LocalDate expireDate = LocalDate.of(2020, 9, 2);
+    final ExportInfo exportInfo = sessionMega.export(exportFolder)
+            .setExpireDate(expireDate)
+            .call();
+```
+
+or you can just specify a duration using `TimeDelay`.
+
+```java  
+    final ExportInfo exportInfo = sessionMega.export(exportFolder)
+        .setExpirationTimeDelay(TimeDelay.of(
+             Period.ofYears(3).plusMonths(11).plusDays(15)
+         ))
+        .call();
+```
+
 ### MEGAcmdServer
 Thanks to the class `io.github.eliux.mega.MegaServer` you can now `start` and `stop` the local MEGAcmdServer on command.
 
@@ -80,7 +101,12 @@ platforms should be found [here][megacmd-install].
 1. The most common way to setup your credentials would be using the environment variables `MEGA_EMAIL` 
 and `MEGA_PWD`.
 
-2. To use an existing session can be a safer way. You can use it from your app as long as it don't be closed.
+2. Use an existing session can be a saver way. You can use it from your app as long 
+as it don't be closed.
+
+## Continuous Integrations
+As most OSS projects in github, this one uses [Travis CI](https://travis-ci.com/EliuX/MEGAcmd4J). 
+I you want a CLI for your project, its recommend to install the correspondent ruby gem:
 
 ```bash
     gem install travis
@@ -91,10 +117,17 @@ and `MEGA_PWD`.
 You will be able to notice those who are already implemented in this library and those who don't. Try them out.
 
 ## Contributing
-Please read CONTRIBUTING.md for details on the code of conduct, and the process for submitting pull requests to the project.
+Make sure your contact data is included in the **Contributors** section, and
+
 * Follow the [Google Java Style Guide][google-java-style-guide] as much as possible: Its recommended that you install the 
 [Google Java Style Guide settings in your IDE][google-java-style-settings-intellij]. 
 * Respect as much as possible the format of the provided templates for issues and PRs.
+
+# Contributors
+Add your name, email and your account for Twitter, Github or LinkedIn:
+- **Cenyo Medewou** - [medewou@gmail.com](mailto:medewou@gmail.com) | [Github](https://github.com/ccenyo) | [Linkedin](https://www.linkedin.com/in/cenyomedewou)
+
+
 
 ## Built With
 * [Java SDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) -  Java™ Platform
