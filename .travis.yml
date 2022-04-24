@@ -30,7 +30,7 @@ deploy:
     tags: true
     branch: master
 after_deploy:
-#After running make release a release tag is created.
-#Then run this script and a release artifact is
-#uploaded to the Maven Central
+# After running make release a release tag is created.
+# Then run this script and a release artifact is
+# uploaded to the Maven Central
  - make deploy
