@@ -2,7 +2,6 @@ package io.github.eliux.mega.cmd;
 
 import io.github.eliux.mega.MegaTestUtils;
 import java.util.List;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
