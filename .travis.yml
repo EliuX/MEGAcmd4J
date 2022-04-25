@@ -4,8 +4,6 @@ language: java
 sudo: required
 env:
  - MEGA_CMD_TTL=30000
-jdk:
- - oraclejdk11
 
 before_install:
  #Megacmd required ubuntu packages

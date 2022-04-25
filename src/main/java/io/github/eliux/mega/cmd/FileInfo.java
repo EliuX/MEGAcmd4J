@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class FileInfo {
 
   private static final Pattern FILE_INFO_PATTERN = Pattern
-      .compile("^(\\S{4})\\s{4}(\\S+)\\s+(-|\\d+)\\s(\\S+)\\s(\\S+)\\s(.+)$");
+      .compile("^(\\S{4})\\s+(\\S+)\\s+(-|\\d+)\\s(\\S+)\\s(\\S+)\\s(.+)$");
 
   private final String name;
 
